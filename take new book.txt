@@ -7,7 +7,7 @@ if @injournal 'world will save''system'
   @clearjournal
 endif
 //center goza X-4
-while not x == 2035  and x > 2035
+while not x == 2039  and x > 2035
   turn 'west'
   walk 'west'
   pause 1000
@@ -34,26 +34,26 @@ endwhile
 @setalias 'Queue19' 0x43494ebb
 @setalias 'Queue20' 0x43457f5d
 //blue bags
-@setalias 'Done1' 
-@setalias 'Done2' 
-@setalias 'Done3' 
-@setalias 'Done4' 
-@setalias 'Done5' 
-@setalias 'Done6' 
-@setalias 'Done7' 
-@setalias 'Done8' 
-@setalias 'Done9' 
-@setalias 'Done10' 
-@setalias 'Done11' 
-@setalias 'Done12' 
-@setalias 'Done13' 
-@setalias 'Done14' 
-@setalias 'Done15' 
-@setalias 'Done16' 
-@setalias 'Done17' 
-@setalias 'Done18' 
-@setalias 'Done19' 
-@setalias 'Done20' 
+@setalias 'Done1' 0x43495f8e 
+@setalias 'Done2' 0x43494eb2
+@setalias 'Done3' 0x43495f8f
+@setalias 'Done4' 0x43495f85
+@setalias 'Done5' 0x43495f91
+@setalias 'Done6' 0x43494eb0
+@setalias 'Done7' 0x43494eae
+@setalias 'Done8' 0x43495f87
+@setalias 'Done9' 0x43495f86
+@setalias 'Done10' 0x43457f52
+@setalias 'Done11' 0x43495f97
+@setalias 'Done12' 0x43495f90
+@setalias 'Done13' 0x43495f96
+@setalias 'Done14' 0x43457f5c
+@setalias 'Done15' 0x43457f64
+@setalias 'Done16' 0x43457f55
+@setalias 'Done17' 0x43457f5b
+@setalias 'Done18' 0x43457f5e
+@setalias 'Done19' 0x43457f5a
+@setalias 'Done20' 0x43457f57
 if @injournal 'world will save'
   while not @injournal 'world save complete'
   endwhile
@@ -680,7 +680,7 @@ waitforgump 0x968739db 5000
 replygump 0x968739db 0
 waitforgump 0x54f555df 5000
 //center goza X
-while not x == 983 and x < 983
+while not x == 2035 and x < 2039
   turn 'east'
   walk 'east'
   pause 1000
