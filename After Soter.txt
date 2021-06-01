@@ -1,0 +1,571 @@
+//wall of bags north of goza
+@setalias 'verite' 0x46df6e94
+@setalias 'valorite' 0x47b778d1
+@setalias 'agapite' 0x46df6e93
+@setalias 'gold1' 0x46df377b
+@setalias 'gold2' 0x46dee308
+@setalias 'bronze1' 0x46df6e8c
+@setalias 'bronze2' 0x46dee30b
+@setalias 'copper1' 0x46df6e90
+@setalias 'copper2' 0x46dee314
+@setalias '+60' 0x46dee31a
+@setalias '+30' 0x46dee309
+@setalias '+151'0x46df3776
+@setalias '+152' 0x46df3783
+@setalias '120' 0x46df3784
+@setalias 'POF1' 0x46df3782
+@setalias 'POF2' 0x46dee319
+@setalias 'BronzeSmall' 0x46df3770
+@setalias 'CopperSmall' 0x46df376f
+@setalias 'ShadowSmall' 0x46df3774
+@setalias 'HRSK1' 0x46dee2f3
+@setalias 'HRSK2' 0x46df3766
+@setalias 'BRSK1' 0x46dee304
+@setalias 'BRSK2' 0x46df376b
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//make room by temporarily placing other books on ground
+clearignorelist
+@unsetalias 'setaside1'
+@unsetalias 'setaside2'
+if not x == 983 and y == 1919
+  sysmsg 'stand on the goza'
+  stop
+endif
+if counttype 0x2259 'any' 'backpack' <= 2
+  while @findtype 0x2259 'any' 'backpack'
+    if not @findalias 'setaside1'
+      @setalias 'setaside1' 'found'
+    elseif not @findalias 'setaside2'
+      @setalias 'setaside2' 'found'
+    endif
+    ignoreobject 'found'
+  endwhile
+  @moveitemoffset 'setaside1' 'ground' (0 1 0)
+  pause 750
+  @moveitemoffset 'setaside2' 'ground' (0 1 0)
+  pause 750
+else
+  sysmsg 'Too many bod books in your pack to run this macro.' 34
+  if @findalias 'setaside1' or @findalias 'setaside2'
+    moveitem 'setaside1' 'backpack'
+    pause 750
+    moveitem 'setaside2' 'backpack'
+    pause 750
+  endif
+  stop
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//Valorite
+sysmsg 'Valorite' 95
+if not counttype 0x2259 0 'Valorite' > 0
+  useobject 'Valorite'
+  pause 750
+endif
+if @findtype 0x2258 'any' 'Valorite'
+  if findtype 0x2259 0 'Valorite'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' 'Valorite'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' 'Valorite'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the Valorite Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'VALORITE BOOK FULL' 33
+  endif
+endif
+//Verite
+sysmsg 'Verite' 79
+if not counttype 0x2259 0 'Verite' > 0
+  useobject 'Verite'
+  pause 750
+endif
+if @findtype 0x2258 'any' 'Verite'
+  if findtype 0x2259 0 'Verite'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' 'Verite'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' 'Verite'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the Verite Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'VERITE BOOK FULL' 33
+  endif
+endif
+//Agapite
+sysmsg 'Agapite' 36
+if not counttype 0x2259 0 'Agapite' > 0
+  useobject 'Agapite'
+  pause 750
+endif
+if @findtype 0x2258 'any' 'Agapite'
+  if findtype 0x2259 0 'Agapite'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' 'Agapite'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' 'Agapite'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the Agapite Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'AGAPITE BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//Gold
+sysmsg 'Gold' 252
+if @property 'Contents' 'gold1' > 0
+  useobject 'gold1'
+  pause 750
+  useobject 'gold2'
+  pause 750
+  if @findtype 0x2258 'any' 'gold1'
+    if findtype 0x2259 0 'gold2'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' 'gold1'  and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' 'gold2'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the Gold Container' 34
+    endif
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'GOLD BOOK FULL' 33
+  endif
+endif
+//Bronze
+sysmsg 'Bronze' 249
+if @property 'Contents' 'bronze1' > 0
+  useobject 'bronze1'
+  pause 750
+  useobject 'bronze2'
+  pause 750
+  if @findtype 0x2258 'any' 'bronze1'
+    if findtype 0x2259 0 'bronze2'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' 'bronze1'  and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' 'bronze2'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the Bronze Container' 34
+    endif
+  endif
+  if @injournal 'world will save'
+    while not @injournal 'world save complete'
+    endwhile
+    @clearjournal
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'BRONZE BOOK FULL' 33
+  endif
+endif
+//Copper
+sysmsg 'Copper' 242
+if @property 'Contents' 'copper1' > 0
+  useobject 'copper1'
+  pause 750
+  useobject 'copper2'
+  pause 750
+  if @findtype 0x2258 'any' 'copper1'
+    if findtype 0x2259 0 'copper2'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' 'copper1'  and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' 'copper2'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the Copper Container' 34
+    endif
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'COPPER BOOK FULL' 33
+  endif
+endif
+//+60
+sysmsg '+60' 34
+if not counttype 0x2259 0 '+60' > 0
+  useobject '+60'
+  pause 750
+endif
+if @findtype 0x2258 'any' '+60'
+  if findtype 0x2259 0 '+60'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' '+60'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' '+60'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the +60 Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg '+60 ASH BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//+30
+sysmsg '+30' 73
+if not counttype 0x2259 0 '+30' > 0
+  useobject '+30'
+  pause 750
+endif
+if @findtype 0x2258 'any' '+30'
+  if findtype 0x2259 0 '+30'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' '+30'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' '+30'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the +30 Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg '+30 ASH BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//+15
+sysmsg '+15' 20
+if @property 'Contents' '+151' > 0
+  useobject '+151'
+  pause 750
+  useobject '+152'
+  pause 750
+  if @findtype 0x2258 'any' '+151'
+    if findtype 0x2259 0 '+152'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' '+151' and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' '+152'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the +15 Container' 34
+    endif
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg '+15 ASH BOOK FULL' 33
+  endif
+  if @injournal 'world will save'
+    while not @injournal 'world save complete'
+    endwhile
+    @clearjournal
+  endif
+endif
+//BronzeSmall
+sysmsg 'Bronze Small' 88
+if not counttype 0x2259 0 'BronzeSmall' > 0
+  useobject 'BronzeSmall'
+  pause 750
+endif
+if @findtype 0x2258 'any' 'BronzeSmall'
+  if findtype 0x2259 0 'BronzeSmall'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' 'BronzeSmall'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' 'BronzeSmall'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the BronzeSmall Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'BRONZE SMALL BOD BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//CopperSmall
+sysmsg 'Copper Small' 88
+if not counttype 0x2259 0 'CopperSmall' > 0
+  useobject 'CopperSmall'
+  pause 750
+endif
+if @findtype 0x2258 'any' 'CopperSmall'
+  if findtype 0x2259 0 'CopperSmall'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' 'CopperSmall'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' 'CopperSmall'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the CopperSmall Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'COPPER SMALL BOD BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//ShadowSmall
+sysmsg 'Shadow Small' 88
+if not counttype 0x2259 0 'ShadowSmall' > 0
+  useobject 'ShadowSmall'
+  pause 750
+endif
+if @findtype 0x2258 'any' 'ShadowSmall'
+  if findtype 0x2259 0 'ShadowSmall'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' 'ShadowSmall'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' 'ShadowSmall'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the ShadowSmall Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'SHADOW SMALL BOD BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//POF
+sysmsg 'POF' 88
+if @property 'Contents' 'POF1' > 0
+  useobject 'POF1'
+  pause 750
+  useobject 'POF2'
+  pause 750
+  if @findtype 0x2258 'any' 'POF1'
+    if findtype 0x2259 0 'POF2'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' 'POF1' and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' 'POF2'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the PoF Container' 34
+    endif
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'POF BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//120
+sysmsg '120' 2498
+if not counttype 0x2259 0 '120' > 0
+  useobject '120'
+  pause 750
+endif
+if @findtype 0x2258 'any' '120'
+  if findtype 0x2259 0 '120'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' '120'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' '120'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the 120 Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg '120 BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//BRSK
+sysmsg 'BRSK' 168
+if @property 'Contents' 'brsk1' > 0
+  useobject 'BRSK1'
+  pause 750
+  useobject 'BRSK2'
+  pause 750
+  if @findtype 0x2258 'any' 'BRSK1'
+    if findtype 0x2259 0 'BRSK2'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' 'BRSK1'  and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' 'BRSK2'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the BRSK Container' 34
+    endif
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'BRSK BOOK FULL' 33
+  endif
+  if @injournal 'world will save'
+    while not @injournal 'world save complete'
+    endwhile
+    @clearjournal
+  endif
+endif
+//HRSK
+sysmsg 'HRSK' 34
+if @property 'Contents' 'hrsk1' > 0
+  useobject 'HRSK1'
+  pause 750
+  useobject 'HRSK2'
+  pause 750
+  if @findtype 0x2258 'any' 'HRSK1'
+    if findtype 0x2259 0 'HRSK2'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' 'HRSK1'  and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' 'HRSK2'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the HRSK Container' 34
+    endif
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'HRSK BOOK FULL' 33
+  endif
+  if @injournal 'world will save'
+    while not @injournal 'world save complete'
+    endwhile
+    @clearjournal
+  endif
+endif
+if @findalias 'setaside1' or @findalias 'setaside2'
+  for 5
+    if @findalias 'setaside1' and not @findobject 'setaside1' 'any' 'backpack'
+      moveitem 'setaside1' 'backpack'
+      pause 2000
+    endif
+    if @findalias 'setaside2' and not @findobject 'setaside2' 'any' 'backpack'
+      moveitem 'setaside2' 'backpack'
+      pause 2000
+    endif
+    if @findobject 'setaside1' 'any' 'backpack' and @findobject 'setaside2' 'any' 'backpack'
+      @unsetalias 'setaside1'
+      @unsetalias 'setaside2'
+    endif
+  endfor
+endif

@@ -1,0 +1,1053 @@
+//list also maintained in BS Loop and Tailor Loop
+//account 1
+if serial 'self' == 0x100420
+  @setalias 'beetle' 0xb52ac
+  @setalias 'turninrunebook' 0x437274da
+  //account 2
+elseif serial 'self' == 0x1d08ef
+  @setalias 'beetle' 0x1c1a71
+  @setalias 'turninrunebook' 0x447f91b6
+  //account 3
+elseif serial 'self' == 0x14200
+  @setalias 'beetle' 0x163cb
+  @setalias 'turninrunebook' 0x448010e4
+  //account 4
+elseif serial 'self' == 0xc18c
+  @setalias 'beetle' 0x325af
+  @setalias 'turninrunebook' 0x45cb8c93
+else
+  sysmsg 'I dont have your serial for the beetle/runebook list' 34
+  stop
+endif
+clearignorelist
+//4 multicolored bags NE of goza
+@setalias 'redbag' 0x46739778
+@setalias 'bluebag' 0x4679e70a
+@setalias 'greenbag' 0x46795900
+@setalias 'purplebag' 0x467a1468
+//black bags
+@setalias 'Queue1' 0x46df375e
+@setalias 'Queue2' 0x46df6e7a
+@setalias 'Queue3' 0x46df6e86
+@setalias 'Queue4' 0x46df6e81
+@setalias 'Queue5' 0x46dee307
+@setalias 'Queue6' 0x46df6e7e
+@setalias 'Queue7' 0x46dee2fb
+@setalias 'Queue8' 0x46df3764
+@setalias 'Queue9' 0x46df376a
+@setalias 'Queue10' 0x46df6e88
+@setalias 'Queue11' 0x46df375c
+@setalias 'Queue12' 0x46dee2ff
+@setalias 'Queue13' 0x46df6e85
+@setalias 'Queue14' 0x46df375d
+@setalias 'Queue15' 0x46df376e
+@setalias 'Queue16' 0x46dee2f2
+@setalias 'Queue17' 0x46df3768
+@setalias 'Queue18' 0x46df6e7f
+@setalias 'Queue19' 0x46df6e80
+@setalias 'Queue20' 0x46df6e79
+//blue bags
+@setalias 'Done1' 0x46df6e78
+@setalias 'Done2' 0x46df6e83
+@setalias 'Done3' 0x46df376d
+@setalias 'Done4' 0x46df6e84
+@setalias 'Done5' 0x46df6e7d
+@setalias 'Done6' 0x46df6e82
+@setalias 'Done7' 0x46dee302
+@setalias 'Done8' 0x46dee2f6
+@setalias 'Done9' 0x46df3761
+@setalias 'Done10' 0x46df375b
+@setalias 'Done11' 0x46dee2f7
+@setalias 'Done12' 0x46df6e87
+@setalias 'Done13' 0x46dee2f8
+@setalias 'Done14' 0x46dee301
+@setalias 'Done15' 0x46df3760
+@setalias 'Done16' 0x46dee2f4
+@setalias 'Done17' 0x46dee2fc
+@setalias 'Done18' 0x46df6e8b
+@setalias 'Done19' 0x46df3767
+@setalias 'Done20' 0x46dee300
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+pause 1000
+if @property 'Deeds in Book' 'resets' <= 20
+  pause 1000
+  useobject 'resets'
+  pause 1000
+  waitforgump 0x54f555df 1500
+  if @ingump 0x54f555df 'Iron'
+    if @property 'Contents' 'greenbag' <= 115
+      moveitem 'resets' 'greenbag'
+    elseif @property 'Contents' 'purplebag' <= 115
+      moveitem 'resets' 'purplebag'
+    endif
+  else
+    if @property 'Contents' 'redbag' <= 115
+      moveitem 'resets' 'redbag'
+    elseif @property 'Contents' 'bluebag' <= 115
+      moveitem 'resets' 'bluebag'
+    endif
+  endif
+  pause 1000
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//center goza X-3
+while x > 953
+  walk 'west'
+  pause 550
+endwhile
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+pause 1000
+///
+if @property 'Deeds in Book' 'resets' > 400
+  //needs 100
+  if @property 'Contents' 'Queue1' < 24
+    moveitem 'resets' 'Queue1'
+    pause 750
+  elseif @property 'Contents' 'Queue2' < 24
+    moveitem 'resets' 'Queue2'
+    pause 750
+  elseif @property 'Contents' 'Queue3' < 24
+    moveitem 'resets' 'Queue3'
+    pause 750
+  elseif @property 'Contents' 'Queue4' < 24
+    moveitem 'resets' 'Queue4'
+    pause 750
+  elseif @property 'Contents' 'Queue5' < 24
+    moveitem 'resets' 'Queue5'
+    pause 750
+  elseif @property 'Contents' 'Queue6' < 24
+    moveitem 'resets' 'Queue6'
+    pause 750
+  elseif @property 'Contents' 'Queue7' < 24
+    moveitem 'resets' 'Queue7'
+    pause 750
+  elseif @property 'Contents' 'Queue8' < 24
+    moveitem 'resets' 'Queue8'
+    pause 750
+  elseif @property 'Contents' 'Queue9' < 24
+    moveitem 'resets' 'Queue9'
+    pause 750
+  elseif @property 'Contents' 'Queue10' < 24
+    moveitem 'resets' 'Queue10'
+    pause 750
+  elseif @property 'Contents' 'Queue11' < 24
+    moveitem 'resets' 'Queue11'
+    pause 750
+  elseif @property 'Contents' 'Queue12' < 24
+    moveitem 'resets' 'Queue12'
+    pause 750
+  elseif @property 'Contents' 'Queue13' < 24
+    moveitem 'resets' 'Queue13'
+    pause 750
+  elseif @property 'Contents' 'Queue14' < 24
+    moveitem 'resets' 'Queue14'
+    pause 750
+  elseif @property 'Contents' 'Queue15' < 24
+    moveitem 'resets' 'Queue15'
+    pause 750
+  elseif @property 'Contents' 'Queue16' < 24
+    moveitem 'resets' 'Queue16'
+    pause 750
+  elseif @property 'Contents' 'Queue17' < 24
+    moveitem 'resets' 'Queue17'
+    pause 750
+  elseif @property 'Contents' 'Queue18' < 24
+    moveitem 'resets' 'Queue18'
+    pause 750
+  elseif @property 'Contents' 'Queue19' < 24
+    moveitem 'resets' 'Queue19'
+    pause 750
+  elseif @property 'Contents' 'Queue20' < 24
+    moveitem 'resets' 'Queue20'
+    pause 750
+  endif
+elseif @property 'Deeds In Book' 'resets' > 300
+  //needs 80
+  if @property 'Contents' 'Queue1' < 44
+    moveitem 'resets' 'Queue1'
+    pause 750
+  elseif @property 'Contents' 'Queue2' < 44
+    moveitem 'resets' 'Queue2'
+    pause 750
+  elseif @property 'Contents' 'Queue3' < 44
+    moveitem 'resets' 'Queue3'
+    pause 750
+  elseif @property 'Contents' 'Queue4' < 44
+    moveitem 'resets' 'Queue4'
+    pause 750
+  elseif @property 'Contents' 'Queue5' < 44
+    moveitem 'resets' 'Queue5'
+    pause 750
+  elseif @property 'Contents' 'Queue6' < 44
+    moveitem 'resets' 'Queue6'
+    pause 750
+  elseif @property 'Contents' 'Queue7' < 44
+    moveitem 'resets' 'Queue7'
+    pause 750
+  elseif @property 'Contents' 'Queue8' < 44
+    moveitem 'resets' 'Queue8'
+    pause 750
+  elseif @property 'Contents' 'Queue9' < 44
+    moveitem 'resets' 'Queue9'
+    pause 750
+  elseif @property 'Contents' 'Queue10' < 44
+    moveitem 'resets' 'Queue10'
+    pause 750
+  elseif @property 'Contents' 'Queue11' < 44
+    moveitem 'resets' 'Queue11'
+    pause 750
+  elseif @property 'Contents' 'Queue12' < 44
+    moveitem 'resets' 'Queue12'
+    pause 750
+  elseif @property 'Contents' 'Queue13' < 44
+    moveitem 'resets' 'Queue13'
+    pause 750
+  elseif @property 'Contents' 'Queue14' < 44
+    moveitem 'resets' 'Queue14'
+    pause 750
+  elseif @property 'Contents' 'Queue15' < 44
+    moveitem 'resets' 'Queue15'
+    pause 750
+  elseif @property 'Contents' 'Queue16' < 44
+    moveitem 'resets' 'Queue16'
+    pause 750
+  elseif @property 'Contents' 'Queue17' < 44
+    moveitem 'resets' 'Queue17'
+    pause 750
+  elseif @property 'Contents' 'Queue18' < 44
+    moveitem 'resets' 'Queue18'
+    pause 750
+  elseif @property 'Contents' 'Queue19' < 44
+    moveitem 'resets' 'Queue19'
+    pause 750
+  elseif @property 'Contents' 'Queue20' < 44
+    moveitem 'resets' 'Queue20'
+    pause 750
+  endif
+elseif @property 'Deeds In Book' 'resets' > 200
+  //needs 60
+  if @property 'Contents' 'Queue1' < 64
+    moveitem 'resets' 'Queue1'
+    pause 750
+  elseif @property 'Contents' 'Queue2' < 64
+    moveitem 'resets' 'Queue2'
+    pause 750
+  elseif @property 'Contents' 'Queue3' < 64
+    moveitem 'resets' 'Queue3'
+    pause 750
+  elseif @property 'Contents' 'Queue4' < 64
+    moveitem 'resets' 'Queue4'
+    pause 750
+  elseif @property 'Contents' 'Queue5' < 64
+    moveitem 'resets' 'Queue5'
+    pause 750
+  elseif @property 'Contents' 'Queue6' < 64
+    moveitem 'resets' 'Queue6'
+    pause 750
+  elseif @property 'Contents' 'Queue7' < 64
+    moveitem 'resets' 'Queue7'
+    pause 750
+  elseif @property 'Contents' 'Queue8' < 64
+    moveitem 'resets' 'Queue8'
+    pause 750
+  elseif @property 'Contents' 'Queue9' < 64
+    moveitem 'resets' 'Queue9'
+    pause 750
+  elseif @property 'Contents' 'Queue10' < 64
+    moveitem 'resets' 'Queue10'
+    pause 750
+  elseif @property 'Contents' 'Queue11' < 64
+    moveitem 'resets' 'Queue11'
+    pause 750
+  elseif @property 'Contents' 'Queue12' < 64
+    moveitem 'resets' 'Queue12'
+    pause 750
+  elseif @property 'Contents' 'Queue13' < 64
+    moveitem 'resets' 'Queue13'
+    pause 750
+  elseif @property 'Contents' 'Queue14' < 64
+    moveitem 'resets' 'Queue14'
+    pause 750
+  elseif @property 'Contents' 'Queue15' < 64
+    moveitem 'resets' 'Queue15'
+    pause 750
+  elseif @property 'Contents' 'Queue16' < 64
+    moveitem 'resets' 'Queue16'
+    pause 750
+  elseif @property 'Contents' 'Queue17' < 64
+    moveitem 'resets' 'Queue17'
+    pause 750
+  elseif @property 'Contents' 'Queue18' < 64
+    moveitem 'resets' 'Queue18'
+    pause 750
+  elseif @property 'Contents' 'Queue19' < 64
+    moveitem 'resets' 'Queue19'
+    pause 750
+  elseif @property 'Contents' 'Queue20' < 64
+    moveitem 'resets' 'Queue20'
+    pause 750
+  endif
+elseif @property 'Deeds In Book' 'resets' > 100
+  //needs 40
+  if @property 'Contents' 'Queue1' < 84
+    moveitem 'resets' 'Queue1'
+    pause 750
+  elseif @property 'Contents' 'Queue2' < 84
+    moveitem 'resets' 'Queue2'
+    pause 750
+  elseif @property 'Contents' 'Queue3' < 84
+    moveitem 'resets' 'Queue3'
+    pause 750
+  elseif @property 'Contents' 'Queue4' < 84
+    moveitem 'resets' 'Queue4'
+    pause 750
+  elseif @property 'Contents' 'Queue5' < 84
+    moveitem 'resets' 'Queue5'
+    pause 750
+  elseif @property 'Contents' 'Queue6' < 84
+    moveitem 'resets' 'Queue6'
+    pause 750
+  elseif @property 'Contents' 'Queue7' < 84
+    moveitem 'resets' 'Queue7'
+    pause 750
+  elseif @property 'Contents' 'Queue8' < 84
+    moveitem 'resets' 'Queue8'
+    pause 750
+  elseif @property 'Contents' 'Queue9' < 84
+    moveitem 'resets' 'Queue9'
+    pause 750
+  elseif @property 'Contents' 'Queue10' < 84
+    moveitem 'resets' 'Queue10'
+    pause 750
+  elseif @property 'Contents' 'Queue11' < 84
+    moveitem 'resets' 'Queue11'
+    pause 750
+  elseif @property 'Contents' 'Queue12' < 84
+    moveitem 'resets' 'Queue12'
+    pause 750
+  elseif @property 'Contents' 'Queue13' < 84
+    moveitem 'resets' 'Queue13'
+    pause 750
+  elseif @property 'Contents' 'Queue14' < 84
+    moveitem 'resets' 'Queue14'
+    pause 750
+  elseif @property 'Contents' 'Queue15' < 84
+    moveitem 'resets' 'Queue15'
+    pause 750
+  elseif @property 'Contents' 'Queue16' < 84
+    moveitem 'resets' 'Queue16'
+    pause 750
+  elseif @property 'Contents' 'Queue17' < 84
+    moveitem 'resets' 'Queue17'
+    pause 750
+  elseif @property 'Contents' 'Queue18' < 84
+    moveitem 'resets' 'Queue18'
+    pause 750
+  elseif @property 'Contents' 'Queue19' < 84
+    moveitem 'resets' 'Queue19'
+    pause 750
+  elseif @property 'Contents' 'Queue20' < 84
+    moveitem 'resets' 'Queue20'
+    pause 750
+  endif
+else
+  //needs 20
+  if @property 'Contents' 'Queue1' < 104
+    moveitem 'resets' 'Queue1'
+    pause 750
+  elseif @property 'Contents' 'Queue2' < 104
+    moveitem 'resets' 'Queue2'
+    pause 750
+  elseif @property 'Contents' 'Queue3' < 104
+    moveitem 'resets' 'Queue3'
+    pause 750
+  elseif @property 'Contents' 'Queue4' < 104
+    moveitem 'resets' 'Queue4'
+    pause 750
+  elseif @property 'Contents' 'Queue5' < 104
+    moveitem 'resets' 'Queue5'
+    pause 750
+  elseif @property 'Contents' 'Queue6' < 104
+    moveitem 'resets' 'Queue6'
+    pause 750
+  elseif @property 'Contents' 'Queue7' < 104
+    moveitem 'resets' 'Queue7'
+    pause 750
+  elseif @property 'Contents' 'Queue8' < 104
+    moveitem 'resets' 'Queue8'
+    pause 750
+  elseif @property 'Contents' 'Queue9' < 104
+    moveitem 'resets' 'Queue9'
+    pause 750
+  elseif @property 'Contents' 'Queue10' < 104
+    moveitem 'resets' 'Queue10'
+    pause 750
+  elseif @property 'Contents' 'Queue11' < 104
+    moveitem 'resets' 'Queue11'
+    pause 750
+  elseif @property 'Contents' 'Queue12' < 104
+    moveitem 'resets' 'Queue12'
+    pause 750
+  elseif @property 'Contents' 'Queue13' < 104
+    moveitem 'resets' 'Queue13'
+    pause 750
+  elseif @property 'Contents' 'Queue14' < 104
+    moveitem 'resets' 'Queue14'
+    pause 750
+  elseif @property 'Contents' 'Queue15' < 104
+    moveitem 'resets' 'Queue15'
+    pause 750
+  elseif @property 'Contents' 'Queue16' < 104
+    moveitem 'resets' 'Queue16'
+    pause 750
+  elseif @property 'Contents' 'Queue17' < 104
+    moveitem 'resets' 'Queue17'
+    pause 750
+  elseif @property 'Contents' 'Queue18' < 104
+    moveitem 'resets' 'Queue18'
+    pause 750
+  elseif @property 'Contents' 'Queue19' < 104
+    moveitem 'resets' 'Queue19'
+    pause 750
+  elseif @property 'Contents' 'Queue20' < 104
+    moveitem 'resets' 'Queue20'
+    pause 750
+  endif
+endif
+@setalias 'resets' 'booktosort'
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+pause 1000
+if @property 'Contents' 'done1' > 0
+  useobject 'done1'
+  pause 550
+endif
+if @property 'Contents' 'done2' > 0
+  useobject 'done2'
+  pause 550
+endif
+if @property 'Contents' 'done3' > 0
+  useobject 'done3'
+  pause 550
+endif
+if @property 'Contents' 'done4' > 0
+  useobject 'done4'
+  pause 550
+endif
+if @property 'Contents' 'done5' > 0
+  useobject 'done5'
+  pause 550
+endif
+if @property 'Contents' 'done6' > 0
+  useobject 'done6'
+  pause 550
+endif
+if @property 'Contents' 'done7' > 0
+  useobject 'done7'
+  pause 550
+endif
+if @property 'Contents' 'done8' > 0
+  useobject 'done8'
+  pause 550
+endif
+if @property 'Contents' 'done9' > 0
+  useobject 'done9'
+  pause 550
+endif
+if @property 'Contents' 'done10' > 0
+  useobject 'done10'
+  pause 550
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+if @property 'Contents' 'done11' > 0
+  useobject 'done11'
+  pause 550
+endif
+if @property 'Contents' 'done12' > 0
+  useobject 'done12'
+  pause 550
+endif
+if @property 'Contents' 'done13' > 0
+  useobject 'done13'
+  pause 550
+endif
+if @property 'Contents' 'done14' > 0
+  useobject 'done14'
+  pause 550
+endif
+if @property 'Contents' 'done15' > 0
+  useobject 'done15'
+  pause 550
+endif
+if @property 'Contents' 'done16' > 0
+  useobject 'done16'
+  pause 550
+endif
+if @property 'Contents' 'done17' > 0
+  useobject 'done17'
+  pause 550
+endif
+if @property 'Contents' 'done18' > 0
+  useobject 'done18'
+  pause 550
+endif
+if @property 'Contents' 'done19' > 0
+  useobject 'done19'
+  pause 550
+endif
+if @property 'Contents' 'done20' > 0
+  useobject 'done20'
+  pause 550
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+pause 1000
+if @findtype 0x2259 'any' 'Done20'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done19'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done18'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done17'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done16'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done15'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done14'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done13'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done12'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done11'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done10'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done9'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done8'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done7'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done6'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done5'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done4'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done3'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done2'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+elseif @findtype 0x2259 'any' 'Done1'
+  moveitem 'found' 'backpack'
+  pause 550
+  @setalias 'filledbods' 'found'
+else
+  sysmsg 'No books done' 34
+  @unsetalias 'filledbods'
+  @setalias 'emptybods' 'booktosort'
+  @playmacro 'Take New Book'
+  stop
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+pause 1000
+if counttype 0x2259 0 'backpack' > 2
+  sysmsg 'Stopping because you have more than 2 bod books in your pack. This could be happening because the castle has filled up' 34
+  stop
+endif
+useobject 'filledbods'
+waitforgump 0x54f555df 2000
+replygump 0x54f555df 1
+waitforgump 0x968739db 2000
+replygump 0x968739db 3
+waitforgump 0x968739db 2000
+replygump 0x968739db 0
+waitforgump 0x54f555df 2000
+replygump 0x54f555df 5
+waitforgump 0x54f555df 2000
+pause 2000
+if findtype 0x2258 'any' 'backpack'
+  if color 'found' == 1102
+    moveitem 'found' 'filledbods'
+    pause 1000
+    while not @gumpexists 0x554b87f3
+      useobject 'turninrunebook'
+      waitforgump 0x554b87f3 1500
+    endwhile
+    if @findalias 'smithshop3'
+      @unsetalias 'smithshop1'
+      @unsetalias 'smithshop2'
+      @unsetalias 'smithshop3'
+    endif
+    if not @findalias 'smithshop1'
+      replygump 0x554b87f3 35
+      @setalias 'smithshop1' 'self'
+    elseif not @findalias 'smithshop2'
+      replygump 0x554b87f3 41
+      @setalias 'smithshop2' 'self'
+    elseif not @findalias 'smithshop3'
+      replygump 0x554b87f3 47
+      @setalias 'smithshop3' 'self'
+    endif
+    while @inrange 'Done1' 10
+      //if the rune is blocked, pause 2 min to give time for NPCs to move
+      if @injournal 'blocked' 'system'
+        sysmsg 'Rune blocked, trying a different rune in 10 seconds' 33
+        pause 10000
+        @clearjournal
+        while not @gumpexists 0x554b87f3
+          useobject 'turninrunebook'
+          waitforgump 0x554b87f3 1500
+        endwhile
+        if @findalias 'smithshop3'
+          @unsetalias 'smithshop1'
+          @unsetalias 'smithshop2'
+          @unsetalias 'smithshop3'
+        endif
+        if not @findalias 'smithshop1'
+          replygump 0x554b87f3 35
+          @setalias 'smithshop1' 'self'
+        elseif not @findalias 'smithshop2'
+          replygump 0x554b87f3 41
+          @setalias 'smithshop2' 'self'
+        elseif not @findalias 'smithshop3'
+          replygump 0x554b87f3 47
+          @setalias 'smithshop3' 'self'
+        endif
+        pause 2000
+      endif
+    endwhile
+    pause 1000
+    //navigate into shops
+    //Skara Brae
+    if y > 2185 and y < 2199
+      while x < 623
+        walk 'east'
+      endwhile
+      //Jhelom
+    elseif y > 3695 and y < 3719
+      while y < 3707
+        run 'south'
+      endwhile
+      while x < 1398
+        run 'east'
+      endwhile
+      //Nujelm
+    elseif y > 2610 and y < 1208
+      while x > 3551
+        walk 'west'
+        pause 250
+      endwhile
+      //Moonglow
+    elseif y > 1103 and y < 1118
+      while y > 1111
+        walk 'north'
+      endwhile
+      //Serpents Hold
+    elseif y > 3399 and y < 3421
+      while y > 3408
+        run 'north'
+      endwhile
+      //Trinsic
+    elseif y > 2757 and y < 2777
+      while y < 2768
+        walk 'south'
+        pause 500
+      endwhile
+      //Vesper
+    elseif y > 847 and y < 863
+      while y > 854
+        walk 'north'
+        pause 250
+      endwhile
+      while x > 2864
+        walk 'west'
+        pause 250
+      endwhile
+      //Zento
+    elseif y > 1242 and y < 1265
+      while x > 775
+        run 'west'
+      endwhile
+      //Jhelom weaponsmith
+    elseif y > 3847 and y < 3864
+      while x > 1422
+        walk 'west'
+      endwhile
+    endif
+    pause 750
+    if @injournal 'world will save'
+      while not @injournal 'world save complete'
+      endwhile
+      @clearjournal
+    endif
+    //set NPC alias
+    //Skara Brae
+    if y > 2185 and y < 2199
+      @setalias 'blacksmith' 0x7af97
+      //Jhelom
+    elseif y > 3695 and y < 3719
+      @setalias 'blacksmith' 0x77eb5
+      //Nujelm
+    elseif y > 2610 and y < 1208
+      @setalias 'blacksmith' 0x7a9ab
+      //Moonglow
+    elseif y > 1103 and y < 1118
+      @setalias 'blacksmith' 0x17e0d
+      //Serpents Hold
+    elseif y > 3399 and y < 3421
+      @setalias 'blacksmith' 0x4c8ff
+      //Trinsic
+    elseif y > 2757 and y < 2777
+      @setalias 'blacksmith' 0x5b02a
+      //Vesper
+    elseif y > 847 and y < 863
+      @setalias 'blacksmith' 0x7a259
+      //Zento
+    elseif y > 1242 and y < 1265
+      @setalias 'blacksmith' 0x61725
+      //Jhelom weaponsmith
+    elseif y > 3847 and y < 3864
+      @setalias 'blacksmith' 0x1743c
+    endif
+    while not @inrange 'blacksmith' 1
+      if @x 'blacksmith' > x 'self' and @y 'blacksmith' > y 'self'
+        walk 'Southeast'
+      elseif @x 'blacksmith' < x 'self' and @y 'blacksmith' > y 'self'
+        walk 'Southwest'
+      elseif @x 'blacksmith' > x 'self' and @y 'blacksmith' < y 'self'
+        walk 'Northeast'
+      elseif @x 'blacksmith' < x 'self' and @y 'blacksmith' < y 'self'
+        walk 'Northwest'
+      elseif @x 'blacksmith' > x 'self' and @y 'blacksmith' == y 'self'
+        walk 'East'
+      elseif @x 'blacksmith' < x 'self' and @y 'blacksmith' == y 'self'
+        walk 'West'
+      elseif @x 'blacksmith' == x 'self' and @y 'blacksmith' > y 'self'
+        walk 'South'
+      elseif @x 'blacksmith' == x 'self' and @y 'blacksmith' < y 'self'
+        walk 'North'
+      endif
+      pause 500
+      if @inrange 'blacksmith' 1
+        for 3
+          //call NPC name
+          //Skara Brae
+          if y > 2185 and y < 2199
+            msg 'Sally'
+            //Jhelom
+          elseif y > 3695 and y < 3719
+            msg 'Pearce'
+            //Nujelm
+          elseif y > 2610 and y < 1208
+            msg 'Seif'
+            //Moonglow
+          elseif y > 1103 and y < 1118
+            msg 'Bayta'
+            //Serpents Hold
+          elseif y > 3399 and y < 3421
+            msg 'Lysel'
+            //Trinsic
+          elseif y > 2757 and y < 2777
+            msg 'Brittany'
+            //Vesper
+          elseif y > 847 and y < 863
+            msg 'Tracy'
+            //Zento
+          elseif y > 1242 and y < 1265
+            msg 'Sanesue'
+            //Jhelom weaponsmith
+          elseif y > 3847 and y < 3864
+            msg 'Mansi'
+          endif
+        endfor
+      endif
+    endwhile
+    useobject 'self'
+    pause 1000
+    @playmacro 'Turn In BS Loop'
+  elseif color 'found' == 1155
+    moveitem 'found' 'filledbods'
+    pause 1000
+    clearjournal
+    while not @gumpexists 0x554b87f3
+      useobject 'turninrunebook'
+      waitforgump 0x554b87f3 1500
+    endwhile
+    if @findalias 'tailorshop3'
+      @unsetalias 'tailorshop1'
+      @unsetalias 'tailorshop2'
+      @unsetalias 'tailorshop3'
+    endif
+    if not @findalias 'tailorshop1'
+      @setalias 'tailorshop1' 'self'
+      replygump 0x554b87f3 17
+    elseif not @findalias 'tailorshop2'
+      @setalias 'tailorshop2' 'self'
+      replygump 0x554b87f3 23
+    elseif not @findalias 'tailorshop3'
+      @setalias 'tailorshop3' 'self'
+      replygump 0x554b87f3 29
+    endif
+    while @inrange 'Done1' 10
+      if @injournal 'blocked' 'system'
+        sysmsg 'Rune blocked, trying a different rune in 10 seconds' 33
+        pause 10000
+        @clearjournal
+        while not @gumpexists 0x554b87f3
+          useobject 'turninrunebook'
+          waitforgump 0x554b87f3 1500
+        endwhile
+        if @findalias 'tailorshop3'
+          @unsetalias 'tailorshop1'
+          @unsetalias 'tailorshop2'
+          @unsetalias 'tailorshop3'
+        endif
+        if not @findalias 'tailorshop1'
+          @setalias 'tailorshop1' 'self'
+          replygump 0x554b87f3 17
+        elseif not @findalias 'tailorshop2'
+          @setalias 'tailorshop2' 'self'
+          replygump 0x554b87f3 23
+        elseif not @findalias 'tailorshop3'
+          @setalias 'tailorshop3' 'self'
+          replygump 0x554b87f3 29
+        endif
+        pause 2000
+      endif
+    endwhile
+    pause 1000
+    //navigate into shop
+    //Nujelm
+    if y > 1255 and y < 1271
+      while x > 3770
+        walk 'west'
+      endwhile
+      //Jhelom
+    elseif y > 3775 and y < 3791
+      while x < 1351
+        walk 'east'
+      endwhile
+      //Moonglow
+    elseif y > 1055 and y < 1072
+      while x < 4462
+        run 'east'
+      endwhile
+      while y < 1063
+        walk 'south'
+        pause 250
+      endwhile
+      //Serpents Hold
+    elseif y > 3495 and y < 3511
+      while x < 2884
+        run 'east'
+      endwhile
+      while y > 3504
+        walk 'north'
+      endwhile
+      //Trinsic
+    elseif y > 2833 and y < 2850
+      while y > 2844
+        walk 'north'
+        pause 250
+      endwhile
+      while x > 1984
+        walk 'west'
+        pause 250
+      endwhile
+      //Vesper
+    elseif y > 866 and y < 888
+      while y < 886
+        run 'south'
+      endwhile
+      while x < 2839
+        walk 'east'
+        pause 500
+      endwhile
+      //Delucia
+    elseif y > 4013 and y < 4033
+      while y > 4020
+        run 'north'
+      endwhile
+      //Skara Brae
+    elseif y > 2176 and y < 2198
+      while y > 2182
+        run 'north'
+      endwhile
+      while x < 654
+        run 'east'
+      endwhile
+      while y > 2181
+        walk 'north'
+        pause 500
+      endwhile
+      //Zento
+    elseif y > 1201 and y < 1214
+      while y > 1204
+        run 'north'
+      endwhile
+    endif
+    //set NPC alias
+    //Nujelm
+    if y > 1255 and y < 1271
+      @setalias 'tailor' 0x7deae
+      //Jhelom
+    elseif y > 3775 and y < 3791
+      @setalias 'tailor' 0x7cdcb
+      //Moonglow
+    elseif y > 1055 and y < 1072
+      @setalias 'tailor' 0x6794f
+      //serpents hold
+    elseif y > 3495 and y < 3511
+      @setalias 'tailor' 0x4c96d
+      //Trinsic
+    elseif y > 2833 and y < 2850
+      @setalias 'tailor' 0x47bc7
+      //Vesper
+    elseif y > 866 and y < 888
+      @setalias 'tailor' 0x801a4
+      //Delucia
+    elseif y > 4013 and y < 4033
+      @setalias 'tailor' 0x7ffaa
+      //Skara Brae
+    elseif y > 2176 and y < 2198
+      @setalias 'tailor' 0x7ea1e
+      //Zento
+    elseif y > 1201 and y < 1214
+      @setalias 'tailor' 0x62a93
+    endif
+    pause 750
+    if @injournal 'world will save'
+      while not @injournal 'world save complete'
+      endwhile
+      @clearjournal
+    endif
+    while not @inrange 'tailor' 1
+      if @x 'tailor' > x 'self' and @y 'tailor' > y 'self'
+        walk 'Southeast'
+      elseif @x 'tailor' < x 'self' and @y 'tailor' > y 'self'
+        walk 'Southwest'
+      elseif @x 'tailor' > x 'self' and @y 'tailor' < y 'self'
+        walk 'Northeast'
+      elseif @x 'tailor' < x 'self' and @y 'tailor' < y 'self'
+        walk 'Northwest'
+      elseif @x 'tailor' > x 'self' and @y 'tailor' == y 'self'
+        walk 'East'
+      elseif @x 'tailor' < x 'self' and @y 'tailor' == y 'self'
+        walk 'West'
+      elseif @x 'tailor' == x 'self' and @y 'tailor' > y 'self'
+        walk 'South'
+      elseif @x 'tailor' == x 'self' and @y 'tailor' < y 'self'
+        walk 'North'
+      endif
+      pause 500
+      if @inrange 'tailor' 1
+        for 3
+          //NPC name
+          //Nujelm
+          if y > 1255 and y < 1271
+            msg 'Moon'
+            //Jhelom
+          elseif y > 3775 and y < 3791
+            msg 'Annora'
+            //Moonglow
+          elseif y > 1055 and y < 1072
+            msg 'Cain'
+            //Serpents Hold
+          elseif y > 3495 and y < 3511
+            msg 'Jamie'
+            //Trinsic
+          elseif y > 2833 and y < 2850
+            msg 'Caldwell'
+            //Vesper
+          elseif y > 866 and y < 888
+            msg 'Pembroke'
+            //Delucia
+          elseif y > 4013 and y < 4033
+            msg 'Armstrong'
+            //Skara Brae
+          elseif y > 2176 and y < 2198
+            msg 'Ira'
+            //Zento
+          elseif y > 1201 and y < 1214
+            msg 'Chihu'
+          endif
+        endfor
+      endif
+    endwhile
+    useobject 'self'
+    pause 1000
+    @playmacro 'Turn In Tailor Loop'
+  endif
+endif

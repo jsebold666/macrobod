@@ -1,0 +1,688 @@
+//if you want it to switch to Turn Ins when all are filled, set the alias. If you want it to stop when all are filled, unset the alias.
+@setalias 'transition' 'self'
+//@unsetalias 'transition'
+if @injournal 'world will save''system'
+  while not @injournal 'world save complete''system'
+  endwhile
+  @clearjournal
+endif
+//center goza X-4
+while not x == 2035  and x > 2035
+  turn 'west'
+  walk 'west'
+  pause 1000
+endwhile
+//black bags
+@setalias 'Queue1' 0x43494eb7
+@setalias 'Queue2' 0x43494ebd
+@setalias 'Queue3' 0x43495f93
+@setalias 'Queue4' 0x43495f8c
+@setalias 'Queue5' 0x43494eab
+@setalias 'Queue6' 0x43494eb9
+@setalias 'Queue7' 0x43495f88
+@setalias 'Queue8' 0x43495f84
+@setalias 'Queue9' 0x43494ea8
+@setalias 'Queue10' 0x43457f58
+@setalias 'Queue11' 0x43494eaf
+@setalias 'Queue12' 0x43495f92
+@setalias 'Queue13' 0x43495f89
+@setalias 'Queue14' 0x43495f8d
+@setalias 'Queue15' 0x43494eb6
+@setalias 'Queue16' 0x43494eb1
+@setalias 'Queue17' 0x43494eb8
+@setalias 'Queue18' 0x43495f83
+@setalias 'Queue19' 0x43494ebb
+@setalias 'Queue20' 0x43457f5d
+//blue bags
+@setalias 'Done1' 
+@setalias 'Done2' 
+@setalias 'Done3' 
+@setalias 'Done4' 
+@setalias 'Done5' 
+@setalias 'Done6' 
+@setalias 'Done7' 
+@setalias 'Done8' 
+@setalias 'Done9' 
+@setalias 'Done10' 
+@setalias 'Done11' 
+@setalias 'Done12' 
+@setalias 'Done13' 
+@setalias 'Done14' 
+@setalias 'Done15' 
+@setalias 'Done16' 
+@setalias 'Done17' 
+@setalias 'Done18' 
+@setalias 'Done19' 
+@setalias 'Done20' 
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+if @property 'Contents' 'queue1' > 0
+  useobject 'Queue1'
+  pause 750
+endif
+if @property 'Contents' 'queue2' > 0
+  useobject 'Queue2'
+  pause 750
+endif
+if @property 'Contents' 'queue3' > 0
+  useobject 'Queue3'
+  pause 750
+endif
+if @property 'Contents' 'queue4' > 0
+  useobject 'Queue4'
+  pause 750
+endif
+if @property 'Contents' 'queue5' > 0
+  useobject 'Queue5'
+  pause 750
+endif
+if @property 'Contents' 'queue6' > 0
+  useobject 'Queue6'
+  pause 750
+endif
+if @property 'Contents' 'queue7' > 0
+  useobject 'Queue7'
+  pause 750
+endif
+if @property 'Contents' 'queue8' > 0
+  useobject 'Queue8'
+  pause 750
+endif
+if @property 'Contents' 'queue9' > 0
+  useobject 'Queue9'
+  pause 750
+endif
+if @property 'Contents' 'queue10' > 0
+  useobject 'Queue10'
+  pause 750
+endif
+if @property 'Contents' 'queue11' > 0
+  useobject 'Queue11'
+  pause 750
+endif
+if @property 'Contents' 'queue12' > 0
+  useobject 'Queue12'
+  pause 750
+endif
+if @property 'Contents' 'queue13' > 0
+  useobject 'Queue13'
+  pause 750
+endif
+if @property 'Contents' 'queue14' > 0
+  useobject 'Queue14'
+  pause 750
+endif
+if @property 'Contents' 'queue15' > 0
+  useobject 'Queue15'
+  pause 750
+endif
+if @property 'Contents' 'queue16' > 0
+  useobject 'Queue16'
+  pause 750
+endif
+if @property 'Contents' 'queue17' > 0
+  useobject 'Queue17'
+  pause 750
+endif
+if @property 'Contents' 'queue18' > 0
+  useobject 'Queue18'
+  pause 750
+endif
+if @property 'Contents' 'queue19' > 0
+  useobject 'Queue19'
+  pause 750
+endif
+if @property 'Contents' 'queue20' > 0
+  useobject 'Queue20'
+  pause 750
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+if @property 'Contents' 'done1' > 0
+  useobject 'done1'
+  pause 750
+endif
+if @property 'Contents' 'done2' > 0
+  useobject 'done2'
+  pause 750
+endif
+if @property 'Contents' 'done3' > 0
+  useobject 'done3'
+  pause 750
+endif
+if @property 'Contents' 'done4' > 0
+  useobject 'done4'
+  pause 750
+endif
+if @property 'Contents' 'done5' > 0
+  useobject 'done5'
+  pause 750
+endif
+if @property 'Contents' 'done6' > 0
+  useobject 'done6'
+  pause 750
+endif
+if @property 'Contents' 'done7' > 0
+  useobject 'done7'
+  pause 750
+endif
+if @property 'Contents' 'done8' > 0
+  useobject 'done8'
+  pause 750
+endif
+if @property 'Contents' 'done9' > 0
+  useobject 'done9'
+  pause 750
+endif
+if @property 'Contents' 'done10' > 0
+  useobject 'done10'
+  pause 750
+endif
+if @property 'Contents' 'done11' > 0
+  useobject 'done11'
+  pause 750
+endif
+if @property 'Contents' 'done12' > 0
+  useobject 'done12'
+  pause 750
+endif
+if @property 'Contents' 'done13' > 0
+  useobject 'done13'
+  pause 750
+endif
+if @property 'Contents' 'done14' > 0
+  useobject 'done14'
+  pause 750
+endif
+if @property 'Contents' 'done15' > 0
+  useobject 'done15'
+  pause 750
+endif
+if @property 'Contents' 'done16' > 0
+  useobject 'done16'
+  pause 750
+endif
+if @property 'Contents' 'done17' > 0
+  useobject 'done17'
+  pause 750
+endif
+if @property 'Contents' 'done18' > 0
+  useobject 'done18'
+  pause 750
+endif
+if @property 'Contents' 'done19' > 0
+  useobject 'done19'
+  pause 750
+endif
+if @property 'Contents' 'done20' > 0
+  useobject 'done20'
+  pause 750
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+waitforproperties 'EmptyBods' 5000
+//if property 'Deeds In Book: 0' 'EmptyBods'
+if @property 'Deeds in Book' 'FilledBods' > 400
+  //needs 100
+  if @property 'Contents' 'Done1' < 24
+    moveitem 'FilledBods' 'Done1'
+    pause 750
+  elseif @property 'Contents' 'Done2' < 24
+    moveitem 'FilledBods' 'Done2'
+    pause 750
+  elseif @property 'Contents' 'Done3' < 24
+    moveitem 'FilledBods' 'Done3'
+    pause 750
+  elseif @property 'Contents' 'Done4' < 24
+    moveitem 'FilledBods' 'Done4'
+    pause 750
+  elseif @property 'Contents' 'Done5' < 24
+    moveitem 'FilledBods' 'Done5'
+    pause 750
+  elseif @property 'Contents' 'Done6' < 24
+    moveitem 'FilledBods' 'Done6'
+    pause 750
+  elseif @property 'Contents' 'Done7' < 24
+    moveitem 'FilledBods' 'Done7'
+    pause 750
+  elseif @property 'Contents' 'Done8' < 24
+    moveitem 'FilledBods' 'Done8'
+    pause 750
+  elseif @property 'Contents' 'Done9' < 24
+    moveitem 'FilledBods' 'Done9'
+    pause 750
+  elseif @property 'Contents' 'Done10' < 24
+    moveitem 'FilledBods' 'Done10'
+    pause 750
+  elseif @property 'Contents' 'Done11' < 24
+    moveitem 'FilledBods' 'Done11'
+    pause 750
+  elseif @property 'Contents' 'Done12' < 24
+    moveitem 'FilledBods' 'Done12'
+    pause 750
+  elseif @property 'Contents' 'Done13' < 24
+    moveitem 'FilledBods' 'Done13'
+    pause 750
+  elseif @property 'Contents' 'Done14' < 24
+    moveitem 'FilledBods' 'Done14'
+    pause 750
+  elseif @property 'Contents' 'Done15' < 24
+    moveitem 'FilledBods' 'Done15'
+    pause 750
+  elseif @property 'Contents' 'Done16' < 24
+    moveitem 'FilledBods' 'Done16'
+    pause 750
+  elseif @property 'Contents' 'Done17' < 24
+    moveitem 'FilledBods' 'Done17'
+    pause 750
+  elseif @property 'Contents' 'Done18' < 24
+    moveitem 'FilledBods' 'Done18'
+    pause 750
+  elseif @property 'Contents' 'Done19' < 24
+    moveitem 'FilledBods' 'Done19'
+    pause 750
+  elseif @property 'Contents' 'Done20' < 24
+    moveitem 'FilledBods' 'Done20'
+    pause 750
+  endif
+elseif @property 'Deeds In Book' 'FilledBods' > 300
+  //needs 80
+  if @property 'Contents' 'Done1' < 44
+    moveitem 'FilledBods' 'Done1'
+    pause 750
+  elseif @property 'Contents' 'Done2' < 44
+    moveitem 'FilledBods' 'Done2'
+    pause 750
+  elseif @property 'Contents' 'Done3' < 44
+    moveitem 'FilledBods' 'Done3'
+    pause 750
+  elseif @property 'Contents' 'Done4' < 44
+    moveitem 'FilledBods' 'Done4'
+    pause 750
+  elseif @property 'Contents' 'Done5' < 44
+    moveitem 'FilledBods' 'Done5'
+    pause 750
+  elseif @property 'Contents' 'Done6' < 44
+    moveitem 'FilledBods' 'Done6'
+    pause 750
+  elseif @property 'Contents' 'Done7' < 44
+    moveitem 'FilledBods' 'Done7'
+    pause 750
+  elseif @property 'Contents' 'Done8' < 44
+    moveitem 'FilledBods' 'Done8'
+    pause 750
+  elseif @property 'Contents' 'Done9' < 44
+    moveitem 'FilledBods' 'Done9'
+    pause 750
+  elseif @property 'Contents' 'Done10' < 44
+    moveitem 'FilledBods' 'Done10'
+    pause 750
+  elseif @property 'Contents' 'Done11' < 44
+    moveitem 'FilledBods' 'Done11'
+    pause 750
+  elseif @property 'Contents' 'Done12' < 44
+    moveitem 'FilledBods' 'Done12'
+    pause 750
+  elseif @property 'Contents' 'Done13' < 44
+    moveitem 'FilledBods' 'Done13'
+    pause 750
+  elseif @property 'Contents' 'Done14' < 44
+    moveitem 'FilledBods' 'Done14'
+    pause 750
+  elseif @property 'Contents' 'Done15' < 44
+    moveitem 'FilledBods' 'Done15'
+    pause 750
+  elseif @property 'Contents' 'Done16' < 44
+    moveitem 'FilledBods' 'Done16'
+    pause 750
+  elseif @property 'Contents' 'Done17' < 44
+    moveitem 'FilledBods' 'Done17'
+    pause 750
+  elseif @property 'Contents' 'Done18' < 44
+    moveitem 'FilledBods' 'Done18'
+    pause 750
+  elseif @property 'Contents' 'Done19' < 44
+    moveitem 'FilledBods' 'Done19'
+    pause 750
+  elseif @property 'Contents' 'Done20' < 44
+    moveitem 'FilledBods' 'Done20'
+    pause 750
+  endif
+elseif @property 'Deeds In Book' 'FilledBods' > 200
+  //needs 60
+  if @property 'Contents' 'Done1' < 64
+    moveitem 'FilledBods' 'Done1'
+    pause 750
+  elseif @property 'Contents' 'Done2' < 64
+    moveitem 'FilledBods' 'Done2'
+    pause 750
+  elseif @property 'Contents' 'Done3' < 64
+    moveitem 'FilledBods' 'Done3'
+    pause 750
+  elseif @property 'Contents' 'Done4' < 64
+    moveitem 'FilledBods' 'Done4'
+    pause 750
+  elseif @property 'Contents' 'Done5' < 64
+    moveitem 'FilledBods' 'Done5'
+    pause 750
+  elseif @property 'Contents' 'Done6' < 64
+    moveitem 'FilledBods' 'Done6'
+    pause 750
+  elseif @property 'Contents' 'Done7' < 64
+    moveitem 'FilledBods' 'Done7'
+    pause 750
+  elseif @property 'Contents' 'Done8' < 64
+    moveitem 'FilledBods' 'Done8'
+    pause 750
+  elseif @property 'Contents' 'Done9' < 64
+    moveitem 'FilledBods' 'Done9'
+    pause 750
+  elseif @property 'Contents' 'Done10' < 64
+    moveitem 'FilledBods' 'Done10'
+    pause 750
+  elseif @property 'Contents' 'Done11' < 64
+    moveitem 'FilledBods' 'Done11'
+    pause 750
+  elseif @property 'Contents' 'Done12' < 64
+    moveitem 'FilledBods' 'Done12'
+    pause 750
+  elseif @property 'Contents' 'Done13' < 64
+    moveitem 'FilledBods' 'Done13'
+    pause 750
+  elseif @property 'Contents' 'Done14' < 64
+    moveitem 'FilledBods' 'Done14'
+    pause 750
+  elseif @property 'Contents' 'Done15' < 64
+    moveitem 'FilledBods' 'Done15'
+    pause 750
+  elseif @property 'Contents' 'Done16' < 64
+    moveitem 'FilledBods' 'Done16'
+    pause 750
+  elseif @property 'Contents' 'Done17' < 64
+    moveitem 'FilledBods' 'Done17'
+    pause 750
+  elseif @property 'Contents' 'Done18' < 64
+    moveitem 'FilledBods' 'Done18'
+    pause 750
+  elseif @property 'Contents' 'Done19' < 64
+    moveitem 'FilledBods' 'Done19'
+    pause 750
+  elseif @property 'Contents' 'Done20' < 64
+    moveitem 'FilledBods' 'Done20'
+    pause 750
+  endif
+elseif @property 'Deeds In Book' 'FilledBods' > 100
+  //needs 40
+  if @property 'Contents' 'Done1' < 84
+    moveitem 'FilledBods' 'Done1'
+    pause 750
+  elseif @property 'Contents' 'Done2' < 84
+    moveitem 'FilledBods' 'Done2'
+    pause 750
+  elseif @property 'Contents' 'Done3' < 84
+    moveitem 'FilledBods' 'Done3'
+    pause 750
+  elseif @property 'Contents' 'Done4' < 84
+    moveitem 'FilledBods' 'Done4'
+    pause 750
+  elseif @property 'Contents' 'Done5' < 84
+    moveitem 'FilledBods' 'Done5'
+    pause 750
+  elseif @property 'Contents' 'Done6' < 84
+    moveitem 'FilledBods' 'Done6'
+    pause 750
+  elseif @property 'Contents' 'Done7' < 84
+    moveitem 'FilledBods' 'Done7'
+    pause 750
+  elseif @property 'Contents' 'Done8' < 84
+    moveitem 'FilledBods' 'Done8'
+    pause 750
+  elseif @property 'Contents' 'Done9' < 84
+    moveitem 'FilledBods' 'Done9'
+    pause 750
+  elseif @property 'Contents' 'Done10' < 84
+    moveitem 'FilledBods' 'Done10'
+    pause 750
+  elseif @property 'Contents' 'Done11' < 84
+    moveitem 'FilledBods' 'Done11'
+    pause 750
+  elseif @property 'Contents' 'Done12' < 84
+    moveitem 'FilledBods' 'Done12'
+    pause 750
+  elseif @property 'Contents' 'Done13' < 84
+    moveitem 'FilledBods' 'Done13'
+    pause 750
+  elseif @property 'Contents' 'Done14' < 84
+    moveitem 'FilledBods' 'Done14'
+    pause 750
+  elseif @property 'Contents' 'Done15' < 84
+    moveitem 'FilledBods' 'Done15'
+    pause 750
+  elseif @property 'Contents' 'Done16' < 84
+    moveitem 'FilledBods' 'Done16'
+    pause 750
+  elseif @property 'Contents' 'Done17' < 84
+    moveitem 'FilledBods' 'Done17'
+    pause 750
+  elseif @property 'Contents' 'Done18' < 84
+    moveitem 'FilledBods' 'Done18'
+    pause 750
+  elseif @property 'Contents' 'Done19' < 84
+    moveitem 'FilledBods' 'Done19'
+    pause 750
+  elseif @property 'Contents' 'Done20' < 84
+    moveitem 'FilledBods' 'Done20'
+    pause 750
+  endif
+else
+  //needs 20
+  if @property 'Contents' 'Done1' < 104
+    moveitem 'FilledBods' 'Done1'
+    pause 750
+  elseif @property 'Contents' 'Done2' < 104
+    moveitem 'FilledBods' 'Done2'
+    pause 750
+  elseif @property 'Contents' 'Done3' < 104
+    moveitem 'FilledBods' 'Done3'
+    pause 750
+  elseif @property 'Contents' 'Done4' < 104
+    moveitem 'FilledBods' 'Done4'
+    pause 750
+  elseif @property 'Contents' 'Done5' < 104
+    moveitem 'FilledBods' 'Done5'
+    pause 750
+  elseif @property 'Contents' 'Done6' < 104
+    moveitem 'FilledBods' 'Done6'
+    pause 750
+  elseif @property 'Contents' 'Done7' < 104
+    moveitem 'FilledBods' 'Done7'
+    pause 750
+  elseif @property 'Contents' 'Done8' < 104
+    moveitem 'FilledBods' 'Done8'
+    pause 750
+  elseif @property 'Contents' 'Done9' < 104
+    moveitem 'FilledBods' 'Done9'
+    pause 750
+  elseif @property 'Contents' 'Done10' < 104
+    moveitem 'FilledBods' 'Done10'
+    pause 750
+  elseif @property 'Contents' 'Done11' < 104
+    moveitem 'FilledBods' 'Done11'
+    pause 750
+  elseif @property 'Contents' 'Done12' < 104
+    moveitem 'FilledBods' 'Done12'
+    pause 750
+  elseif @property 'Contents' 'Done13' < 104
+    moveitem 'FilledBods' 'Done13'
+    pause 750
+  elseif @property 'Contents' 'Done14' < 104
+    moveitem 'FilledBods' 'Done14'
+    pause 750
+  elseif @property 'Contents' 'Done15' < 104
+    moveitem 'FilledBods' 'Done15'
+    pause 750
+  elseif @property 'Contents' 'Done16' < 104
+    moveitem 'FilledBods' 'Done16'
+    pause 750
+  elseif @property 'Contents' 'Done17' < 104
+    moveitem 'FilledBods' 'Done17'
+    pause 750
+  elseif @property 'Contents' 'Done18' < 104
+    moveitem 'FilledBods' 'Done18'
+    pause 750
+  elseif @property 'Contents' 'Done19' < 104
+    moveitem 'FilledBods' 'Done19'
+    pause 750
+  elseif @property 'Contents' 'Done20' < 104
+    moveitem 'FilledBods' 'Done20'
+    pause 750
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+@setalias 'FilledBods' 'EmptyBods'
+if @findtype 0x2259 'any' 'Queue20'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue19'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue18'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue17'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue16'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue15'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue14'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue13'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue12'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue11'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue10'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue9'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue8'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue7'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue6'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue5'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue4'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue3'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue2'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+elseif @findtype 0x2259 'any' 'Queue1'
+  moveitem 'found' 'backpack'
+  pause 750
+  @setalias 'EmptyBods' 'found'
+else
+  sysmsg 'No books in queue' 34
+  if @property 'Contents' 'Done1' == 0 and @property 'Contents' 'Queue1' == 0
+    sysmsg 'All books depleted' 73
+    useskill 'hiding'
+    stop
+  else
+    if @findalias 'transition'
+      @setalias 'newbods' 'emptybods'
+      @unsetalias 'filledbods'
+      @unsetalias 'resets'
+      @playmacro 'Turn In Get New Book'
+    else
+      sysmsg 'No books in queue and set to not transition to turn ins' 73
+      stop
+    endif
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//endif
+useobject 'EmptyBods'
+waitforgump 0x54f555df 5000
+replygump 0x54f555df 1
+waitforgump 0x968739db 5000
+replygump 0x968739db 3
+waitforgump 0x968739db 5000
+replygump 0x968739db 0
+waitforgump 0x54f555df 5000
+pause 750
+useobject 'FilledBods'
+waitforgump 0x54f555df 5000
+replygump 0x54f555df 1
+waitforgump 0x968739db 5000
+replygump 0x968739db 3
+waitforgump 0x968739db 5000
+replygump 0x968739db 0
+waitforgump 0x54f555df 5000
+//center goza X
+while not x == 983 and x < 983
+  turn 'east'
+  walk 'east'
+  pause 1000
+endwhile
+@playmacro 'CraftFill'

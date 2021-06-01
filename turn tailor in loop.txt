@@ -1,0 +1,731 @@
+if mounted 'self'
+  useobject 'self'
+  pause 1000
+endif
+//list also maintained in BS Loop and Get New Book
+//account 1
+if serial 'self' == 0x100420
+  @setalias 'beetle' 0xb52ac
+  @setalias 'turninrunebook' 0x437274da
+  //account 2
+elseif serial 'self' == 0x16109
+  @setalias 'beetle' 0x1076d4
+  @setalias 'turninrunebook' 0x441d8ff4
+  //account 3
+elseif serial 'self' == 0x1596b3
+  @setalias 'beetle' 0xbfc40
+  @setalias 'turninrunebook' 0x441d8e12
+  //account 4
+elseif serial 'self' == 0xf7fcd
+  @setalias 'beetle' 0x384ef
+  @setalias 'turninrunebook' 0x441da7e3
+else
+  sysmsg 'I dont have your serial for the beetle/runebook list' 34
+  stop
+endif
+if not timerexists 'turnin'
+  createtimer 'turnin'
+  settimer 'turnin' 10000
+endif
+if not @findobject 'filledbods' or not @findobject 'newbods'
+  @unsetalias 'filledbods'
+  @unsetalias 'newbods'
+endif
+if serial 'filledbods' == serial 'newbods'
+  @unsetalias 'filledbods'
+  @unsetalias 'newbods'
+endif
+if not @findobject 'filledbods'
+  sysmsg 'Target the Filled Bods book in your backpack' 167
+  promptalias 'filledbods'
+endif
+if not @findobject 'newbods'
+  sysmsg 'Target the New Bods Book in your backpack' 34
+  promptalias 'newbods'
+endif
+while @property 'Deeds in Book' 'filledbods' > 0
+  while hits < maxhits or poisoned 'self'
+    msg 'guards'
+    miniheal 'self'
+    pause 500
+  endwhile
+  if counttype 0x2258 1102 'backpack' > 3
+    sysmsg 'Looks like you have blacksmith bods at the tailor shop. Stopping!' 34
+    pause 1000
+    useobject 'beetle'
+    stop
+  endif
+  //2 left click "Complete Tailor Bods Book"
+  useobject 'filledbods'
+  pause 1000
+  //Take Bod Out of the Book
+  if not @findtype 0x2258 1155 'backpack'
+    replygump 0x54f555df 5
+  endif
+  pause 1000
+  //set NPC alias
+  //Nujelm
+  if y > 1255 and y < 1271
+    @setalias 'tailor' 0x7deae
+    //Jhelom
+  elseif y > 3775 and y < 3791
+    @setalias 'tailor' 0x7cdcb
+    //Moonglow
+  elseif y > 1055 and y < 1072
+    @setalias 'tailor' 0x6794f
+    //serpents hold
+  elseif y > 3495 and y < 3511
+    @setalias 'tailor' 0x4c96d
+    //Trinsic
+  elseif y > 2833 and y < 2850
+    @setalias 'tailor' 0x47bc7
+    //Vesper
+  elseif y > 866 and y < 888
+    @setalias 'tailor' 0x801a4
+    //Delucia
+  elseif y > 4013 and y < 4033
+    @setalias 'tailor' 0x7ffaa
+    //Skara Brae
+  elseif y > 2176 and y < 2198
+    @setalias 'tailor' 0x7ea1e
+    //Zento
+  elseif y > 1201 and y < 1214
+    @setalias 'tailor' 0x62a93
+  endif
+  //Move Bod on the NPC
+  while not @inrange 'tailor' 1
+    while hits < maxhits or poisoned 'self'
+      msg 'guards'
+      miniheal 'self'
+      pause 500
+    endwhile
+    if @x 'tailor' > x 'self' and @y 'tailor' > y 'self'
+      walk 'Southeast'
+    elseif @x 'tailor' < x 'self' and @y 'tailor' > y 'self'
+      walk 'Southwest'
+    elseif @x 'tailor' > x 'self' and @y 'tailor' < y 'self'
+      walk 'Northeast'
+    elseif @x 'tailor' < x 'self' and @y 'tailor' < y 'self'
+      walk 'Northwest'
+    elseif @x 'tailor' > x 'self' and @y 'tailor' == y 'self'
+      walk 'East'
+    elseif @x 'tailor' < x 'self' and @y 'tailor' == y 'self'
+      walk 'West'
+    elseif @x 'tailor' == x 'self' and @y 'tailor' > y 'self'
+      walk 'South'
+    elseif @x 'tailor' == x 'self' and @y 'tailor' < y 'self'
+      walk 'North'
+    endif
+    pause 500
+    if @inrange 'tailor' 1
+      for 3
+        //NPC name
+        //Nujelm
+        if y > 1255 and y < 1271
+          msg 'Moon'
+          //Jhelom
+        elseif y > 3775 and y < 3791
+          msg 'Annora'
+          //Moonglow
+        elseif y > 1055 and y < 1072
+          msg 'Cain'
+          //Serpents Hold
+        elseif y > 3495 and y < 3511
+          msg 'Jamie'
+          //Trinsic
+        elseif y > 2833 and y < 2850
+          msg 'Caldwell'
+          //Vesper
+        elseif y > 866 and y < 888
+          msg 'Pembroke'
+          //Delucia
+        elseif y > 4013 and y < 4033
+          msg 'Armstrong'
+          //Skara Brae
+        elseif y > 2176 and y < 2198
+          msg 'Ira'
+          //Zento
+        elseif y > 1201 and y < 1214
+          msg 'Chihu'
+        endif
+      endfor
+    endif
+  endwhile
+  clearjournal
+  if @injournal 'world will save'
+    while not @injournal 'world save complete'
+    endwhile
+    @clearjournal
+  endif
+  while timer 'turnin' < 9100
+    while hits < maxhits or poisoned 'self'
+      msg 'guards'
+      miniheal 'self'
+      pause 500
+    endwhile
+  endwhile
+  movetype '0x2258' 'backpack' 'tailor' 0 0 0 '1155' 1
+  pause 1000
+  if @injournal 'have to wait a few seconds'
+    movetype '0x2258' 'backpack' 'tailor' 0 0 0 '1155' 1
+    pause 1000
+  endif
+  @settimer 'turnin' 0
+  //Ask NPC for a new Bod
+  waitforcontext 'tailor' 1 15000
+  pause 750
+  //stall while GMs around
+  if @findtype 0x3db 'any' 'ground' 18
+    while @findtype 0x3db 'any' 'ground' 18
+    endwhile
+    //pause 3 minutes after they leave
+    pause 180000
+  endif
+  while hits < maxhits or poisoned 'self'
+    msg 'guards'
+    miniheal 'self'
+    pause 500
+  endwhile
+  //Confirm NEW Bod - Small Bod Gump
+  @replygump 0x9bade6ea 1
+  //Confirm NEW Bod - Large Bod Gump
+  @replygump 0xbe0dad1e 1
+  pause 500
+  if @injournal 'world will save'
+    while not @injournal 'world save complete'
+    endwhile
+    @clearjournal
+  endif
+  //Move NEW Bod to "New Bods Book"
+  movetype '0x2258' 'backpack' 'newbods' 0 0 0 '1155' 1
+  pause 1000
+  while hits < maxhits or poisoned 'self'
+    msg 'guards'
+    miniheal 'self'
+    pause 500
+  endwhile
+  if @injournal 'world will save'
+    while not @injournal 'world save complete'
+    endwhile
+    @clearjournal
+  endif
+  //Move NEW Cloth into Beetle
+  while @findtype 0x1767 'any' 'backpack'
+    usetype 0xfab
+    pause 1000
+    target! 'found'
+    pause 1000
+    moveitem 'found' 'beetle'
+    pause 1000
+  endwhile
+  while hits < maxhits or poisoned 'self'
+    msg 'guards'
+    miniheal 'self'
+    pause 500
+  endwhile
+  movetype 0xeed 'backpack' 'beetle' 0 0 0 'any'
+  pause 1000
+  while @findtype 0x170d 'any' 'backpack' 1
+    movetype 0x170d  'backpack' 'beetle' 0 0 0 'any' 1
+    pause 550
+  endwhile
+  if @property 'weight' 'beetle' > 1400
+    while not mounted 'self'
+      msg 'all follow me'
+      useobject 'beetle'
+      pause 1000
+    endwhile
+    if @injournal 'world will save'
+      while not @injournal 'world save complete'
+      endwhile
+      @clearjournal
+    endif
+    while not @gumpexists 0x554b87f3
+      useobject 'turninrunebook'
+      waitforgump 0x554b87f3 1500
+    endwhile
+    if @findalias 'trashbank3'
+      @unsetalias 'trashbank1'
+      @unsetalias 'trashbank2'
+      @unsetalias 'trashbank3'
+    endif
+    if not @findalias 'trashbank1'
+      replygump 0x554b87f3 53
+      @setalias 'trashbank1' 'self'
+    elseif not @findalias 'trashbank2'
+      replygump 0x554b87f3 59
+      @setalias 'trashbank2' 'self'
+    elseif not @findalias 'trashbank3'
+      replygump 0x554b87f3 65
+      @setalias 'trashbank3' 'self'
+    endif
+    while @inrange 'tailor' 10
+      while hits < maxhits or poisoned 'self'
+        msg 'guards'
+        miniheal 'self'
+        pause 500
+      endwhile
+      //if the rune is blocked, try different rune
+      if @injournal 'blocked' 'system'
+        sysmsg 'Rune blocked, different rune in 10 seconds' 33
+        pause 10000
+        @clearjournal
+        while not @gumpexists 0x554b87f3
+          useobject 'turninrunebook'
+          waitforgump 0x554b87f3 1500
+        endwhile
+        if @findalias 'trashbank3'
+          @unsetalias 'trashbank1'
+          @unsetalias 'trashbank2'
+          @unsetalias 'trashbank3'
+        endif
+        if not @findalias 'trashbank1'
+          replygump 0x554b87f3 53
+          @setalias 'trashbank1' 'self'
+        elseif not @findalias 'trashbank2'
+          replygump 0x554b87f3 59
+          @setalias 'trashbank2' 'self'
+        elseif not @findalias 'trashbank3'
+          replygump 0x554b87f3 65
+          @setalias 'trashbank3' 'self'
+        endif
+        pause 2000
+      endif
+    endwhile
+    msg 'bank'
+    pause 250
+    while mounted 'self'
+      useobject 'self'
+      pause 550
+    endwhile
+    waitforproperties 'beetle' 5000
+    if @property 'bonded' 'beetle'
+      waitforcontext 'beetle' 10 15000
+    else
+      waitforcontext 'beetle' 9 15000
+    endif
+    while @findtype 0xeed 'any' 'beetle'
+      movetype 0xeed 'beetle' 'bank'
+      pause 550
+    endwhile
+    while hits < maxhits or poisoned 'self'
+      msg 'guards'
+      miniheal 'self'
+      pause 500
+    endwhile
+    if counttype 0xeed 0 'bank' > 1000000
+      msg 'check 1000000'
+    endif
+    while @findtype 0x1767 'any' 'beetle'
+      movetype 0x1767 'beetle' 'bank'
+      pause 550
+    endwhile
+    //Umbra trash
+    if y > 1338 and y < 1352
+      @setalias 'banktrash' 0x4009b005
+    elseif y > 1249 and y < 1259
+      //Zento trash
+      @setalias 'banktrash' 0x402eceff
+      //Jhelom Trash
+    elseif y > 557 and y < 567
+      @setalias 'banktrash' 0x4001e289
+      //Moonglow Trash
+    elseif y > 1154 and y < 1166
+      @setalias 'banktrash' 0x4044c11b
+      //Vesper Trash
+    elseif y > 673 and y < 688
+      @setalias 'banktrash' 0x4079cd96
+      //New Haven Trash
+    elseif y > 2563 and y < 2576
+      @setalias 'banktrash' 0x404fcbbc
+    endif
+    while @findtype 0x170d 'any' 'beetle'
+      movetype 0x170d 'beetle' 'banktrash'
+      pause 550
+    endwhile
+    while @findtype 0xfb4 'any' 'beetle'
+      movetype 0xfb4 'beetle' 'banktrash'
+      pause 550
+    endwhile
+    while @findtype 0xe86 'any' 'beetle'
+      movetype 0xe86 'beetle' 'banktrash'
+      pause 550
+    endwhile
+    while @findtype 0xe85 'any' 'beetle'
+      movetype 0xe85 'beetle' 'banktrash'
+      pause 550
+    endwhile
+    while @findtype 0x13d5 'any' 'beetle'
+      movetype 0x13d5 'beetle' 'banktrash'
+      pause 550
+    endwhile
+    while @findtype 0x13c6 'any' 'beetle'
+      movetype 0x13c6 'beetle' 'banktrash'
+      pause 550
+    endwhile
+    while @findtype 0xf39 'any' 'beetle'
+      movetype 0xf39 'beetle' 'banktrash'
+      pause 550
+    endwhile
+    if @injournal 'world will save'
+      while not @injournal 'world save complete'
+      endwhile
+      @clearjournal
+    endif
+    while not mounted 'self'
+      msg 'all follow me'
+      useobject 'beetle'
+      pause 1000
+    endwhile
+    while not @gumpexists 0x554b87f3
+      useobject 'turninrunebook'
+      waitforgump 0x554b87f3 1500
+    endwhile
+    if @findalias 'tailorshop3'
+      @unsetalias 'tailorshop1'
+      @unsetalias 'tailorshop2'
+      @unsetalias 'tailorshop3'
+    endif
+    if not @findalias 'tailorshop1'
+      @setalias 'tailorshop1' 'self'
+      replygump 0x554b87f3 17
+    elseif not @findalias 'tailorshop2'
+      @setalias 'tailorshop2' 'self'
+      replygump 0x554b87f3 23
+    elseif not @findalias 'tailorshop3'
+      @setalias 'tailorshop3' 'self'
+      replygump 0x554b87f3 29
+    endif
+    while inrange 'banktrash' 10
+      while hits < maxhits or poisoned 'self'
+        msg 'guards'
+        miniheal 'self'
+        pause 500
+      endwhile
+      //if the rune is blocked, try a different rune
+      if @injournal 'blocked' 'system'
+        sysmsg 'Rune blocked, trying a different rune in 10 seconds' 33
+        pause 10000
+        @clearjournal
+        while not @gumpexists 0x554b87f3
+          useobject 'turninrunebook'
+          waitforgump 0x554b87f3 1500
+        endwhile
+        if @findalias 'tailorshop3'
+          @unsetalias 'tailorshop1'
+          @unsetalias 'tailorshop2'
+          @unsetalias 'tailorshop3'
+        endif
+        if not @findalias 'tailorshop1'
+          @setalias 'tailorshop1' 'self'
+          replygump 0x554b87f3 17
+        elseif not @findalias 'tailorshop2'
+          @setalias 'tailorshop2' 'self'
+          replygump 0x554b87f3 23
+        elseif not @findalias 'tailorshop3'
+          @setalias 'tailorshop3' 'self'
+          replygump 0x554b87f3 29
+        endif
+        pause 2000
+      endif
+    endwhile
+    //navigate into shop
+    //Nujelm
+    if y > 1255 and y < 1271
+      while x > 3770
+        walk 'west'
+      endwhile
+      //Jhelom
+    elseif y > 3775 and y < 3791
+      while x < 1351
+        walk 'east'
+      endwhile
+      //Moonglow
+    elseif y > 1055 and y < 1072
+      while x < 4462
+        run 'east'
+      endwhile
+      while y < 1063
+        walk 'south'
+        pause 250
+      endwhile
+      //Serpents Hold
+    elseif y > 3495 and y < 3511
+      while x < 2884
+        run 'east'
+      endwhile
+      while y > 3504
+        walk 'north'
+      endwhile
+      //Trinsic
+    elseif y > 2833 and y < 2850
+      while y > 2844
+        walk 'north'
+        pause 250
+      endwhile
+      while x > 1984
+        walk 'west'
+        pause 250
+      endwhile
+      //Vesper
+    elseif y > 866 and y < 888
+      while y < 886
+        run 'south'
+      endwhile
+      while x < 2839
+        walk 'east'
+        pause 500
+      endwhile
+      //Delucia
+    elseif y > 4013 and y < 4033
+      while y > 4020
+        run 'north'
+      endwhile
+      //Skara Brae
+    elseif y > 2176 and y < 2198
+      while y > 2182
+        run 'north'
+      endwhile
+      while x < 654
+        run 'east'
+      endwhile
+      while y > 2181
+        walk 'north'
+        pause 500
+      endwhile
+      //Zento
+    elseif y > 1201 and y < 1214
+      while y > 1204
+        run 'north'
+      endwhile
+    endif
+    //set NPC alias
+    //Nujelm
+    if y > 1255 and y < 1271
+      @setalias 'tailor' 0x7deae
+      //Jhelom
+    elseif y > 3775 and y < 3791
+      @setalias 'tailor' 0x7cdcb
+      //Moonglow
+    elseif y > 1055 and y < 1072
+      @setalias 'tailor' 0x6794f
+      //serpents hold
+    elseif y > 3495 and y < 3511
+      @setalias 'tailor' 0x4c96d
+      //Trinsic
+    elseif y > 2833 and y < 2850
+      @setalias 'tailor' 0x47bc7
+      //Vesper
+    elseif y > 866 and y < 888
+      @setalias 'tailor' 0x801a4
+      //Delucia
+    elseif y > 4013 and y < 4033
+      @setalias 'tailor' 0x7ffaa
+      //Skara Brae
+    elseif y > 2176 and y < 2198
+      @setalias 'tailor' 0x7ea1e
+      //Zento
+    elseif y > 1201 and y < 1214
+      @setalias 'tailor' 0x62a93
+    endif
+    pause 750
+    while not @inrange 'tailor' 1
+      while hits < maxhits or poisoned 'self'
+        msg 'guards'
+        miniheal 'self'
+        pause 500
+      endwhile
+      if @x 'tailor' > x 'self' and @y 'tailor' > y 'self'
+        walk 'Southeast'
+      elseif @x 'tailor' < x 'self' and @y 'tailor' > y 'self'
+        walk 'Southwest'
+      elseif @x 'tailor' > x 'self' and @y 'tailor' < y 'self'
+        walk 'Northeast'
+      elseif @x 'tailor' < x 'self' and @y 'tailor' < y 'self'
+        walk 'Northwest'
+      elseif @x 'tailor' > x 'self' and @y 'tailor' == y 'self'
+        walk 'East'
+      elseif @x 'tailor' < x 'self' and @y 'tailor' == y 'self'
+        walk 'West'
+      elseif @x 'tailor' == x 'self' and @y 'tailor' > y 'self'
+        walk 'South'
+      elseif @x 'tailor' == x 'self' and @y 'tailor' < y 'self'
+        walk 'North'
+      endif
+      pause 500
+      if @inrange 'tailor' 1
+        for 3
+          //NPC name
+          //Nujelm
+          if y > 1255 and y < 1271
+            msg 'Moon'
+            //Jhelom
+          elseif y > 3775 and y < 3791
+            msg 'Annora'
+            //Moonglow
+          elseif y > 1055 and y < 1072
+            msg 'Cain'
+            //Serpents Hold
+          elseif y > 3495 and y < 3511
+            msg 'Jamie'
+            //Trinsic
+          elseif y > 2833 and y < 2850
+            msg 'Caldwell'
+            //Vesper
+          elseif y > 866 and y < 888
+            msg 'Pembroke'
+            //Delucia
+          elseif y > 4013 and y < 4033
+            msg 'Armstrong'
+            //Skara Brae
+          elseif y > 2176 and y < 2198
+            msg 'Ira'
+            //Zento
+          elseif y > 1201 and y < 1214
+            msg 'Chihu'
+          endif
+        endfor
+      endif
+    endwhile
+    useobject 'self'
+    pause 1000
+  endif
+endwhile
+while not mounted 'self'
+  msg 'all follow me'
+  useobject 'beetle'
+  pause 1000
+endwhile
+while not @gumpexists 0x554b87f3
+  useobject 'turninrunebook'
+  waitforgump 0x554b87f3 1500
+endwhile
+if @findalias 'trashbank3'
+  @unsetalias 'trashbank1'
+  @unsetalias 'trashbank2'
+  @unsetalias 'trashbank3'
+endif
+if not @findalias 'trashbank1'
+  replygump 0x554b87f3 53
+  @setalias 'trashbank1' 'self'
+elseif not @findalias 'trashbank2'
+  replygump 0x554b87f3 59
+  @setalias 'trashbank2' 'self'
+elseif not @findalias 'trashbank3'
+  replygump 0x554b87f3 65
+  @setalias 'trashbank3' 'self'
+endif
+while @inrange 'tailor' 10
+  while hits < maxhits or poisoned 'self'
+    msg 'guards'
+    miniheal 'self'
+    pause 500
+  endwhile
+  //if the rune is blocked, try different rune
+  if @injournal 'blocked' 'system'
+    sysmsg 'Rune blocked, trying again in 10 seconds' 33
+    pause 10000
+    @clearjournal
+    while not @gumpexists 0x554b87f3
+      useobject 'turninrunebook'
+      waitforgump 0x554b87f3 1500
+    endwhile
+    if @findalias 'trashbank3'
+      @unsetalias 'trashbank1'
+      @unsetalias 'trashbank2'
+      @unsetalias 'trashbank3'
+    endif
+    if not @findalias 'trashbank1'
+      replygump 0x554b87f3 53
+      @setalias 'trashbank1' 'self'
+    elseif not @findalias 'trashbank2'
+      replygump 0x554b87f3 59
+      @setalias 'trashbank2' 'self'
+    elseif not @findalias 'trashbank3'
+      replygump 0x554b87f3 65
+      @setalias 'trashbank3' 'self'
+    endif
+    pause 2000
+  endif
+endwhile
+msg 'bank'
+pause 250
+while mounted 'self'
+  useobject 'self'
+  pause 550
+endwhile
+waitforproperties 'beetle' 5000
+if @property 'bonded' 'beetle'
+  waitforcontext 'beetle' 10 15000
+else
+  waitforcontext 'beetle' 9 15000
+endif
+while @findtype 0xeed 'any' 'beetle'
+  movetype 0xeed 'beetle' 'bank'
+  pause 550
+endwhile
+if counttype 0xeed 0 'bank' > 1000000
+  msg 'check 1000000'
+endif
+while @findtype 0x1767 'any' 'beetle'
+  movetype 0x1767 'beetle' 'bank'
+  pause 550
+endwhile
+//Umbra trash
+if y > 1338 and y < 1352
+  @setalias 'banktrash' 0x4009b005
+elseif y > 1249 and y < 1259
+  //Zento trash
+  @setalias 'banktrash' 0x402eceff
+  //Jhelom Trash
+elseif y > 557 and y < 567
+  @setalias 'banktrash' 0x4001e289
+  //Moonglow Trash
+elseif y > 1154 and y < 1166
+  @setalias 'banktrash' 0x4044c11b
+  //Vesper Trash
+elseif y > 673 and y < 688
+  @setalias 'banktrash' 0x4079cd96
+  //New Haven Trash
+elseif y > 2563 and y < 2576
+  @setalias 'banktrash' 0x404fcbbc
+endif
+while @findtype 0x170d 'any' 'beetle'
+  movetype 0x170d 'beetle' 'banktrash'
+  pause 550
+endwhile
+while @findtype 0xfb4 'any' 'beetle'
+  movetype 0xfb4 'beetle' 'banktrash'
+  pause 550
+endwhile
+while @findtype 0xe86 'any' 'beetle'
+  movetype 0xe86 'beetle' 'banktrash'
+  pause 550
+endwhile
+while @findtype 0xe85 'any' 'beetle'
+  movetype 0xe85 'beetle' 'banktrash'
+  pause 550
+endwhile
+while @findtype 0x13d5 'any' 'beetle'
+  movetype 0x13d5 'beetle' 'banktrash'
+  pause 550
+endwhile
+while @findtype 0x13c6 'any' 'beetle'
+  movetype 0x13c6 'beetle' 'banktrash'
+  pause 550
+endwhile
+while @findtype 0xf39 'any' 'beetle'
+  movetype 0xf39 'beetle' 'banktrash'
+  pause 550
+endwhile
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+while not mounted 'self'
+  msg 'all follow me'
+  useobject 'beetle'
+  pause 1000
+endwhile
+@playmacro 'Turn In Go Home'

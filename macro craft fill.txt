@@ -1,0 +1,1554 @@
+@removelist 'Amount'
+@removelist 'MaterialGraphic'
+@removelist 'MaterialButton'
+@removelist 'MaterialHue'
+@removelist 'GumpCat'
+@removelist 'GumpSel'
+@removelist 'ToolType'
+@removelist 'Graphic'
+@removelist 'Destination'
+@removelist 'NotIron0'
+@removelist 'Leather'
+@createlist 'Amount'
+@createlist 'MaterialGraphic'
+@createlist 'MaterialButton'
+@createlist 'MaterialHue'
+@createlist 'GumpCat'
+@createlist 'GumpSel'
+@createlist 'ToolType'
+@createlist 'Graphic'
+@createlist 'Destination'
+@createlist 'NotIron0'
+@createlist 'Leather'
+//gift box for restock west of goza and trash can SW of goza
+@setalias 'Restock' 0x40213d69
+@setalias 'Trash BODs Destination' 0x4346b5ee
+@setalias 'Trash Barrel' 0x4346b5ee
+@clearjournal
+if not hidden 'self'
+  useskill 'hiding'
+endif
+//autofind books if one filled and one empty
+if serial 'filledbods' == serial 'emptybods'
+  @unsetalias 'filledbods'
+  @unsetalias 'emptybods'
+endif
+if not @findobject 'FilledBods' 'any' 'backpack' or not @findobject 'EmptyBods' 'backpack'
+  clearignorelist
+  if @findtype 0x2258 'any' 'backpack'
+    sysmsg 'Get loose bods out of pack before starting' 34
+    stop
+  endif
+  clearjournal
+  @unsetalias 'FilledBods'
+  @unsetalias 'EmptyBods'
+  if counttype 0x2259 'any' 'backpack' == 2
+    while @findtype 0x2259 'any' 'backpack'
+      waitforproperties 'found' 5000
+      if @property 'Deeds in Book' 'found' == 0
+        setalias 'FilledBods' 'found'
+      else
+        setalias 'EmptyBods' 'found'
+      endif
+      ignoreobject 'found'
+    endwhile
+  else
+    sysmsg 'You need 2 bod books, you have more or less!' 34
+    stop
+  endif
+  clearignorelist
+  //if you arent starting with an empty book
+  if not @findobject 'FilledBods' 'any' 'backpack' or not @findobject 'EmptyBods' 'backpack'
+    @unsetalias 'FilledBods'
+    @unsetalias 'EmptyBods'
+    clearjournal
+    if counttype 0x2258 'any' 'backpack' <= 1
+      if @findtype 0x2258 'any' 'backpack'
+        @setalias 'setaside' 'found'
+        moveitemoffset 'setaside' 'ground' (0 1 0)
+        pause 1000
+      endif
+      if counttype 0x2259 'any' 'backpack' == 2
+        while @findtype 0x2259 'any' 'backpack'
+          waitforproperties 'found' 5000
+          if not @findalias 'book1'
+            @setalias 'book1' 'found'
+            useobject 'book1'
+            waitforgump 0x54f555df 1500
+            replygump 0x54f555df 1
+            waitforgump 0x968739db 1500
+            replygump 0x968739db 3
+            waitforgump 0x968739db 1500
+            replygump 0x968739db 0
+            waitforgump 0x54f555df 1500
+            replygump 0x54f555df 5
+            waitforgump 0x54f555df 1500
+            while @findtype 0x2258 'any' 'backpack'
+              waitforproperties 'found' 5000
+              pause 550
+              useobject 'found'
+              waitforgump 0x5afbd742 1500
+              replygump 0x5afbd742 2
+              waitforgump 0x5afbd742 1500
+              pause 1000
+              if @injournal 'maximum amount of requested items'
+                setalias 'FilledBods' 'book1'
+              else
+                setalias 'EmptyBods' 'book1'
+              endif
+              ignoreobject 'found'
+            endwhile
+            ignoreobject 'book1'
+          else
+            @setalias 'book2' 'found'
+            if not @findalias 'FilledBods'
+              setalias 'FilledBods' 'book2'
+            elseif not @findalias 'EmptyBods'
+              setalias 'EmptyBods' 'book2'
+            endif
+          endif
+          ignoreobject 'found'
+        endwhile
+      endif
+      clearignorelist
+      if @findalias 'setaside'
+        pause 550
+        moveitem 'setaside' 'backpack'
+        pause 550
+      endif
+    endif
+  endif
+endif
+//if you didnt get both set automatically, then prompt
+if not @findalias 'FilledBods' or not @findalias 'EmptyBods'
+  if @findtype 0x2258 'any' 'backpack'
+    sysmsg 'Get loose bods out of pack before starting' 34
+    stop
+  endif
+  @unsetalias 'FilledBods'
+  @unsetalias 'EmptyBods'
+endif
+if not @findobject 'EmptyBods'
+  sysmsg 'Target the bod book that needs filling' 34
+  promptalias 'EmptyBods'
+endif
+if not @findobject 'FilledBods'
+  sysmsg 'Target the bod book for completed bods' 34
+  promptalias 'FilledBods'
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//center goza
+if not x == 2039 and y == 3100
+  sysmsg 'stand on the goza'
+  stop
+endif
+// Search for a BOD to fill
+if @findtype 0x2258 'any' 'backpack' and @property 'small' 'found'
+  // Reset craft state
+  @unsetalias 'crafting'
+  @clearjournal
+  // Define and open new BOD
+  @setalias 'bod' 'found'
+  useobject! 'bod'
+  waitforgump 0x5afbd742 15000
+  pause 550
+  if @injournal 'wait'
+    @setalias 'bod' 'found'
+    useobject! 'bod'
+    waitforgump 0x5afbd742 15000
+    pause 550
+  endif
+  // Combine items
+  if not targetexists 'server'
+    replygump 0x5afbd742 2
+    waitforgump 0x5afbd742 2500
+    waitfortarget 5000
+    if @injournal 'The maximum amount of requested items'
+      clearjournal
+      sysmsg 'tem mover as bod' 34
+      @moveitem 'bod' 'FilledBods'
+    endif
+  endif
+  //set your talismans
+  if not listexists 'Talismans'
+    @createlist 'Talismans'
+    @pushlist 'Talismans' 0x2f58
+    @pushlist 'Talismans' 0x2f59
+    @pushlist 'Talismans' 0x2f5a
+    @pushlist 'Talismans' 0x2f5b
+  endif
+  //forget tally if they are registering off another char
+  if not @findobject 'tailortally' 'any' 'backpack' and not @findobject 'smithtally' 'any' 'backpack'
+    unsetalias 'smithtally'
+    unsetalias 'tailortally'
+    @unsetalias 'warning'
+  endif
+  //auto set talismans
+  if not @findalias 'smithtally' or not @findalias 'tailortally'
+    clearignorelist
+    if not @findalias 'warning'
+      if @findlayer 'self' 9
+        pause 550
+        @moveitem 'found' 'backpack'
+        pause 550
+      endif
+      for 0 to 'Talismans'
+        while @findtype Talismans[] 0 'backpack'
+          waitforproperties 'found' 5000
+          if @property 'Blacksmithing Bonus' 'found' > 0
+            @setalias 'smithtally' 'found'
+          elseif @property 'Tailoring Bonus' 'found' > 0
+            @setalias 'tailortally' 'found'
+          endif
+          ignoreobject 'found'
+        endwhile
+      endfor
+      if not @findalias 'smithtally'
+        sysmsg 'You should get a Smith Bonus/Ex tally. Clear active objects after' 34
+      endif
+      if not @findalias 'tailortally'
+        sysmsg 'You should get a Tailor Bonus/Ex tally. Clear active objects after' 34
+      endif
+      @setalias 'warning' 'self'
+    endif
+  endif
+  //equip talisman
+  if color 'bod' == 1102 and @findobject 'smithtally' 'any' 'backpack'
+    if @findlayer 'self' 9
+      pause 550
+      @moveitem 'found' 'backpack'
+      pause 550
+    endif
+    if findobject 'smithtally' 'any' 'backpack'
+      pause 550
+      equipitem 'smithtally' 9
+      pause 550
+    endif
+  elseif color 'bod' == 1155 and @findobject 'tailortally' 'any' 'backpack'
+    if @findlayer 'self' 9
+      pause 550
+      @moveitem 'found' 'backpack'
+      pause 550
+    endif
+    if findobject 'tailortally' 'any' 'backpack'
+      pause 550
+      equipitem 'tailortally' 9
+      pause 550
+    endif
+  endif
+  //equip ASH hammers
+  if not @findlayer 'self' 1
+    if not @findlayer 'self' 1
+      @setalias '15hammerstash' 0x41101d99
+      useobject '15hammerstash'
+      pause 550
+      waitforcontents '15hammerstash' 5000
+      if @findtype 0x13e4 1154 '15hammerstash'
+        @setalias '15hammer' 'found'
+        if not @findlayer 'self' 1
+          equipitem '15hammer' 1
+          pause 550
+        endif
+      endif
+    endif
+  endif
+  // Craft
+  while targetexists 'server'
+    if @property 'Contents' 'backpack' >= 124 or @property 'Stones' 'backpack' >= 525
+      sysmsg 'Something went wrong! Pack full! Abort! Abort!' 34
+      stop
+    endif
+    if @injournal 'world will save'
+      while not @injournal 'world save complete'
+      endwhile
+      @clearjournal
+    endif
+    if @injournal 'world will save'
+      while not @injournal 'world save complete'
+      endwhile
+      @clearjournal
+    endif
+    if not @findalias 'crafting'
+      // Leather
+      if @ingump 0x5afbd742 'leather gorget'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0x13c7
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'leather cap'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 30
+        @pushlist 'Graphic' 0x1db9
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'leather gloves'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 37
+        @pushlist 'Graphic' 0x13c6
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'leather sleeves'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 44
+        @pushlist 'Graphic' 0x13cd
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'leather leggings'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 51
+        @pushlist 'Graphic' 0x13cb
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'leather tunic'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 58
+        @pushlist 'Graphic' 0x13cc
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+        // Studded
+      elseif @ingump 0x5afbd742 'studded gorget'
+        @pushlist 'GumpCat' 43
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0x13d6
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'studded gloves'
+        @pushlist 'GumpCat' 43
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0x13d5
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'studded sleeves'
+        @pushlist 'GumpCat' 43
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0x13dc
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'studded leggings'
+        @pushlist 'GumpCat' 43
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0x13da
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'studded tunic'
+        @pushlist 'GumpCat' 43
+        @pushlist 'GumpSel' 30
+        @pushlist 'Graphic' 0x13db
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+        // Female Armor
+      elseif @ingump 0x5afbd742 'leather shorts'
+        @pushlist 'GumpCat' 50
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0x1c00
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'leather skirt'
+        @pushlist 'GumpCat' 50
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0x1c08
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'leather bustier'
+        @pushlist 'GumpCat' 50
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0x1c0a
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'studded bustier'
+        @pushlist 'GumpCat' 50
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0x1c0c
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'female leather armor'
+        @pushlist 'GumpCat' 50
+        @pushlist 'GumpSel' 30
+        @pushlist 'Graphic' 0x1c06
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'studded armor'
+        @pushlist 'GumpCat' 50
+        @pushlist 'GumpSel' 37
+        @pushlist 'Graphic' 0x1c02
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'thigh boots'
+        @pushlist 'GumpCat' 29
+        @pushlist 'GumpSel' 51
+        @pushlist 'Graphic' 0x1711
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+        if @ingump 0x5afbd742 'barbed' or @ingump 0x5afbd742 'horned'
+        elseif @ingump 0x5afbd742 'spined'
+        else
+          @pushlist 'MaterialButton' 6
+          @pushlist 'MaterialHue' 0
+          @pushlist 'MaterialGraphic' 0x1081
+          @pushlist 'Leather' 'yep'
+        endif
+      elseif @ingump 0x5afbd742 'shoes'
+        @pushlist 'GumpCat' 29
+        @pushlist 'GumpSel' 37
+        @pushlist 'Graphic' 0x170f
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+        if @ingump 0x5afbd742 'barbed' or @ingump 0x5afbd742 'horned'
+        elseif @ingump 0x5afbd742 'spined'
+        else
+          @pushlist 'MaterialButton' 6
+          @pushlist 'MaterialHue' 0
+          @pushlist 'MaterialGraphic' 0x1081
+          @pushlist 'Leather' 'yep'
+        endif
+      elseif @ingump 0x5afbd742 'sandals'
+        @pushlist 'GumpCat' 29
+        @pushlist 'GumpSel' 30
+        @pushlist 'Graphic' 0x170d
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+        if @ingump 0x5afbd742 'barbed' or @ingump 0x5afbd742 'horned'
+        elseif @ingump 0x5afbd742 'spined'
+        else
+          @pushlist 'MaterialButton' 6
+          @pushlist 'MaterialHue' 0
+          @pushlist 'MaterialGraphic' 0x1081
+          @pushlist 'Leather' 'yep'
+        endif
+      elseif @ingump 0x5afbd742 'boots'
+        @pushlist 'GumpCat' 29
+        @pushlist 'GumpSel' 44
+        @pushlist 'Graphic' 0x170b
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+        if @ingump 0x5afbd742 'barbed' or @ingump 0x5afbd742 'horned'
+        elseif @ingump 0x5afbd742 'spined'
+        else
+          @pushlist 'MaterialButton' 6
+          @pushlist 'MaterialHue' 0
+          @pushlist 'MaterialGraphic' 0x1081
+          @pushlist 'Leather' 'yep'
+        endif
+        // Hats
+      elseif @ingump 0x5afbd742 'skullcap'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0x1544
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'bandana'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0x1540
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'floppy hat'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0x1713
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'cap'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0x1715
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'wide-brim hat'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 30
+        @pushlist 'Graphic' 0x1714
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'tall straw hat'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 44
+        @pushlist 'Graphic' 0x1716
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'straw hat'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 37
+        @pushlist 'Graphic' 0x1717
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 "wizard's hat"
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 51
+        @pushlist 'Graphic' 0x1718
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'bonnet'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 58
+        @pushlist 'Graphic' 0x1719
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'feathered hat'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 65
+        @pushlist 'Graphic' 0x171a
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'tricorne hat'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 72
+        @pushlist 'Graphic' 0x171b
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'jester hat'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 79
+        @pushlist 'Graphic' 0x171c
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'flower garland'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 86
+        @pushlist 'Graphic' 0x2306
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+        // Shirts
+      elseif @ingump 0x5afbd742 'doublet'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0x1f7b
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'fancy shirt'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0x1efd
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'formal shirt'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 86
+        @pushlist 'Graphic' 0x2310
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'shirt'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0x1517
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'surcoat'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 30
+        @pushlist 'Graphic' 0x1ffd
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'plain dress'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 37
+        @pushlist 'Graphic' 0x1f01
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'fancy dress'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 44
+        @pushlist 'Graphic' 0x1f00
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'cloak'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 51
+        @pushlist 'Graphic' 0x1515
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'robe'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 58
+        @pushlist 'Graphic' 0x1f03
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'jester suit'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 65
+        @pushlist 'Graphic' 0x1f9f
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'fur cape'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 72
+        @pushlist 'Graphic' 0x230a
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'gilded dress'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 79
+        @pushlist 'Graphic' 0x230e
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+        // Pants
+      elseif @ingump 0x5afbd742 'short pants'
+        @pushlist 'GumpCat' 15
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0x152e
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'long pants'
+        @pushlist 'GumpCat' 15
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0x1539
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'kilt'
+        @pushlist 'GumpCat' 15
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0x1537
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'skirt'
+        @pushlist 'GumpCat' 15
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0x1516
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+        // Miscellaneous
+      elseif @ingump 0x5afbd742 'body sash'
+        @pushlist 'GumpCat' 22
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0x1541
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'half apron'
+        @pushlist 'GumpCat' 22
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0x153b
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'full apron'
+        @pushlist 'GumpCat' 22
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0x153d
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+        // Footwear
+      elseif @ingump 0x5afbd742 'fur boots'
+        @pushlist 'GumpCat' 29
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0x2307
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+        // Ringmail
+      elseif @ingump 0x5afbd742 'ringmail gloves'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0x13eb
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'ringmail leggings'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0x13f0
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'ringmail sleeves'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0x13ee
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'ringmail tunic'
+        @pushlist 'GumpCat' 1
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0x13ec
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+        // Chainmail
+      elseif @ingump 0x5afbd742 'chainmail coif'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0x13bb
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'chainmail leggings'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0x13be
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'chainmail tunic'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0x13bf
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+        // Platemail
+      elseif @ingump 0x5afbd742 'platemail arms'
+        @pushlist 'GumpCat' 15
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0x1410
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'platemail gloves'
+        @pushlist 'GumpCat' 15
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0x1414
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'platemail gorget'
+        @pushlist 'GumpCat' 15
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0x1413
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'platemail legs'
+        @pushlist 'GumpCat' 15
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0x1411
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'platemail tunic'
+        @pushlist 'GumpCat' 15
+        @pushlist 'GumpSel' 30
+        @pushlist 'Graphic' 0x1415
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'female plate'
+        @pushlist 'GumpCat' 15
+        @pushlist 'GumpSel' 37
+        @pushlist 'Graphic' 0x1c04
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+        // Helmets
+      elseif @ingump 0x5afbd742 'bascinet'
+        @pushlist 'GumpCat' 22
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0x140c
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'close helmet'
+        @pushlist 'GumpCat' 22
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0x1408
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'helmet' and not @ingump 0x5afbd742 'bone'
+        @pushlist 'GumpCat' 22
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0x140a
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'norse helm'
+        @pushlist 'GumpCat' 22
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0x140e
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'plate helm'
+        @pushlist 'GumpCat' 22
+        @pushlist 'GumpSel' 30
+        @pushlist 'Graphic' 0x1412
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+        // Shields
+      elseif @ingump 0x5afbd742 'buckler'
+        @pushlist 'GumpCat' 29
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0x1b73
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'bronze shield'
+        @pushlist 'GumpCat' 29
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0x1b72
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'heater shield'
+        @pushlist 'GumpCat' 29
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0x1b76
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'metal shield'
+        @pushlist 'GumpCat' 29
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0x1b7b
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'metal kite shield'
+        @pushlist 'GumpCat' 29
+        @pushlist 'GumpSel' 30
+        @pushlist 'Graphic' 0x1b74
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'tear kite shield'
+        @pushlist 'GumpCat' 29
+        @pushlist 'GumpSel' 37
+        @pushlist 'Graphic' 0x1b79
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+        // Bladed
+      elseif @ingump 0x5afbd742 'broadsword'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0xf5e
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'cutlass'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0x1441
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'dagger'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 30
+        @pushlist 'Graphic' 0xf52
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'katana'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 37
+        @pushlist 'Graphic' 0x13ff
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'kryss'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 44
+        @pushlist 'Graphic' 0x1401
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'longsword'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 51
+        @pushlist 'Graphic' 0xf61
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'scimitar'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 58
+        @pushlist 'Graphic' 0x13b6
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'viking sword'
+        @pushlist 'GumpCat' 36
+        @pushlist 'GumpSel' 65
+        @pushlist 'Graphic' 0x13b9
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+        // Axes
+      elseif @ingump 0x5afbd742 'large battle axe'
+        @pushlist 'GumpCat' 43
+        @pushlist 'GumpSel' 30
+        @pushlist 'Graphic' 0x13fb
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'double axe'
+        @pushlist 'GumpCat' 43
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0xf4b
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 "executioner's axe"
+        @pushlist 'GumpCat' 43
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0xf45
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'battle axe'
+        @pushlist 'GumpCat' 43
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0xf47
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'two handed axe'
+        @pushlist 'GumpCat' 43
+        @pushlist 'GumpSel' 37
+        @pushlist 'Graphic' 0x1443
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'war axe'
+        @pushlist 'GumpCat' 43
+        @pushlist 'GumpSel' 44
+        @pushlist 'Graphic' 0x13b0
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'axe'
+        @pushlist 'GumpCat' 43
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0xf49
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+        // Polearms
+      elseif @ingump 0x5afbd742 'bardiche'
+        @pushlist 'GumpCat' 50
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0xf4d
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'halberd'
+        @pushlist 'GumpCat' 50
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0x143e
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'short spear'
+        @pushlist 'GumpCat' 50
+        @pushlist 'GumpSel' 44
+        @pushlist 'Graphic' 0x1403
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'spear'
+        @pushlist 'GumpCat' 50
+        @pushlist 'GumpSel' 58
+        @pushlist 'Graphic' 0xf62
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'war fork'
+        @pushlist 'GumpCat' 50
+        @pushlist 'GumpSel' 65
+        @pushlist 'Graphic' 0x1405
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+        // Bashing
+      elseif @ingump 0x5afbd742 'war mace'
+        @pushlist 'GumpCat' 57
+        @pushlist 'GumpSel' 30
+        @pushlist 'Graphic' 0x1407
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'hammer pick'
+        @pushlist 'GumpCat' 57
+        @pushlist 'GumpSel' 2
+        @pushlist 'Graphic' 0x143d
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'mace'
+        @pushlist 'GumpCat' 57
+        @pushlist 'GumpSel' 9
+        @pushlist 'Graphic' 0xf5c
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'maul'
+        @pushlist 'GumpCat' 57
+        @pushlist 'GumpSel' 16
+        @pushlist 'Graphic' 0x143b
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'war hammer'
+        @pushlist 'GumpCat' 57
+        @pushlist 'GumpSel' 37
+        @pushlist 'Graphic' 0x1439
+        @pushlist 'ToolType' 0xfbb
+        @pushlist 'Destination' 'FilledBods'
+      elseif @ingump 0x5afbd742 'tunic'
+        @pushlist 'GumpCat' 8
+        @pushlist 'GumpSel' 23
+        @pushlist 'Graphic' 0x1fa1
+        @pushlist 'ToolType' 0xf9d
+        @pushlist 'Destination' 'FilledBods'
+      else
+        break
+      endif
+      // Define resource
+      if @ingump 0x5afbd742 'barbed'
+        @pushlist 'MaterialButton' 27
+        @pushlist 'MaterialHue' 2129
+        @pushlist 'MaterialGraphic' 0x1081
+        @pushlist 'Leather' 'yep'
+      elseif @ingump 0x5afbd742 'horned'
+        @pushlist 'MaterialButton' 20
+        @pushlist 'MaterialHue' 2117
+        @pushlist 'MaterialGraphic' 0x1081
+        @pushlist 'Leather' 'yep'
+      elseif @ingump 0x5afbd742 'spined'
+        @pushlist 'MaterialButton' 13
+        @pushlist 'MaterialHue' 2220
+        @pushlist 'MaterialGraphic' 0x1081
+        @pushlist 'Leather' 'yep'
+      elseif @ingump 0x5afbd742 'leather' or @ingump 0x5afbd742 'studded'
+        @pushlist 'MaterialButton' 6
+        @pushlist 'MaterialHue' 0
+        @pushlist 'MaterialGraphic' 0x1081
+        @pushlist 'Leather' 'yep'
+      elseif @ingump 0x5afbd742 'valorite'
+        @pushlist 'MaterialButton' 62
+        @pushlist 'MaterialHue' 2219
+        @pushlist 'MaterialGraphic' 0x1bf2
+        @pushlist 'NotIron0' 'yep'
+      elseif @ingump 0x5afbd742 'verite'
+        @pushlist 'MaterialButton' 55
+        @pushlist 'MaterialHue' 2207
+        @pushlist 'MaterialGraphic' 0x1bf2
+        @pushlist 'NotIron0' 'yep'
+      elseif @ingump 0x5afbd742 'agapite'
+        @pushlist 'MaterialButton' 48
+        @pushlist 'MaterialHue' 2425
+        @pushlist 'MaterialGraphic' 0x1bf2
+        @pushlist 'NotIron0' 'yep'
+      elseif @ingump 0x5afbd742 'gold'
+        @pushlist 'MaterialButton' 41
+        @pushlist 'MaterialHue' 2213
+        @pushlist 'MaterialGraphic' 0x1bf2
+        @pushlist 'NotIron0' 'yep'
+      elseif @ingump 0x5afbd742 'bronze ingots'
+        @pushlist 'MaterialButton' 34
+        @pushlist 'MaterialHue' 2418
+        @pushlist 'MaterialGraphic' 0x1bf2
+        @pushlist 'NotIron0' 'yep'
+      elseif @ingump 0x5afbd742 'shadow iron'
+        @pushlist 'MaterialButton' 20
+        @pushlist 'MaterialHue' 2406
+        @pushlist 'MaterialGraphic' 0x1bf2
+        @pushlist 'NotIron0' 'yep'
+      elseif @ingump 0x5afbd742 'dull copper'
+        @pushlist 'MaterialButton' 13
+        @pushlist 'MaterialHue' 2419
+        @pushlist 'MaterialGraphic' 0x1bf2
+        @pushlist 'NotIron0' 'yep'
+      elseif @ingump 0x5afbd742 'copper'
+        @pushlist 'MaterialButton' 27
+        @pushlist 'MaterialHue' 2413
+        @pushlist 'MaterialGraphic' 0x1bf2
+        @pushlist 'NotIron0' 'yep'
+      elseif color 'bod' == 1102
+        @pushlist 'MaterialButton' 6
+        @pushlist 'MaterialHue' 0
+        @pushlist 'MaterialGraphic' 0x1bf2
+      else
+        //cloth
+      endif
+    endif
+    for 3
+      // Check for cut cloths and ingots if using cloth
+      if list 'MaterialHue' == 0
+        if @counttype 0x1bf2 0 'backpack' < 50
+          if @movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 200
+            pause 750
+          else
+            useobject 'Restock'
+            pause 550
+            waitforcontents 'Restock' 5000
+            for 2
+              if @movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 100
+                pause 750
+              endif
+            endfor
+            for 3
+              if @movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 25
+                pause 750
+              endif
+            endfor
+            for 5
+              if @movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 5
+                pause 750
+              endif
+            endfor
+            for 10
+              if @movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 1
+                pause 750
+              endif
+            endfor
+            @canceltarget
+            if @counttype 0x1bf2 0 'restock' == 0
+              sysmsg 'Out of Ingots' 34
+              @canceltarget
+              pause 600000
+              @playmacro 'CraftFill'
+            endif
+          endif
+        endif
+        //unload colored ingots
+        while counttype 0x1bf2 2219 'backpack' > 0
+          movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2219
+          pause 550
+        endwhile
+        while counttype 0x1bf2 2207 'backpack' > 0
+          movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2207
+          pause 550
+        endwhile
+        while counttype 0x1bf2 2425 'backpack' > 0
+          movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2425
+          pause 550
+        endwhile
+        while counttype 0x1bf2 2213 'backpack' > 0
+          movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2213
+          pause 550
+        endwhile
+        while counttype 0x1bf2 2418 'backpack' > 0
+          movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2418
+          pause 550
+        endwhile
+        while counttype 0x1bf2 2406 'backpack' > 0
+          movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2406
+          pause 550
+        endwhile
+        while counttype 0x1bf2 2419 'backpack' > 0
+          movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2419
+          pause 550
+        endwhile
+        while counttype 0x1bf2 2413 'backpack' > 0
+          movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2413
+          pause 550
+        endwhile
+        //cloth
+        if @counttype 0x1766 'any' 'backpack' < 50 and @counttype 0x1767 'any' 'backpack' < 50
+          if @movetype 0x1766 'Restock' 'backpack' 0 0 0 'any' 500 or @movetype 0x1767 'Restock' 'backpack' 0 0 0 'any' 500
+            pause 750
+          else
+            useobject 'Restock'
+            pause 550
+            waitforcontents 'Restock' 5000
+            for 5
+              if @movetype 0x1766 'Restock' 'backpack' 0 0 0 'any' 100 or @movetype 0x1767 'Restock' 'backpack' 0 0 0 'any' 100
+                pause 750
+              endif
+            endfor
+            for 5
+              if @movetype 0x1766 'Restock' 'backpack' 0 0 0 'any' 50 or @movetype 0x1767 'Restock' 'backpack' 0 0 0 'any' 50
+                pause 750
+              endif
+            endfor
+            for 2
+              if @movetype 0x1766 'Restock' 'backpack' 0 0 0 'any' 25 or @movetype 0x1767 'Restock' 'backpack' 0 0 0 'any' 25
+                pause 750
+              endif
+            endfor
+            for 5
+              if @movetype 0x1766 'Restock' 'backpack' 0 0 0 'any' 5 or @movetype 0x1767 'Restock' 'backpack' 0 0 0 'any' 5
+                pause 750
+              endif
+            endfor
+            for 5
+              if @movetype 0x1766 'Restock' 'backpack' 0 0 0 'any' 1 or @movetype 0x1767 'Restock' 'backpack' 0 0 0 'any' 1
+                pause 750
+              endif
+            endfor
+            if @counttype 0x1bf2 0 'restock' == 0
+              sysmsg 'Out of Cloth' 25
+              @canceltarget
+              pause 600000
+              @playmacro 'CraftFill'
+            endif
+          endif
+        endif
+      else
+        if list 'Leather' >= 1
+          //unload colored ingots
+          while counttype 0x1bf2 2219 'backpack' > 0
+            movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2219
+            pause 550
+          endwhile
+          while counttype 0x1bf2 2207 'backpack' > 0
+            movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2207
+            pause 550
+          endwhile
+          while counttype 0x1bf2 2425 'backpack' > 0
+            movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2425
+            pause 550
+          endwhile
+          while counttype 0x1bf2 2213 'backpack' > 0
+            movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2213
+            pause 550
+          endwhile
+          while counttype 0x1bf2 2418 'backpack' > 0
+            movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2418
+            pause 550
+          endwhile
+          while counttype 0x1bf2 2406 'backpack' > 0
+            movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2406
+            pause 550
+          endwhile
+          while counttype 0x1bf2 2419 'backpack' > 0
+            movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2419
+            pause 550
+          endwhile
+          while counttype 0x1bf2 2413 'backpack' > 0
+            movetype 0x1bf2 'backpack' 'restock' (0 0 0) 2413
+            pause 550
+          endwhile
+          if @counttype MaterialGraphic[0] MaterialHue[0] 'backpack' < 50
+            //unload all leather types
+            while @movetype MaterialGraphic[0] 'backpack' 'Restock'
+              pause 750
+            endwhile
+            //try to restock 250 leather
+            if @movetype MaterialGraphic[0] 'Restock' 'backpack' 0 0 0 MaterialHue[0] 250
+              pause 750
+            else
+              useobject 'Restock'
+              pause 550
+              waitforcontents 'Restock' 5000
+              for 4
+                if @movetype MaterialGraphic[0] 'Restock' 'backpack' 0 0 0 MaterialHue[0] 50 and @property 'Stones' 'backpack' < 400
+                  pause 750
+                endif
+              endfor
+              for 4
+                if @movetype MaterialGraphic[0] 'Restock' 'backpack' 0 0 0 MaterialHue[0] 25 and @property 'Stones' 'backpack' < 475
+                  pause 750
+                endif
+              endfor
+              for 5
+                if @movetype MaterialGraphic[0] 'Restock' 'backpack' 0 0 0 MaterialHue[0] 5 and @property 'Stones' 'backpack' < 500
+                  pause 750
+                endif
+              endfor
+              for 5
+                if @movetype MaterialGraphic[0] 'Restock' 'backpack' 0 0 0 MaterialHue[0] 1 and @property 'Stones' 'backpack' < 500
+                  pause 750
+                endif
+              endfor
+              @canceltarget
+              if @counttype MaterialGraphic[0] MaterialHue[0] 'restock' == 0
+                sysmsg 'Out of Leather or Ingots' 25
+                @canceltarget
+                pause 600000
+                @playmacro 'CraftFill'
+              endif
+            endif
+            if @counttype 0x1bf2 0 'backpack' < 20
+              if movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 50
+                pause 550
+              else
+                useobject 'Restock'
+                pause 550
+                waitforcontents 'Restock' 5000
+                for 4
+                  movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 10
+                  pause 550
+                endfor
+                for 4
+                  movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 4
+                  pause 550
+                endfor
+                for 5
+                  movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 1
+                  pause 550
+                endfor
+              endif
+            endif
+            if @property 'Stones' 'backpack' >= 525
+              movetype MaterialGraphic[0] 'backpack' 'restock' (0 0 0) 'any' 50
+              pause 550
+            endif
+          endif
+        elseif list 'NotIron0' >= 1
+          //unload leather
+          while counttype 0x1081 'any' 'backpack' > 0
+            movetype 0x1081 'backpack' 'restock'
+            pause 550
+          endwhile
+          if @counttype MaterialGraphic[0] MaterialHue[0] 'backpack' < 50
+            //unload all ingots types
+            while @movetype MaterialGraphic[0] 'backpack' 'Restock'
+              pause 750
+            endwhile
+            if @movetype MaterialGraphic[0] 'Restock' 'backpack' 0 0 0 MaterialHue[0] 1000
+              pause 750
+            else
+              useobject 'Restock'
+              pause 550
+              waitforcontents 'Restock' 5000
+              for 4
+                if @movetype MaterialGraphic[0] 'Restock' 'backpack' 0 0 0 MaterialHue[0] 250
+                  pause 750
+                endif
+              endfor
+              for 5
+                if @movetype MaterialGraphic[0] 'Restock' 'backpack' 0 0 0 MaterialHue[0] 50
+                  pause 750
+                endif
+              endfor
+              for 2
+                if @movetype MaterialGraphic[0] 'Restock' 'backpack' 0 0 0 MaterialHue[0] 25
+                  pause 750
+                endif
+              endfor
+              for 5
+                if @movetype MaterialGraphic[0] 'Restock' 'backpack' 0 0 0 MaterialHue[0] 5
+                  pause 750
+                endif
+              endfor
+              for 5
+                if @movetype MaterialGraphic[0] 'Restock' 'backpack' 0 0 0 MaterialHue[0] 1
+                  pause 750
+                endif
+              endfor
+              @canceltarget
+              if @counttype MaterialGraphic[0] MaterialHue[0] 'restock' == 0
+                sysmsg 'Out of Leather or Ingots' 25
+                @canceltarget
+                pause 600000
+                @playmacro 'CraftFill'
+              endif
+            endif
+            if @counttype 0x1bf2 0 'backpack' < 20
+              if movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 50
+                pause 550
+              else
+                useobject 'Restock'
+                pause 550
+                waitforcontents 'Restock' 5000
+                for 4
+                  movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 10
+                  pause 550
+                endfor
+                for 4
+                  movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 4
+                  pause 550
+                endfor
+                for 5
+                  movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 1
+                  pause 550
+                endfor
+              endif
+            endif
+          endif
+        else
+          //iron restock
+          if @counttype 0x1bf2 0 'backpack' < 200
+            if @movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 1000
+              pause 750
+            else
+              useobject 'Restock'
+              pause 550
+              waitforcontents 'Restock' 5000
+              for 3
+                if @movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 250
+                  pause 750
+                endif
+              endfor
+              for 2
+                if @movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 100
+                  pause 750
+                endif
+              endfor
+              for 3
+                if @movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 25
+                  pause 750
+                endif
+              endfor
+              for 5
+                if @movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 5
+                  pause 750
+                endif
+              endfor
+              for 10
+                if @movetype 0x1bf2 'Restock' 'backpack' 0 0 0 0 1
+                  pause 750
+                endif
+              endfor
+              @canceltarget
+              if @counttype 0x1bf2 0 'restock' == 0
+                sysmsg 'Out of Ingots' 34
+                pause 600000
+                @playmacro 'CraftFill'
+              endif
+            endif
+          endif
+        endif
+      endif
+    endfor
+    if @property 'Contents' 'backpack' >= 124 or @property 'Stones' 'backpack' >= 525
+      sysmsg 'Something went wrong! Pack full! Abort! Abort!' 34
+      stop
+    endif
+    // Check for tools
+    // make tinker tools
+    if @counttype 0x1eb8 0 'backpack' < 2
+      pause 550
+      @unsetalias 'warning'
+      while @counttype 0x1eb8 0 'backpack' < 2
+        usetype! 0x1eb8
+        waitforgump 0x38920abd 2000
+        replygump 0x38920abd 7
+        waitforgump 0x38920abd 2000
+        replygump 0x38920abd 6
+        waitforgump 0x38920abd 2000
+        @replygump 0x38920abd 8
+        waitforgump 0x38920abd 2000
+        @replygump 0x38920abd 23
+        pause 1000
+      endwhile
+    endif
+    //make kits
+    if @counttype 0xf9d 0 'backpack' < 3 and color 'bod' == 1155
+      pause 550
+      while @counttype 0xf9d 0 'backpack' < 3
+        usetype! 0x1eb8
+        waitforgump 0x38920abd 2000
+        replygump 0x38920abd 7
+        waitforgump 0x38920abd 2000
+        replygump 0x38920abd 6
+        waitforgump 0x38920abd 2000
+        @replygump 0x38920abd 8
+        waitforgump 0x38920abd 2000
+        @replygump 0x38920abd 44
+        waitforgump 0x38920abd 2000
+        pause 1000
+      endwhile
+    endif
+    //make hammers
+    if @counttype 0xfbb 0 'backpack' < 3 and color 'bod' == 1102
+      pause 550
+      while @counttype 0xfbb 0 'backpack' < 3
+        usetype! 0x1eb8
+        waitforgump 0x38920abd 2000
+        replygump 0x38920abd 7
+        waitforgump 0x38920abd 2000
+        replygump 0x38920abd 6
+        waitforgump 0x38920abd 2000
+        @replygump 0x38920abd 8
+        waitforgump 0x38920abd 2000
+        @replygump 0x38920abd 86
+        waitforgump 0x38920abd 2000
+        pause 1000
+      endwhile
+    endif
+    // Search for existing items
+    while @findtype Graphic[0] 'any' 'backpack'
+      if @property 'Contents' 'backpack' >= 124 or @property 'Stones' 'backpack' >= 525
+        sysmsg 'Something went wrong! Pack full! Abort! Abort!' 34
+        stop
+      endif
+      target! 'found'
+      waitfortarget 1000
+      if not targetexists 'server' and @injournal 'must be exceptional' 'system'
+        // Recycle this item
+        @clearjournal
+        if color 'bod' == 1102
+          replygump 0x38920abd 14
+          waitfortarget 5000
+          target! 'found'
+          pause 750
+        else
+          if usetype! 0xf9f
+            waitfortarget 5000
+            target! 'found'
+            pause 750
+          endif
+        endif
+        // Unable to recycle, trash item
+        if @findobject 'found'
+          @moveitem! 'found' 'Trash Barrel'
+          pause 750
+        endif
+      elseif not targetexists 'server' and @injournal 'the maximum amount of requested items'
+        // Recycle this item
+        if color 'bod' == 1102
+          replygump 0x38920abd 14
+          waitfortarget 5000
+          target! 'found'
+          pause 750
+        else
+          if usetype! 0xf9f
+            waitfortarget 5000
+            target! 'found'
+            pause 750
+          endif
+        endif
+        // Unable to recycle, trash item
+        if @findobject 'found'
+          @moveitem! 'found' 'Trash Barrel'
+          pause 750
+        endif
+      elseif not targetexists 'server'
+        replygump 0x5afbd742 2
+        waitforgump 0x5afbd742 2500
+        waitfortarget 1000
+      endif
+    endwhile
+    // Craft new items if necessary
+    if targetexists 'server'
+      if @property 'Contents' 'backpack' >= 124 or @property 'Stones' 'backpack' >= 525
+        sysmsg 'Something went wrong! Pack full! Abort! Abort!' 34
+        stop
+      endif
+      // Swap resource and category only once per BOD
+      if not @findobject 'crafting' 'any' 'backpack'
+        @setalias 'crafting' 'bod'
+        // Resource
+        if not list 'MaterialHue' == 0
+          usetype! ToolType[0] 0
+          waitforgump 0x38920abd 2000
+          replygump 0x38920abd 7
+          waitforgump 0x38920abd 2000
+          replygump 0x38920abd MaterialButton[0]
+          waitforgump 0x38920abd 2000
+        endif
+        // Category
+        pause 550
+        usetype! ToolType[0] 0
+        waitforgump 0x38920abd 2000
+        replygump 0x38920abd GumpCat[0]
+        waitforgump 0x38920abd 2000
+      endif
+      if not @gumpexists 0x38920abd or @injournal 'replygump: gump id not found'
+        usetype! ToolType[0] 0
+        waitforgump 0x38920abd 2000
+        @clearjournal
+      elseif not @ingump 0x38920abd 'Bone Armor' and not @ingump 0x38920abd 'Dragon Scale Armor'
+        usetype! ToolType[0] 0
+        waitforgump 0x38920abd 2000
+      endif
+      replygump 0x38920abd GumpSel[0]
+      waitforgump 0x38920abd 2000
+      pause 50
+      if counttype Graphic[0] 'any' 'backpack' == 0 or counttype Graphic[0] 'any' 'backpack' > 2
+        @unsetalias 'crafting'
+        pause 550
+        @playmacro 'CraftFill'
+      endif
+    endif
+  endwhile
+  // BOD is complete, move to destination
+  if @injournal 'The maximum amount of requested items have already been combined to this deed'
+    while @findtype Graphic[0] 'any' 'backpack'
+      if color 'bod' == 1102
+        replygump 0x38920abd 14
+        waitfortarget 5000
+        target! 'found'
+        pause 750
+      else
+        if usetype! 0xf9f
+          waitfortarget 5000
+          target! 'found'
+          pause 750
+        endif
+      endif
+      // Unable to recycle, trash item
+      if @findobject 'found'
+        @moveitem! 'found' 'Trash Barrel'
+        pause 750
+      endif
+      replygump 0x5afbd742 2
+      waitforgump 0x5afbd742 2500
+      waitfortarget 5000
+      clearjournal
+    endwhile
+    clearjournal
+    sysmsg 'tem mover as bod!!!!!!!!!!!' 34
+    @moveitem 'bod' Destination[0]
+    pause 750
+    // Trash BOD or missing definitions
+  elseif not targetexists 'server'
+    replygump 0x5afbd742 2
+    waitforgump 0x5afbd742 2500
+    waitfortarget 1000
+  elseif not @findalias 'crafting'
+    @moveitem 'bod' 'Trash BODs Destination'
+    pause 750
+  endif
+elseif not @property 'Deeds in Book: 0' 'EmptyBods'
+  sysmsg 'tem mover as bod' 34
+  useobject! 'EmptyBods'
+  waitforgump 0x54f555df 2500
+  replygump 0x54f555df 5
+  waitforgump 0x54f555df 2500
+  pause 750
+else
+  sysmsg 'Out of bods to fill.' 64
+  @canceltarget
+  @playmacro 'Take New Book'
+  stop
+endif

@@ -1,0 +1,1726 @@
+@removelist 'CBDclothamount'
+@createlist 'CBDclothamount'
+//Cloth is cheaper than leather, might want to save more. also change in the Sort Books and Sort Loose macros
+@pushlist 'CBDclothamount' 5
+@removelist 'CBDamount'
+@createlist 'CBDamount'
+//change this number to the number of CBD leather sets you want waiting to fill per stack. Also change in the Sort Books and Sort Loose macros
+@pushlist 'CBDamount' 1
+@removelist 'CBDlbodamount'
+@createlist 'CBDlbodamount'
+//change this number to the number of CBD leather lbods you want waiting to fill. They are rare so good idea to save more than the exceptional sbods above.
+@pushlist 'CBDlbodamount' 5
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+clearignorelist
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+while not mounted 'self'
+  useobject 'beetle'
+  pause 550
+endwhile
+clearjournal
+while not @gumpexists 0x554b87f3
+  useobject 'turninrunebook'
+  waitforgump 0x554b87f3 1500
+endwhile
+replygump 0x554b87f3 5
+pause 3000
+//north and south of recall
+while not y < 182 and y > 192
+  //if the rune is blocked, pause and try again
+  if @injournal 'blocked' 'system'
+    sysmsg 'Rune blocked, trying again in 30 seconds' 33
+    pause 30000
+    @clearjournal
+    while not @gumpexists 0x554b87f3
+      useobject 'turninrunebook'
+      waitforgump 0x554b87f3 1500
+    endwhile
+    replygump 0x554b87f3 5
+    pause 2000
+  endif
+endwhile
+while not x 'self' == 982
+  while y > 1920 and x == 981
+    walk 'North'
+    endwhilE
+    while x == 981 and y == 1920
+      turn "East"
+    endwhile
+    while x < 983
+      walk 'east'
+      pause 500
+    endwhile
+    while x == 983 and y == 1919
+      turn "West"
+    endwhile
+  endwhile
+endwhile
+pause 500
+@setalias 'booktosort' 'newbods'
+@setalias 'resets' 'filledbods'
+//copy AfterSort variables
+@setalias 'Trash Barrel' 0x470f865e
+@setalias 'verite' 0x46df6e94
+@setalias 'valorite' 0x47b778d1
+@setalias 'agapite' 0x46df6e93
+@setalias 'gold1' 0x46df377b
+@setalias 'gold2' 0x46dee308
+@setalias 'bronze1' 0x46df6e8c
+@setalias 'bronze2' 0x46dee30b
+@setalias 'copper1' 0x46df6e90
+@setalias 'copper2' 0x46dee314
+@setalias '+60' 0x46dee31a
+@setalias '+30' 0x46dee309
+@setalias '+151'0x46df3776
+@setalias '+152' 0x46df3783
+@setalias '120' 0x46df3784
+@setalias 'POF1' 0x46df3782
+@setalias 'POF2' 0x46dee319
+@setalias 'BronzeSmall' 0x46df3770
+@setalias 'CopperSmall' 0x46df376f
+@setalias 'ShadowSmall' 0x46df3774
+@setalias 'HRSK1' 0x46dee2f3
+@setalias 'HRSK2' 0x46df3766
+@setalias 'BRSK1' 0x46dee304
+@setalias 'BRSK2' 0x46df376b
+//1-red bags
+@setalias 'lbod10male' 0x46dee30c
+@setalias '10leggings' 0x46dee311
+@setalias '10tunic' 0x46df6e99
+@setalias '10gloves' 0x46dee315
+@setalias '10sleeves' 0x46df3775
+@setalias '10gorget' 0x46df3771
+@setalias '10cap' 0x46dee317
+//2-red bags
+@setalias 'lbod15male' 0x46dee312
+@setalias '15leggings' 0x46df6e92
+@setalias '15tunic' 0x46dee313
+@setalias '15gloves' 0x46df6e96
+@setalias '15sleeves' 0x46dee310
+@setalias '15gorget' 0x46df6e8f
+@setalias '15cap' 0x46df6e98
+//3-red bags
+@setalias 'lbod10female' 0x46dee30e
+@setalias '10skirt' 0x46df377c
+@setalias '10shorts' 0x46df377d
+@setalias '10studdedbustier' 0x46df3772
+@setalias '10leatherbustier' 0x46dee30d
+@setalias '10armor' 0x46dee31b 
+@setalias '10studdedarmor' 0x46df3780
+//4-red bags
+@setalias 'lbod15female' 0x46df377e
+@setalias '15skirt' 0x46df377a
+@setalias '15shorts' 0x46df3779
+@setalias '15studdedbustier' 0x46df6e91
+@setalias '15leatherbustier' 0x46df3777
+@setalias '15armor' 0x46df6e8d
+@setalias '15studdedarmor' 0x46dee318
+//finalredbags
+//// put in trash barrel
+@setalias 'lbodcrier' 0x470f865e
+@setalias 'thighboots' 0x470f865e
+@setalias 'shortpants' 0x470f865e
+@setalias 'fancyshirt' 0x470f865e
+@setalias 'surcoat' 0x470f865e
+@setalias 'featheredhat' 0x470f865e
+//1-green bags
+@setalias 'lbod20male' 0x4713362a
+@setalias '20leggings'0x4713170c
+@setalias '20tunic' 0x46df3778
+@setalias '20gloves' 0x46dee30f
+@setalias '20sleeves' 0x46dee316
+@setalias '20gorget' 0x46dee316
+@setalias '20cap' 0x47133631
+//2-green bags
+@setalias 'lbod20female' 0x4713170d
+@setalias '20skirt' 0x4713362b
+@setalias '20shorts' 0x4713362f
+@setalias '20studdedbustier' 0x47133632
+@setalias '20leatherbustier' 0x4713362c
+@setalias '20armor' 0x47133633
+@setalias '20studdedarmor' 0x4713362d
+//trash barrel
+@setalias 'lbodmalecbd' 0x470f865e
+@setalias 'cbdleggings' 0x470f865e
+@setalias 'cbdtunic' 0x470f865e
+@setalias 'cbdgloves' 0x470f865e
+@setalias 'cbdsleeves' 0x470f865e
+@setalias 'cbdgorget' 0x470f865e
+@setalias 'cbdcap' 0x470f865e
+@setalias 'lbodfemalecbd' 0x470f865e
+@setalias 'cbdskirt' 0x470f865e
+@setalias 'cbdshorts' 0x470f865e
+@setalias 'cbdstuddedbustier' 0x470f865e
+@setalias 'cbdleatherbustier' 0x470f865e
+@setalias 'cbdarmor' 0x470f865e
+@setalias 'cbdstuddedarmor'  0x470f865e
+@setalias '120tailorlarge' 0x470f865e
+//
+@useobject 'BookToSort'
+waitforgump 0x54f555df 2500
+replygump 0x54f555df 1
+waitforgump 0x968739db 2500
+replygump 0x968739db 3
+waitforgump 0x968739db 2500
+replygump 0x968739db 0
+waitforgump 0x54f555df 2500
+pause 1000
+for 505
+  if not hidden 'self'
+    useskill 'hiding'
+  endif
+  if @property 'Deeds in Book' 'BookToSort' > 0
+    if not @findtype 0x2258 'any' 'backpack'
+      useobject 'BookToSort'
+      waitforgump 0x54f555df 2500
+      while @property 'Deeds in Book' 'BookToSort' > 0 and @property 'Contents' 'backpack' < 123
+        replygump 0x54f555df 5
+        waitforgump 0x54f555df 2500
+      endwhile
+    endif
+    if @injournal 'world will save'
+      while not @injournal 'world save complete'
+      endwhile
+      @clearjournal
+    endif
+    pause 550
+    while @findtype 0x2258 'any' 'backpack'
+      if @injournal 'world will save'
+        while not @injournal 'world save complete'
+        endwhile
+        @clearjournal
+      endif
+      //center goza
+      if not x == 983 and y == 1919
+        sysmsg 'stand on the goza'
+        stop
+      endif
+      waitforproperties 'found' 5000
+      //trashing nonexceptional bods
+      if not @property 'exceptional' 'found'
+        if not @property 'spined' 'found' and not @property 'horned' 'found'
+          if not @property 'barbed' 'found' and @property 'large' 'found'
+            if @property '20' 'found' and @property 'leather gorget' 'found'
+              if @property 'Contents' 'lbodmalecbd' < CBDlbodamount[0]
+                sysmsg 'CBD' 53
+                moveitem 'found' 'lbodmalecbd'
+                pause 750
+              endif
+            elseif @property '20' 'found' and @property 'studded bustier' 'found'
+              if @property 'Contents' 'lbodfemalecbd' < CBDlbodamount[0]
+                sysmsg 'CBD' 53
+                moveitem 'found' 'lbodfemalecbd'
+                pause 750
+              endif
+            endif
+          endif
+        endif
+        if @findobject 'found' 'any' 'backpack'
+          moveitem 'found' 'Trash Barrel'
+          if @property 'large' 'found'
+            sysmsg 'Normal LBOD Trash' 33
+          else
+            sysmsg 'Normal SBOD Trash' 33
+          endif
+          pause 750
+        endif
+      elseif color 'found' == 1102
+        if @property 'Valorite' 'found'
+          if @property 'exceptional' 'found'
+            if @property '20' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                moveitem 'found' 'valorite'
+                sysmsg 'Valorite' 95
+              elseif @property 'chainmail' 'found'
+                moveitem 'found' '+60'
+                sysmsg '+60' 34
+              elseif @property 'ringmail' 'found'
+                moveitem 'found' '+30'
+                sysmsg '+30' 73
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            elseif @property '10' 'found' or @property '15' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                moveitem 'found' 'verite'
+                sysmsg 'Verite' 79
+              elseif @property 'chainmail' 'found'
+                moveitem 'found' 'agapite'
+                sysmsg 'Agapite' 36
+              elseif @property 'ringmail' 'found'
+                moveitem 'found' 'gold1'
+                sysmsg 'Gold' 252
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            endif
+          elseif not @property 'exceptional' found'
+            //shouldn't have these
+          endif
+        elseif @property 'Verite' 'found'
+          if @property 'exceptional' 'found'
+            if @property '20' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                moveitem 'found' 'verite'
+                sysmsg 'Verite' 79
+              elseif @property 'chainmail' 'found'
+                moveitem 'found' 'agapite'
+                sysmsg 'Agapite' 36
+              elseif @property 'ringmail' 'found'
+                moveitem 'found' 'gold1'
+                sysmsg 'Gold' 252
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            elseif @property '10' 'found' or @property '15' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                moveitem 'found' '+60'
+                sysmsg '+60' 34
+              elseif @property 'chainmail' 'found'  and not @property 'large' 'found'
+                //bronzes worth more than +30, remove large clause if changing
+                //moveitem 'found' '+30'
+                //sysmsg '+30' 73
+                moveitem 'found' 'BronzeSmall'
+                sysmsg 'Bronze' 88
+              elseif @property 'ringmail' 'found'  and not @property 'large' 'found'
+                //bronzes worth more than 120, remove large clause if changing
+                //moveitem 'found' '120'
+                //sysmsg '120' 2498
+                moveitem 'found' 'BronzeSmall'
+                sysmsg 'Bronze' 88
+              elseif not @property 'large' 'found'
+                moveitem 'found' 'BronzeSmall'
+                sysmsg 'Bronze' 88
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            endif
+          elseif not @property 'exceptional' 'found'
+            //shouldn't have these
+          endif
+        elseif @property 'Agapite' 'found'
+          if @property 'exceptional' 'found'
+            if @property '20' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                moveitem 'found' '+60'
+                sysmsg '+60' 34
+              elseif @property 'chainmail' 'found' and not @property 'large' 'found'
+                //+30 but small bod bronzes worth more, remove large clause if changing
+                //moveitem 'found' '+30'
+                //sysmsg '+30' 73
+                moveitem 'found' 'BronzeSmall'
+                sysmsg 'Bronze' 88
+              elseif @property 'ringmail' 'found' and not @property 'large' 'found'
+                //120 but small bod bronzes worth more, remove large clause if changing
+                //moveitem 'found' '120'
+                //sysmsg '120' 2498
+                moveitem 'found' 'BronzeSmall'
+                sysmsg 'Bronze' 88
+              elseif not @property 'large' 'found'
+                moveitem 'found' 'BronzeSmall'
+                sysmsg 'Bronze' 88
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            elseif @property '10' 'found' or @property '15' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                moveitem 'found' 'agapite'
+                sysmsg 'Agapite' 36
+              elseif @property 'chainmail' 'found'
+                moveitem 'found' 'gold1'
+                sysmsg 'Gold' 252
+              elseif @property 'ringmail' 'found'
+                if @property '15' 'found'
+                  if @property 'Contents' '+152' < 101
+                    moveitem 'found' '+151'
+                    sysmsg '+15' 20
+                  else
+                    moveitem 'found' 'Trash Barrel'
+                    sysmsg '+15 book full, trashing' 20
+                  endif
+                  //+15 but 4 small bod coppers worth more, remove large clause if changing
+                elseif @property '10' 'found' and not @property 'large' 'found'
+                  moveitem 'found' 'CopperSmall'
+                  sysmsg 'Copper' 88
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'Trash'
+                endif
+              elseif not @property 'large' 'found' and @property '10' 'found'
+                moveitem 'found' 'CopperSmall'
+                sysmsg 'Copper' 88
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            endif
+          elseif not @property 'exceptional' 'found'
+            //shouldn't have these
+          endif
+        elseif @property 'gold' 'found'
+          if @property 'exceptional' 'found'
+            if @property '20' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                moveitem 'found' 'agapite'
+                sysmsg 'Agapite' 36
+              elseif @property 'chainmail' 'found'
+                moveitem 'found' 'gold1'
+                sysmsg 'Gold' 252
+                //+15 but 4 small bod coppers worth more, remove large clause if changing
+              elseif @property 'ringmail' 'found' and not @property 'large' 'found'
+                //moveitem 'found' '+151'
+                //          sysmsg '+15' 20
+                moveitem 'found' 'CopperSmall'
+                sysmsg 'Copper' 88
+              elseif not @property 'large' 'found'
+                moveitem 'found' 'CopperSmall'
+                sysmsg 'Copper' 88
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            elseif @property '10' 'found' or @property '15' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                moveitem 'found' '+30'
+                sysmsg '+30' 73
+              elseif @property 'chainmail' 'found'
+                if @property 'Contents' '120' < 101
+                  moveitem 'found' '120'
+                  sysmsg '120' 2498
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg '120 book full, trashing' 2498
+                endif
+              elseif not @property 'large' 'found' and @property '10' 'found'
+                if @property 'Contents' 'ShadowSmall' < 101
+                  moveitem 'found' 'ShadowSmall'
+                  sysmsg 'ShadowSmall' 88
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'Shadow book full, trashing' 88
+                endif
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            endif
+          elseif not @property 'exceptional' 'found'
+            //shouldn't have these
+          endif
+        elseif @property 'bronze ingots' 'found'
+          if @property 'exceptional' 'found'
+            if @property '20' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                moveitem 'found' '+30'
+                sysmsg '+30' 73
+              elseif @property 'chainmail' 'found'
+                if @property 'Contents' '120' < 101
+                  moveitem 'found' '120'
+                  sysmsg '120' 2498
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg '120 book full, trashing' 2498
+                endif
+              elseif not @property 'large' 'found'
+                if @property 'Contents' 'ShadowSmall' < 101
+                  moveitem 'found' 'ShadowSmall'
+                  sysmsg 'ShadowSmall' 88
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'Shadow book full, trashing' 88
+                endif
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            elseif @property '10' 'found' or @property '15' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                moveitem 'found' 'gold1'
+                sysmsg 'Gold' 252
+              elseif @property 'chainmail' 'found'
+                if @property 'Contents' '+152' < 101
+                  moveitem 'found' '+151'
+                  sysmsg '+15' 20
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg '+15 book full, trashing' 20
+                endif
+              elseif not @property 'large' 'found'
+                if @property 'Contents' 'ShadowSmall' < 101
+                  moveitem 'found' 'ShadowSmall'
+                  sysmsg 'ShadowSmall' 88
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'Shadow book full, trashing' 88
+                endif
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            endif
+          elseif not @property 'exceptional' 'found'
+            //shouldn't have these
+          endif
+        elseif @property 'copper' 'found' and not @property 'dull' 'found'
+          if @property 'exceptional' 'found'
+            if @property '20' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                moveitem 'found' 'gold1'
+                sysmsg 'Gold' 252
+              elseif @property 'chainmail' 'found'
+                if @property 'Contents' '+152' < 101
+                  moveitem 'found' '+151'
+                  sysmsg '+15' 20
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg '+15 book full, trashing' 20
+                endif
+              elseif not @property 'large' 'found'
+                if @property 'Contents' 'ShadowSmall' < 101
+                  moveitem 'found' 'ShadowSmall'
+                  sysmsg 'ShadowSmall' 88
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'Shadow book full, trashing' 88
+                endif
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            elseif @property '10' 'found' or @property '15' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                if @property 'Contents' '120' < 101
+                  moveitem 'found' '120'
+                  sysmsg '120' 2498
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg '120 book full, trashing' 2498
+                endif
+              elseif @property 'ringmail' 'found'
+                moveitem 'found' 'bronze1'
+                sysmsg 'Bronze' 249
+              elseif not @property 'large' 'found'
+                //dull copper
+                //moveitem 'found' 'ShadowSmall'
+                //sysmsg 'Dull Copper' 88
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            endif
+          elseif not @property 'exceptional' 'found'
+            //shouldn't have these
+          endif
+        elseif @property 'shadow' 'found'
+          if @property 'exceptional' 'found'
+            if @property '20' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                if @property 'Contents' '120' < 101
+                  moveitem 'found' '120'
+                  sysmsg '120' 2498
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg '120 book full, trashing' 2498
+                endif
+              elseif @property 'ringmail' 'found'
+                moveitem 'found' 'bronze1'
+                sysmsg 'Bronze' 249
+              elseif not @property 'large' 'found'
+                //dull copper
+                //moveitem 'found' 'ShadowSmall'
+                //sysmsg 'Dull Copper' 88
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            elseif @property '10' 'found' or @property '15' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                if @property 'Contents' '+152' < 101
+                  moveitem 'found' '+151'
+                  sysmsg '+15' 20
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg '+15 book full, trashing' 20
+                endif
+              elseif not @property 'large' 'found'
+                if @property 'Contents' 'POF2' < 101
+                  moveitem 'found' 'POF1'
+                  sysmsg 'PoF' 88
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'PoF book full, trashing' 88
+                endif
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            endif
+          elseif not @property 'exceptional' 'found'
+            //shouldn't have these
+          endif
+        elseif @property 'dull' 'found'
+          if @property 'exceptional' 'found'
+            if @property '20' 'found'
+              if @property 'platemail' 'found' or @property 'plate helm' 'found'
+                if @property 'Contents' '+152' < 101
+                  moveitem 'found' '+151'
+                  sysmsg '+15' 20
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg '+15 book full, trashing' 20
+                endif
+              elseif not @property 'large' 'found'
+                if @property 'Contents' 'POF2' < 101
+                  moveitem 'found' 'POF1'
+                  sysmsg 'PoF' 88
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'PoF book full, trashing' 88
+                endif
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            elseif @property '10' 'found' or @property '15' 'found'
+              if @property 'chainmail' 'found'
+                moveitem 'found' 'bronze1'
+                sysmsg 'Bronze' 249
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            endif
+          elseif not @property 'exceptional' 'found'
+            //shouldn't have these
+          endif
+        else
+          if @property 'exceptional' 'found' and @property '20' 'found'
+            if @property 'platemail' 'found' or @property 'plate helm' 'found'
+              if @property 'Contents' 'copper2' < 101
+                moveitem 'found' 'copper1'
+                sysmsg 'Copper' 242
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Copper book full, trashing' 242
+              endif
+            elseif @property 'small' 'found'
+              moveitem 'found' 'resets'
+              sysmsg 'Reset' '110'
+            else
+              moveitem 'found' 'Trash Barrel'
+              sysmsg 'Trash'
+            endif
+          elseif @property 'small' 'found'
+            moveitem 'found' 'resets'
+            sysmsg 'Reset' '110'
+          else
+            moveitem 'found' 'Trash Barrel'
+            sysmsg 'Trash'
+          endif
+        endif
+        pause 750
+        if @findobject 'found' 'any' 'backpack'
+          sysmsg 'Bod didnt sort, pausing and trying again' 34
+          pause 750
+        endif
+      else if color 'found' == 1155
+        if @property 'leather' 'found'
+          if @property 'Barbed' 'found'
+            if @property 'exceptional' 'found'
+              if @property '20' 'found'
+                if @property 'bone' 'found'
+                  moveitem 'found' 'BRSK1'
+                  sysmsg 'BRSK' 168
+                elseif @property 'studded armor' 'found' or @property 'studded bustier' 'found'
+                  moveitem 'found' 'BRSK1'
+                  sysmsg 'BRSK' 168
+                elseif @property 'studded' 'found'
+                  moveitem 'found' 'BRSK1'
+                  sysmsg 'BRSK' 168
+                elseif @property 'sandals' 'found' or @property 'shoes' 'found'
+                  moveitem 'found' 'HRSK1'
+                  sysmsg 'HRSK' 34
+                elseif @property 'boots' 'found'
+                  moveitem 'found' 'HRSK1'
+                  sysmsg 'HRSK' 34
+                else
+                  @moveitem 'found' 'BRSK1'
+                  sysmsg 'BRSK' 168
+                endif
+              elseif @property '10' 'found' or @property '15' 'found'
+                if not @property 'bone' 'found'
+                  if @property 'studded armor' 'found' or @property 'studded bustier' 'found'
+                    moveitem 'found' 'BRSK1'
+                    sysmsg 'BRSK' 168
+                  elseif @property 'sandals' 'found' or @property 'shoes' 'found'
+                    //if not @property '15' 'found'
+                    //no point in saving rarer cbds when already needing to cull the others
+                    //moveitem 'found' 'CBD1'
+                    //sysmsg 'CBD' 53
+                    //endif
+                    moveitem 'found' 'Trash Barrel'
+                    sysmsg 'Trash'
+                  elseif @property 'boots' 'found'
+                    //if not @property '15' 'found'
+                    //no point in saving rarer cbds when already needing to cull the others
+                    //moveitem 'found' 'CBD1'
+                    //sysmsg 'CBD' 53
+                    //endif
+                    moveitem 'found' 'Trash Barrel'
+                    sysmsg 'Trash'
+                  elseif not @property 'studded' 'found'
+                    moveitem 'found' 'BRSK1'
+                    sysmsg 'BRSK' 168
+                  else
+                    moveitem 'found' 'Trash Barrel'
+                    sysmsg 'Trash'
+                  endif
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'Trash'
+                endif
+              endif
+            elseif not @property 'exceptional' 'found'
+              //shouldn't have these
+            endif
+          elseif @property 'Horned' 'found'
+            if @property 'exceptional' 'found' and not @property 'bone' 'found'
+              if @property '20' 'found'
+                if @property 'sandals' 'found' or @property 'shoes' 'found'
+                  //no point in saving rarer cbds when already needing to cull the others
+                  //moveitem 'found' 'CBD1'
+                  //sysmsg 'CBD' 53
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'Trash'
+                elseif @property 'boots' 'found'
+                  //no point in saving rarer cbds when already needing to cull the others
+                  //moveitem 'found' 'CBD1'
+                  // sysmsg 'CBD' 53
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'Trash'
+                elseif @property 'studded armor' 'found' or @property 'studded bustier' 'found'
+                  moveitem 'found' 'BRSK1'
+                  sysmsg 'BRSK' 168
+                elseif not @property 'studded' 'found'
+                  moveitem 'found' 'BRSK1'
+                  sysmsg 'BRSK' 168
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'Trash'
+                endif
+              elseif @property '10' 'found' or @property '15' 'found'
+                if not @property 'sandals' 'found' and not @property 'shoes' 'found'
+                  if not @property 'boots' 'found'
+                    if @property 'studded armor' 'found' or @property 'studded bustier' 'found'
+                      moveitem 'found' 'BRSK1'
+                      sysmsg 'BRSK' 168
+                    elseif @property 'studded' 'found'
+                      moveitem 'found' 'HRSK1'
+                      sysmsg 'HRSK' 34
+                    elseif not @property 'studded' 'found'
+                      moveitem 'found' 'BRSK1'
+                      sysmsg 'BRSK' 168
+                    else
+                      moveitem 'found' 'Trash Barrel'
+                      sysmsg 'Trash'
+                    endif
+                  else
+                    moveitem 'found' 'Trash Barrel'
+                    sysmsg 'Trash'
+                  endif
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'Trash'
+                endif
+              endif
+            elseif not @property 'exceptional' 'found'
+              //shouldn't have these
+            else
+              moveitem 'found' 'Trash Barrel'
+              sysmsg 'Trash'
+            endif
+          elseif @property 'Spined' 'found'
+            if not @property 'sandals' 'found' and not @property 'shoes' 'found'
+              if not @property 'boots' 'found' and not @property 'bone' 'found'
+                if @property 'exceptional' 'found'
+                  if @property '20' 'found'
+                    if @property 'studded armor' 'found' or @property 'studded bustier' 'found'
+                      sysmsg 'BRSK' 168
+                      if @property 'large' 'found' and @property '20' 'found'
+                        moveitem 'found' 'lbod20female'
+                      elseif @property 'studded armor' 'found' and  @property '20' 'found'
+                        moveitem 'found' '20studdedarmor'
+                      elseif @property 'studded bustier' 'found' and @property '20' 'found'
+                        moveitem 'found' '20studdedbustier'
+                      endif
+                    elseif @property 'studded' 'found'
+                      moveitem 'found' 'HRSK1'
+                      sysmsg 'HRSK' 34
+                    elseif not @property 'studded' 'found'
+                      sysmsg 'BRSK' 168
+                      if @property 'large' 'found' and @property '20' 'found'
+                        moveitem 'found' 'lbod20male'
+                      elseif @property 'skirt' 'found' and @property '20' 'found'
+                        moveitem 'found' '20skirt'
+                      elseif @property 'shorts' 'found' and @property '20' 'found'
+                        moveitem 'found' '20shorts'
+                      elseif @property 'armor' 'found' and @property '20' 'found'
+                        moveitem 'found' '20armor'
+                      elseif @property 'leather bustier' 'found' and @property '20' 'found'
+                        moveitem 'found' '20leatherbustier'
+                      elseif @property 'leggings' 'found' and @property '20' 'found'
+                        moveitem 'found' '20leggings'
+                      elseif @property 'tunic' 'found' and @property '20' 'found'
+                        moveitem 'found' '20tunic'
+                      elseif @property 'gloves' 'found' and @property '20' 'found'
+                        moveitem 'found' '20gloves'
+                      elseif @property 'sleeves' 'found' and @property '20' 'found'
+                        moveitem 'found' '20sleeves'
+                      elseif @property 'gorget' 'found' and @property '20' 'found'
+                        moveitem 'found' '20gorget'
+                      elseif @property 'cap' 'found' and @property '20' 'found'
+                        moveitem 'found' '20cap'
+                      endif
+                    endif
+                    //elseif @property '10' 'found'
+                    //if @property 'studded' 'found'
+                    //if not @property 'studded armor' 'found' and not @property 'studded bustier' 'found'
+                    //no point in saving rarer cbds when already needing to cull the others
+                    // moveitem 'found' 'CBD1'
+                    //sysmsg 'CBD'
+                    //endif
+                    //endif
+                  else
+                    moveitem 'found' 'Trash Barrel'
+                    sysmsg 'Trash'
+                  endif
+                elseif not @property 'exceptional' 'found'
+                  //shouldn't have these
+                endif
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            else
+              moveitem 'found' 'Trash Barrel'
+              sysmsg 'Trash'
+            endif
+            //plain leather
+          elseif not @property 'bone' 'found'
+            if @property 'exceptional' 'found'
+              if @property '20' 'found'
+                if @property 'studded armor' 'found' or @property 'studded bustier' 'found'
+                  //normally a 120 scroll but can put ex in normal LBOD for cbd
+                  if @property 'large' 'found'
+                    if @property 'Contents' '120tailorlarge' < 5
+                      sysmsg '120 Tailor PS'
+                      moveitem 'found' '120tailorlarge'
+                    else
+                      moveitem 'found' 'Trash Barrel'
+                      sysmsg 'Trash'
+                    endif
+                  elseif not @property 'large' 'found'
+                    sysmsg 'CBD' 53
+                    if @property 'studded armor' 'found'
+                      if @property 'Contents' 'cbdstuddedarmor' < CBDamount[0]
+                        moveitem 'found' 'cbdstuddedarmor'
+                      else
+                        moveitem 'found' 'resets'
+                        sysmsg 'CBD Reset'
+                      endif
+                    elseif @property 'studded bustier' 'found'
+                      if @property 'Contents' 'cbdstuddedbustier' < CBDamount[0]
+                        moveitem 'found' 'cbdstuddedbustier'
+                      else
+                        moveitem 'found' 'resets'
+                        sysmsg 'CBD Reset'
+                      endif
+                    endif
+                  endif
+                elseif @property 'studded' 'found'
+                  //no point in saving rarer cbds when already needing to cull the others
+                  // moveitem! 'found' 'CBD1'
+                  //sysmsg 'CBD' 53
+                  moveitem! 'found' 'resets'
+                  sysmsg 'CBD Reset'
+                else
+                  if @property 'large' 'found'
+                    if @property 'Contents' '120tailorlarge' < 5
+                      sysmsg '120 Tailor PS'
+                      moveitem 'found' '120tailorlarge'
+                    else
+                      moveitem 'found' 'Trash Barrel'
+                      sysmsg 'Trash'
+                    endif
+                  elseif not @property 'large' 'found'
+                    sysmsg 'CBD' 53
+                    if @property 'leggings' 'found'
+                      if @property 'Contents' 'cbdleggings' < CBDamount[0]
+                        moveitem 'found' 'cbdleggings'
+                      else
+                        moveitem 'found' 'resets'
+                        sysmsg 'CBD Reset'
+                      endif
+                    elseif @property 'tunic' 'found'
+                      if @property 'Contents' 'cbdtunic' < CBDamount[0]
+                        moveitem 'found' 'cbdtunic'
+                      else
+                        moveitem 'found' 'resets'
+                        sysmsg 'CBD Reset'
+                      endif
+                    elseif @property 'gloves' 'found'
+                      if @property 'Contents' 'cbdgloves' < CBDamount[0]
+                        moveitem 'found' 'cbdgloves'
+                      else
+                        moveitem 'found' 'resets'
+                        sysmsg 'CBD Reset'
+                      endif
+                    elseif @property 'sleeves' 'found'
+                      if @property 'Contents' 'cbdsleeves' < CBDamount[0]
+                        moveitem 'found' 'cbdsleeves'
+                      else
+                        moveitem 'found' 'resets'
+                        sysmsg 'CBD Reset'
+                      endif
+                    elseif @property 'gorget' 'found'
+                      if @property 'Contents' 'cbdgorget' < CBDamount[0]
+                        moveitem 'found' 'cbdgorget'
+                      else
+                        moveitem 'found' 'resets'
+                        sysmsg 'CBD Reset'
+                      endif
+                    elseif @property 'cap' 'found'
+                      if @property 'Contents' 'cbdcap' < CBDamount[0]
+                        moveitem 'found' 'cbdcap'
+                      else
+                        moveitem 'found' 'resets'
+                        sysmsg 'CBD Reset'
+                      endif
+                    elseif @property 'shorts' 'found'
+                      if @property 'Contents' 'cbdshorts' < CBDamount[0]
+                        moveitem 'found' 'cbdshorts'
+                      else
+                        moveitem 'found' 'resets'
+                        sysmsg 'CBD Reset'
+                      endif
+                    elseif @property 'skirt' 'found'
+                      if @property 'Contents' 'cbdskirt' < CBDamount[0]
+                        moveitem 'found' 'cbdskirt'
+                      else
+                        moveitem 'found' 'resets'
+                        sysmsg 'CBD Reset'
+                      endif
+                    elseif @property 'leather bustier' 'found'
+                      if @property 'Contents' 'cbdleatherbustier' < CBDamount[0]
+                        moveitem 'found' 'cbdleatherbustier'
+                      else
+                        moveitem 'found' 'resets'
+                        sysmsg 'CBD Reset'
+                      endif
+                    elseif @property 'armor' 'found'
+                      if @property 'Contents' 'cbdarmor' < CBDamount[0]
+                        moveitem 'found' 'cbdarmor'
+                      else
+                        moveitem 'found' 'resets'
+                        sysmsg 'CBD Reset'
+                      endif
+                    endif
+                  endif
+                endif
+              elseif @property '10' 'found' or @property '15' 'found'
+                if @property 'studded armor' 'found' or @property 'studded bustier' 'found'
+                  sysmsg 'HRSK' 34
+                  if @property 'large' 'found' and @property '10' 'found'
+                    moveitem 'found' 'lbod10female'
+                  elseif @property 'large' 'found' and @property '15' 'found'
+                    moveitem 'found' 'lbod15female'
+                  elseif @property 'studded armor' 'found' and @property '10' 'found'
+                    moveitem 'found' '10studdedarmor'
+                  elseif @property 'studded armor' 'found' and @property '15' 'found'
+                    moveitem 'found' '15studdedarmor'
+                  elseif @property 'studded bustier' 'found' and @property '10' 'found'
+                    moveitem 'found' '10studdedbustier'
+                  elseif @property 'studded bustier' 'found' and @property '15' 'found'
+                    moveitem 'found' '15studdedbustier'
+                  endif
+                elseif not @property 'studded' 'found'
+                  sysmsg 'HRSK' 34
+                  if @property 'large' 'found' and @property '10' 'found'
+                    moveitem 'found' 'lbod10male'
+                  elseif @property 'large' 'found' and @property '15' 'found'
+                    moveitem 'found' 'lbod15male'
+                  elseif @property 'skirt' 'found' and @property '10' 'found'
+                    moveitem 'found' '10skirt'
+                  elseif @property 'shorts' 'found' and @property '10' 'found'
+                    moveitem 'found' '10shorts'
+                  elseif @property 'armor' 'found' and @property '10' 'found'
+                    moveitem 'found' '10armor'
+                  elseif @property 'leather bustier' 'found' and @property '10' 'found'
+                    moveitem 'found' '10leatherbustier'
+                  elseif @property 'leggings' 'found' and @property '10' 'found'
+                    moveitem 'found' '10leggings'
+                  elseif @property 'tunic' 'found' and @property '10' 'found'
+                    moveitem 'found' '10tunic'
+                  elseif @property 'gloves' 'found' and @property '10' 'found'
+                    moveitem 'found' '10gloves'
+                  elseif @property 'sleeves' 'found' and @property '10' 'found'
+                    moveitem 'found' '10sleeves'
+                  elseif @property 'gorget' 'found' and @property '10' 'found'
+                    moveitem 'found' '10gorget'
+                  elseif @property 'cap' 'found' and @property '10' 'found'
+                    moveitem 'found' '10cap'
+                  elseif @property 'skirt' 'found' and @property '15' 'found'
+                    moveitem 'found' '15skirt'
+                  elseif @property 'shorts' 'found' and @property '15' 'found'
+                    moveitem 'found' '15shorts'
+                  elseif @property 'armor' 'found' and @property '15' 'found'
+                    moveitem 'found' '15armor'
+                  elseif @property 'leather bustier' 'found' and @property '15' 'found'
+                    moveitem 'found' '15leatherbustier'
+                  elseif @property 'leggings' 'found' and @property '15' 'found'
+                    moveitem 'found' '15leggings'
+                  elseif @property 'tunic' 'found' and @property '15' 'found'
+                    moveitem 'found' '15tunic'
+                  elseif @property 'gloves' 'found' and @property '15' 'found'
+                    moveitem 'found' '15gloves'
+                  elseif @property 'sleeves' 'found' and @property '15' 'found'
+                    moveitem 'found' '15sleeves'
+                  elseif @property 'gorget' 'found' and @property '15' 'found'
+                    moveitem 'found' '15gorget'
+                  elseif @property 'cap' 'found' and @property '15' 'found'
+                    moveitem 'found' '15cap'
+                  endif
+                elseif not @property 'large' 'found'
+                  moveitem 'found' 'resets'
+                  sysmsg 'Reset'
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'Trash'
+                endif
+              endif
+            elseif not @property 'exceptional' 'found'
+              //shouldn't have these
+            endif
+          endif
+        elseif @property 'studded armor' 'found' or @property 'studded bustier' 'found'
+          if @property 'exceptional' 'found'
+            if @property '20' 'found'
+              if @property 'large' 'found'
+                if @property 'Contents' '120tailorlarge' < 5
+                  sysmsg '120 Tailor PS'
+                  moveitem 'found' '120tailorlarge'
+                else
+                  moveitem 'found' 'Trash Barrel'
+                  sysmsg 'Trash'
+                endif
+              elseif not @property 'large' 'found'
+                sysmsg 'CBD' 53
+                if @property 'studded armor' 'found'
+                  if @property 'Contents' 'cbdstuddedarmor' < CBDamount[0]
+                    moveitem 'found' 'cbdstuddedarmor'
+                  else
+                    moveitem 'found' 'resets'
+                    sysmsg 'CBD Reset'
+                  endif
+                elseif @property 'studded bustier' 'found'
+                  if @property 'Contents' 'cbdstuddedbustier' < CBDamount[0]
+                    moveitem 'found' 'cbdstuddedbustier'
+                  else
+                    moveitem 'found' 'resets'
+                    sysmsg 'CBD Reset'
+                  endif
+                endif
+              endif
+            elseif @property '10' 'found' or @property '15' 'found'
+              sysmsg 'HRSK' 34
+              if @property 'studded armor' 'found' and @property '10' 'found'
+                moveitem 'found' '10studdedarmor'
+              elseif @property 'studded armor' 'found' and @property '15' 'found'
+                moveitem 'found' '15studdedarmor'
+              elseif @property 'studded bustier' 'found' and @property '10' 'found'
+                moveitem 'found' '10studdedbustier'
+              elseif @property 'studded bustier' 'found' and @property '15' 'found'
+                moveitem 'found' '15studdedbustier'
+              endif
+            endif
+          elseif not @property 'exceptional' 'found'
+            //shouldn't have these
+          endif
+        elseif @property 'shoes' 'found' or @property 'sandals' 'found'
+          if not @property 'large' 'found'
+            moveitem 'found' 'resets'
+            sysmsg 'Reset'
+          else
+            moveitem 'found' 'Trash Barrel'
+            sysmsg 'Trash'
+          endif
+        elseif @property 'boots' 'found' and not @property 'thigh' 'found'
+          if not @property 'large' 'found'
+            moveitem 'found' 'resets'
+            sysmsg 'Reset'
+          else
+            moveitem 'found' 'Trash Barrel'
+            sysmsg 'Trash'
+          endif
+          //town crier ex 20
+        elseif @property 'feathered hat' 'found' or @property 'surcoat' 'found'
+          if @property '20' 'found' and @property 'exceptional' 'found'
+            sysmsg 'CBD' 53
+            if @property 'large' 'found'
+              if @property 'Contents' 'lbodcrier' < CBDclothamount[0]
+                moveitem 'found' 'lbodcrier'
+              else
+                moveitem 'found' 'Trash Barrel'
+                sysmsg 'Trash'
+              endif
+            elseif @property 'feathered hat' 'found'
+              if @property 'Contents' 'featheredhat' < CBDclothamount[0]
+                moveitem 'found' 'featheredhat'
+              else
+                moveitem 'found' 'resets'
+                sysmsg 'CBD Reset'
+              endif
+            elseif @property 'surcoat' 'found'
+              if @property 'Contents' 'surcoat' < CBDclothamount[0]
+                moveitem 'found' 'surcoat'
+              else
+                moveitem 'found' 'resets'
+                sysmsg 'CBD Reset'
+              endif
+            endif
+          elseif not @property 'large' 'found'
+            moveitem 'found' 'resets'
+            sysmsg 'Reset'
+          else
+            moveitem 'found' 'Trash Barrel'
+            sysmsg 'Trash'
+          endif
+        elseif @property 'fancy shirt' 'found' or @property 'short pants' 'found'
+          if @property '20' 'found' and @property 'exceptional' 'found'
+            sysmsg 'CBD' 53
+            if @property 'fancy shirt' 'found'
+              if @property 'Contents' 'fancyshirt' < CBDclothamount[0]
+                moveitem 'found' 'fancyshirt'
+              else
+                moveitem 'found' 'resets'
+                sysmsg 'CBD Reset'
+              endif
+            elseif @property 'short pants' 'found'
+              if @property 'Contents' 'shortpants' < CBDclothamount[0]
+                moveitem 'found' 'shortpants'
+              else
+                moveitem 'found' 'resets'
+                sysmsg 'CBD Reset'
+              endif
+            endif
+          elseif not @property 'large' 'found'
+            moveitem 'found' 'resets'
+            sysmsg 'Reset'
+          else
+            moveitem 'found' 'Trash Barrel'
+            sysmsg 'Trash'
+          endif
+        elseif @property 'thigh boots' 'found' and not @property 'bandana' 'found'
+          if @property '20' 'found' and @property 'exceptional' 'found'
+            sysmsg 'CBD' 53
+            if @property 'Contents' 'thighboots' < CBDclothamount[0]
+              moveitem 'found' 'thighboots'
+            else
+              moveitem 'found' 'resets'
+              sysmsg 'CBD Reset'
+            endif
+          elseif not @property 'large' 'found'
+            moveitem 'found' 'resets'
+            sysmsg 'Reset'
+          else
+            moveitem 'found' 'Trash Barrel'
+            sysmsg 'Trash'
+          endif
+        elseif not @property 'large' 'found' and not @property 'bone' 'found'
+          moveitem 'found' 'resets'
+          sysmsg 'Reset'
+        else
+          moveitem 'found' 'Trash Barrel'
+          sysmsg 'Trash'
+        endif
+        pause 750
+        if @findobject 'found' 'any' 'backpack'
+          sysmsg 'Bod didnt sort, pausing and trying again' 34
+          pause 750
+        endif
+      endif
+      sysmsg '-' 64
+    endwhile
+  endif
+endfor
+pause 2000
+//
+//
+//
+//
+//after sort
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//make room by temporarily placing other books on ground
+clearignorelist
+@unsetalias 'setaside1'
+@unsetalias 'setaside2'
+if not x == 983 and y == 1919
+  sysmsg 'stand on the goza'
+  stop
+endif
+if counttype 0x2259 'any' 'backpack' <= 2
+  while @findtype 0x2259 'any' 'backpack'
+    if not @findalias 'setaside1'
+      @setalias 'setaside1' 'found'
+    elseif not @findalias 'setaside2'
+      @setalias 'setaside2' 'found'
+    endif
+    ignoreobject 'found'
+  endwhile
+  @moveitemoffset 'setaside1' 'ground' (0 1 0)
+  pause 750
+  @moveitemoffset 'setaside2' 'ground' (0 1 0)
+  pause 750
+else
+  sysmsg 'Too many bod books in your pack to run this macro.' 34
+  if @findalias 'setaside1' or @findalias 'setaside2'
+    moveitem 'setaside1' 'backpack'
+    pause 750
+    moveitem 'setaside2' 'backpack'
+    pause 750
+  endif
+  stop
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//Valorite
+if not counttype 0x2259 0 'Valorite' > 0
+  useobject 'Valorite'
+  pause 750
+endif
+sysmsg 'Valorite' 95
+if @findtype 0x2258 'any' 'Valorite'
+  if findtype 0x2259 0 'Valorite'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' 'Valorite'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' 'Valorite'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the Valorite Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'VALORITE BOOK FULL' 33
+  endif
+endif
+//Verite
+sysmsg 'Verite' 79
+if not counttype 0x2259 0 'Verite' > 0
+  useobject 'Verite'
+  pause 750
+endif
+if @findtype 0x2258 'any' 'Verite'
+  if findtype 0x2259 0 'Verite'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' 'Verite'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' 'Verite'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the Verite Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'VERITE BOOK FULL' 33
+  endif
+endif
+//Agapite
+sysmsg 'Agapite' 36
+if not counttype 0x2259 0 'Agapite' > 0
+  useobject 'Agapite'
+  pause 750
+endif
+if @findtype 0x2258 'any' 'Agapite'
+  if findtype 0x2259 0 'Agapite'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' 'Agapite'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' 'Agapite'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the Agapite Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'AGAPITE BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//Gold
+sysmsg 'Gold' 252
+if @property 'Contents' 'gold1' > 0
+  useobject 'gold1'
+  pause 750
+  useobject 'gold2'
+  pause 750
+  if @findtype 0x2258 'any' 'gold1'
+    if findtype 0x2259 0 'gold2'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' 'gold1'  and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' 'gold2'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the Gold Container' 34
+    endif
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'GOLD BOOK FULL' 33
+  endif
+endif
+//Bronze
+sysmsg 'Bronze' 249
+if @property 'Contents' 'bronze1' > 0
+  useobject 'bronze1'
+  pause 750
+  useobject 'bronze2'
+  pause 750
+  if @findtype 0x2258 'any' 'bronze1'
+    if findtype 0x2259 0 'bronze2'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' 'bronze1'  and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' 'bronze2'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the Bronze Container' 34
+    endif
+  endif
+  if @injournal 'world will save'
+    while not @injournal 'world save complete'
+    endwhile
+    @clearjournal
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'BRONZE BOOK FULL' 33
+  endif
+endif
+//Copper
+sysmsg 'Copper' 242
+if @property 'Contents' 'copper1' > 0
+  useobject 'copper1'
+  pause 750
+  useobject 'copper2'
+  pause 750
+  if @findtype 0x2258 'any' 'copper1'
+    if findtype 0x2259 0 'copper2'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' 'copper1'  and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' 'copper2'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the Copper Container' 34
+    endif
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'COPPER BOOK FULL' 33
+  endif
+endif
+//+60
+sysmsg '+60' 34
+if not counttype 0x2259 0 '+60' > 0
+  useobject '+60'
+  pause 750
+endif
+if @findtype 0x2258 'any' '+60'
+  if findtype 0x2259 0 '+60'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' '+60'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' '+60'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the +60 Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg '+60 ASH BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//+30
+sysmsg '+30' 73
+if not counttype 0x2259 0 '+30' > 0
+  useobject '+30'
+  pause 750
+endif
+if @findtype 0x2258 'any' '+30'
+  if findtype 0x2259 0 '+30'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' '+30'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' '+30'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the +30 Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg '+30 ASH BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//+15
+sysmsg '+15' 20
+if @property 'Contents' '+151' > 0
+  useobject '+151'
+  pause 750
+  useobject '+152'
+  pause 750
+  if @findtype 0x2258 'any' '+151'
+    if findtype 0x2259 0 '+152'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' '+151' and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' '+152'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the +15 Container' 34
+    endif
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg '+15 ASH BOOK FULL' 33
+  endif
+  if @injournal 'world will save'
+    while not @injournal 'world save complete'
+    endwhile
+    @clearjournal
+  endif
+endif
+//BronzeSmall
+sysmsg 'Bronze Small' 88
+if not counttype 0x2259 0 'BronzeSmall' > 0
+  useobject 'BronzeSmall'
+  pause 750
+endif
+if @findtype 0x2258 'any' 'BronzeSmall'
+  if findtype 0x2259 0 'BronzeSmall'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' 'BronzeSmall'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' 'BronzeSmall'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the BronzeSmall Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'BRONZE SMALL BOD BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//CopperSmall
+sysmsg 'Copper Small' 88
+if not counttype 0x2259 0 'CopperSmall' > 0
+  useobject 'CopperSmall'
+  pause 750
+endif
+if @findtype 0x2258 'any' 'CopperSmall'
+  if findtype 0x2259 0 'CopperSmall'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' 'CopperSmall'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' 'CopperSmall'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the CopperSmall Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'COPPER SMALL BOD BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//ShadowSmall
+sysmsg 'Shadow Small' 88
+if not counttype 0x2259 0 'ShadowSmall' > 0
+  useobject 'ShadowSmall'
+  pause 750
+endif
+if @findtype 0x2258 'any' 'ShadowSmall'
+  if findtype 0x2259 0 'ShadowSmall'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' 'ShadowSmall'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' 'ShadowSmall'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the ShadowSmall Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'SHADOW SMALL BOD BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//POF
+sysmsg 'POF' 88
+if @property 'Contents' 'POF1' > 0
+  useobject 'POF1'
+  pause 750
+  useobject 'POF2'
+  pause 750
+  if @findtype 0x2258 'any' 'POF1'
+    if findtype 0x2259 0 'POF2'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' 'POF1' and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' 'POF2'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the PoF Container' 34
+    endif
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'POF BOOK FULL' 33
+  endif
+  if @injournal 'world will save'
+    while not @injournal 'world save complete'
+    endwhile
+    @clearjournal
+  endif
+endif
+//120
+sysmsg '120' 2498
+if not counttype 0x2259 0 '120' > 0
+  useobject '120'
+  pause 750
+endif
+if @findtype 0x2258 'any' '120'
+  if findtype 0x2259 0 '120'
+    @setalias 'ResetBook' 'found'
+    @moveitem 'ResetBook' 'backpack' 0 0 0
+    pause 750
+    while @findtype 0x2258 'any' '120'  and @property 'Deeds in Book' 'ResetBook' < 500
+      moveitem 'found' 'ResetBook' 0 0 0
+    endwhile
+    pause 750
+    while @findobject 'ResetBook' 'any' 'backpack'
+      moveitem 'ResetBook' '120'
+      pause 750
+    endwhile
+  else
+    sysmsg 'Need a bod book in the 120 Container' 34
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg '120 BOOK FULL' 33
+  endif
+endif
+if @injournal 'world will save'
+  while not @injournal 'world save complete'
+  endwhile
+  @clearjournal
+endif
+//BRSK
+sysmsg 'BRSK' 168
+if @property 'Contents' 'brsk1' > 0
+  useobject 'BRSK1'
+  pause 750
+  useobject 'BRSK2'
+  pause 750
+  if @findtype 0x2258 'any' 'BRSK1'
+    if findtype 0x2259 0 'BRSK2'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' 'BRSK1'  and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' 'BRSK2'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the BRSK Container' 34
+    endif
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'BRSK BOOK FULL' 33
+  endif
+  if @injournal 'world will save'
+    while not @injournal 'world save complete'
+    endwhile
+    @clearjournal
+  endif
+endif
+//HRSK
+sysmsg 'HRSK' 34
+if @property 'Contents' 'hrsk1' > 0
+  useobject 'HRSK1'
+  pause 750
+  useobject 'HRSK2'
+  pause 750
+  if @findtype 0x2258 'any' 'HRSK1'
+    if findtype 0x2259 0 'HRSK2'
+      @setalias 'ResetBook' 'found'
+      @moveitem 'ResetBook' 'backpack' 0 0 0
+      pause 750
+      while @findtype 0x2258 'any' 'HRSK1'  and @property 'Deeds in Book' 'ResetBook' < 500
+        moveitem 'found' 'ResetBook' 0 0 0
+      endwhile
+      pause 750
+      while @findobject 'ResetBook' 'any' 'backpack'
+        moveitem 'ResetBook' 'HRSK2'
+        pause 750
+      endwhile
+    else
+      sysmsg 'Need a bod book in the HRSK Container' 34
+    endif
+  endif
+  if @property 'Deeds in Book' 'ResetBook' == 500
+    sysmsg 'HRSK BOOK FULL' 33
+  endif
+  if @injournal 'world will save'
+    while not @injournal 'world save complete'
+    endwhile
+    @clearjournal
+  endif
+endif
+if @findalias 'setaside1' or @findalias 'setaside2'
+  for 5
+    if @findalias 'setaside1' and not @findobject 'setaside1' 'any' 'backpack'
+      moveitem 'setaside1' 'backpack'
+      pause 2000
+    endif
+    if @findalias 'setaside2' and not @findobject 'setaside2' 'any' 'backpack'
+      moveitem 'setaside2' 'backpack'
+      pause 2000
+    endif
+    if @findobject 'setaside1' 'any' 'backpack' and @findobject 'setaside2' 'any' 'backpack'
+      @unsetalias 'setaside1'
+      @unsetalias 'setaside2'
+    endif
+  endfor
+endif
+@playmacro 'Turn In Get New Book'
