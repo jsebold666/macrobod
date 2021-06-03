@@ -47,122 +47,122 @@ while not y < 182 and y > 192
     pause 2000
   endif
 endwhile
-while not x 'self' == 982
-  while y > 1920 and x == 981
+while not x 'self' == 2038
+  while y > 3101 and x == 2037
     walk 'North'
-    endwhilE
-    while x == 981 and y == 1920
-      turn "East"
-    endwhile
-    while x < 983
-      walk 'east'
-      pause 500
-    endwhile
-    while x == 983 and y == 1919
-      turn "West"
-    endwhile
+  endwhile
+  while x == 2037 2037 and y == 3101
+    turn "East"
+  endwhile
+  while x < 2039
+    walk 'east'
+    pause 500
+  endwhile
+  while x == 2039 and y == 3100
+    turn "West"
   endwhile
 endwhile
+
 pause 500
 @setalias 'booktosort' 'newbods'
 @setalias 'resets' 'filledbods'
 //copy AfterSort variables
-@setalias 'Trash Barrel' 0x470f865e
-@setalias 'verite' 0x46df6e94
-@setalias 'valorite' 0x47b778d1
-@setalias 'agapite' 0x46df6e93
-@setalias 'gold1' 0x46df377b
-@setalias 'gold2' 0x46dee308
-@setalias 'bronze1' 0x46df6e8c
-@setalias 'bronze2' 0x46dee30b
-@setalias 'copper1' 0x46df6e90
-@setalias 'copper2' 0x46dee314
-@setalias '+60' 0x46dee31a
-@setalias '+30' 0x46dee309
-@setalias '+151'0x46df3776
-@setalias '+152' 0x46df3783
-@setalias '120' 0x46df3784
-@setalias 'POF1' 0x46df3782
-@setalias 'POF2' 0x46dee319
-@setalias 'BronzeSmall' 0x46df3770
-@setalias 'CopperSmall' 0x46df376f
-@setalias 'ShadowSmall' 0x46df3774
-@setalias 'HRSK1' 0x46dee2f3
-@setalias 'HRSK2' 0x46df3766
-@setalias 'BRSK1' 0x46dee304
-@setalias 'BRSK2' 0x46df376b
+@setalias 'Trash Barrel' 0x4346b5ee
+@setalias 'verite' 0x434e063f
+@setalias 'valorite' 0x43435064
+@setalias 'agapite' 0x434e064a
+@setalias 'gold1' 0x434b54f5
+@setalias 'gold2' 0x4343506d
+@setalias 'bronze1' 0x434b54f3
+@setalias 'bronze2' 0x434b5506
+@setalias 'copper1' 0x434b54fb
+@setalias 'copper2' 0x43435061
+@setalias '+60' 0x434b54f4
+@setalias '+30' 0x434e0648
+@setalias '+151' 0x434e064c
+@setalias '+152' 0x434e0648
+@setalias '120' 0x4343506a
+@setalias 'POF1' 0x434b5502
+@setalias 'POF2' 0x434e063c
+@setalias 'BronzeSmall' 0x43519963
+@setalias 'CopperSmall' 0x43519962
+@setalias 'ShadowSmall' 0x434e0647
+@setalias 'HRSK1' 0x43457f61
+@setalias 'HRSK2' 0x43457f54
+@setalias 'BRSK1' 0x43457f56 
+@setalias 'BRSK2' 0x43457f5f
 //1-red bags
-@setalias 'lbod10male' 0x46dee30c
-@setalias '10leggings' 0x46dee311
-@setalias '10tunic' 0x46df6e99
-@setalias '10gloves' 0x46dee315
-@setalias '10sleeves' 0x46df3775
-@setalias '10gorget' 0x46df3771
-@setalias '10cap' 0x46dee317
+@setalias 'lbod10male' 0x434e0644
+@setalias '10leggings' 0x434e0640
+@setalias '10tunic' 0x434e0646
+@setalias '10gloves' 0x434e0645
+@setalias '10sleeves' 0x434e0643
+@setalias '10gorget' 0x434e0641
+@setalias '10cap' 0x43435068
 //2-red bags
-@setalias 'lbod15male' 0x46dee312
-@setalias '15leggings' 0x46df6e92
-@setalias '15tunic' 0x46dee313
-@setalias '15gloves' 0x46df6e96
-@setalias '15sleeves' 0x46dee310
-@setalias '15gorget' 0x46df6e8f
-@setalias '15cap' 0x46df6e98
+@setalias 'lbod15male' 0x4343505c
+@setalias '15leggings' 0x4343505e
+@setalias '15tunic' 0x4343506c
+@setalias '15gloves' 0x43435062
+@setalias '15sleeves' 0x4343505d
+@setalias '15gorget' 0x4343506e
+@setalias '15cap' 0x43435065
 //3-red bags
-@setalias 'lbod10female' 0x46dee30e
-@setalias '10skirt' 0x46df377c
-@setalias '10shorts' 0x46df377d
-@setalias '10studdedbustier' 0x46df3772
-@setalias '10leatherbustier' 0x46dee30d
-@setalias '10armor' 0x46dee31b 
-@setalias '10studdedarmor' 0x46df3780
+@setalias 'lbod10female' 0x4343506b
+@setalias '10skirt' 0x4343505f
+@setalias '10shorts' 0x4343505b
+@setalias '10studdedbustier' 0x43435066
+@setalias '10leatherbustier' 0x434b5503
+@setalias '10armor' 0x434b5505
+@setalias '10studdedarmor' 0x43435067 
 //4-red bags
-@setalias 'lbod15female' 0x46df377e
-@setalias '15skirt' 0x46df377a
-@setalias '15shorts' 0x46df3779
-@setalias '15studdedbustier' 0x46df6e91
-@setalias '15leatherbustier' 0x46df3777
-@setalias '15armor' 0x46df6e8d
-@setalias '15studdedarmor' 0x46dee318
+@setalias 'lbod15female' 0x434b54fe
+@setalias '15skirt' 0x434b54f6
+@setalias '15shorts' 0x434b54f8
+@setalias '15studdedbustier' 0x434b5504
+@setalias '15leatherbustier' 0x434b54ff
+@setalias '15armor' 0x434b5501
+@setalias '15studdedarmor' 0x43435067
 //finalredbags
 //// put in trash barrel
-@setalias 'lbodcrier' 0x470f865e
-@setalias 'thighboots' 0x470f865e
-@setalias 'shortpants' 0x470f865e
-@setalias 'fancyshirt' 0x470f865e
-@setalias 'surcoat' 0x470f865e
-@setalias 'featheredhat' 0x470f865e
+@setalias 'lbodcrier' 0x4346b5ee
+@setalias 'thighboots' 0x4346b5ee
+@setalias 'shortpants' 0x4346b5ee
+@setalias 'fancyshirt' 0x4346b5ee
+@setalias 'surcoat' 0x4346b5ee
+@setalias 'featheredhat' 0x4346b5ee
 //1-green bags
-@setalias 'lbod20male' 0x4713362a
-@setalias '20leggings'0x4713170c
-@setalias '20tunic' 0x46df3778
-@setalias '20gloves' 0x46dee30f
-@setalias '20sleeves' 0x46dee316
-@setalias '20gorget' 0x46dee316
-@setalias '20cap' 0x47133631
+@setalias 'lbod20male' 0x435300e9
+@setalias '20leggings' 0x434b54fa
+@setalias '20tunic' 0x435300de
+@setalias '20gloves' 0x435300e0
+@setalias '20sleeves' 0x435300e6
+@setalias '20gorget' 0x435300d5
+@setalias '20cap' 0x435300d5
 //2-green bags
-@setalias 'lbod20female' 0x4713170d
-@setalias '20skirt' 0x4713362b
-@setalias '20shorts' 0x4713362f
-@setalias '20studdedbustier' 0x47133632
-@setalias '20leatherbustier' 0x4713362c
-@setalias '20armor' 0x47133633
-@setalias '20studdedarmor' 0x4713362d
+@setalias 'lbod20female' 0x435300e3
+@setalias '20skirt' 0x434b54fd
+@setalias '20shorts' 0x434b5500
+@setalias '20studdedbustier' 0x434e063b
+@setalias '20leatherbustier' 0x434e063e
+@setalias '20armor' 0x434b54fc
+@setalias '20studdedarmor' 0x434e064b
 //trash barrel
-@setalias 'lbodmalecbd' 0x470f865e
-@setalias 'cbdleggings' 0x470f865e
-@setalias 'cbdtunic' 0x470f865e
-@setalias 'cbdgloves' 0x470f865e
-@setalias 'cbdsleeves' 0x470f865e
-@setalias 'cbdgorget' 0x470f865e
-@setalias 'cbdcap' 0x470f865e
-@setalias 'lbodfemalecbd' 0x470f865e
-@setalias 'cbdskirt' 0x470f865e
-@setalias 'cbdshorts' 0x470f865e
-@setalias 'cbdstuddedbustier' 0x470f865e
-@setalias 'cbdleatherbustier' 0x470f865e
-@setalias 'cbdarmor' 0x470f865e
-@setalias 'cbdstuddedarmor'  0x470f865e
-@setalias '120tailorlarge' 0x470f865e
+@setalias 'lbodmalecbd' 0x4346b5ee
+@setalias 'cbdleggings' 0x4346b5ee
+@setalias 'cbdtunic' 0x4346b5ee
+@setalias 'cbdgloves' 0x4346b5ee
+@setalias 'cbdsleeves' 0x4346b5ee
+@setalias 'cbdgorget' 0x4346b5ee
+@setalias 'cbdcap' 0x4346b5ee
+@setalias 'lbodfemalecbd' 0x4346b5ee
+@setalias 'cbdskirt' 0x4346b5ee
+@setalias 'cbdshorts' 0x4346b5ee
+@setalias 'cbdstuddedbustier' 0x4346b5ee
+@setalias 'cbdleatherbustier' 0x4346b5ee
+@setalias 'cbdarmor' 0x4346b5ee
+@setalias 'cbdstuddedarmor'  0x4346b5ee
+@setalias '120tailorlarge' 0x4346b5ee
 //
 @useobject 'BookToSort'
 waitforgump 0x54f555df 2500
@@ -199,7 +199,7 @@ for 505
         @clearjournal
       endif
       //center goza
-      if not x == 983 and y == 1919
+      if not x == 2039 and y == 3100
         sysmsg 'stand on the goza'
         stop
       endif
@@ -1185,7 +1185,7 @@ endif
 clearignorelist
 @unsetalias 'setaside1'
 @unsetalias 'setaside2'
-if not x == 983 and y == 1919
+if not x == 2039 and y == 3100
   sysmsg 'stand on the goza'
   stop
 endif

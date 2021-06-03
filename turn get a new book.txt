@@ -21,52 +21,52 @@ else
 endif
 clearignorelist
 //4 multicolored bags NE of goza
-@setalias 'redbag' 0x46739778
-@setalias 'bluebag' 0x4679e70a
-@setalias 'greenbag' 0x46795900
-@setalias 'purplebag' 0x467a1468
+@setalias 'redbag' 0x43494eb5
+@setalias 'bluebag' 0x43494eba
+@setalias 'greenbag' 0x43495f95
+@setalias 'purplebag' 0x43457f53
 //black bags
-@setalias 'Queue1' 0x46df375e
-@setalias 'Queue2' 0x46df6e7a
-@setalias 'Queue3' 0x46df6e86
-@setalias 'Queue4' 0x46df6e81
-@setalias 'Queue5' 0x46dee307
-@setalias 'Queue6' 0x46df6e7e
-@setalias 'Queue7' 0x46dee2fb
-@setalias 'Queue8' 0x46df3764
-@setalias 'Queue9' 0x46df376a
-@setalias 'Queue10' 0x46df6e88
-@setalias 'Queue11' 0x46df375c
-@setalias 'Queue12' 0x46dee2ff
-@setalias 'Queue13' 0x46df6e85
-@setalias 'Queue14' 0x46df375d
-@setalias 'Queue15' 0x46df376e
-@setalias 'Queue16' 0x46dee2f2
-@setalias 'Queue17' 0x46df3768
-@setalias 'Queue18' 0x46df6e7f
-@setalias 'Queue19' 0x46df6e80
-@setalias 'Queue20' 0x46df6e79
+@setalias 'Queue1' 0x43494eb7
+@setalias 'Queue2' 0x43494ebd
+@setalias 'Queue3' 0x43495f93
+@setalias 'Queue4' 0x43495f8c
+@setalias 'Queue5' 0x43494eab
+@setalias 'Queue6' 0x43494eb9
+@setalias 'Queue7' 0x43495f88
+@setalias 'Queue8' 0x43495f84
+@setalias 'Queue9' 0x43494ea8
+@setalias 'Queue10' 0x43457f58
+@setalias 'Queue11' 0x43494eaf
+@setalias 'Queue12' 0x43495f92
+@setalias 'Queue13' 0x43495f89
+@setalias 'Queue14' 0x43495f8d
+@setalias 'Queue15' 0x43494eb6
+@setalias 'Queue16' 0x43494eb1
+@setalias 'Queue17' 0x43494eb8
+@setalias 'Queue18' 0x43495f83
+@setalias 'Queue19' 0x43494ebb
+@setalias 'Queue20' 0x43457f5d
 //blue bags
-@setalias 'Done1' 0x46df6e78
-@setalias 'Done2' 0x46df6e83
-@setalias 'Done3' 0x46df376d
-@setalias 'Done4' 0x46df6e84
-@setalias 'Done5' 0x46df6e7d
-@setalias 'Done6' 0x46df6e82
-@setalias 'Done7' 0x46dee302
-@setalias 'Done8' 0x46dee2f6
-@setalias 'Done9' 0x46df3761
-@setalias 'Done10' 0x46df375b
-@setalias 'Done11' 0x46dee2f7
-@setalias 'Done12' 0x46df6e87
-@setalias 'Done13' 0x46dee2f8
-@setalias 'Done14' 0x46dee301
-@setalias 'Done15' 0x46df3760
-@setalias 'Done16' 0x46dee2f4
-@setalias 'Done17' 0x46dee2fc
-@setalias 'Done18' 0x46df6e8b
-@setalias 'Done19' 0x46df3767
-@setalias 'Done20' 0x46dee300
+@setalias 'Done1' 0x43495f8e 
+@setalias 'Done2' 0x43494eb2
+@setalias 'Done3' 0x43495f8f
+@setalias 'Done4' 0x43495f85
+@setalias 'Done5' 0x43495f91
+@setalias 'Done6' 0x43494eb0
+@setalias 'Done7' 0x43494eae
+@setalias 'Done8' 0x43495f87
+@setalias 'Done9' 0x43495f86
+@setalias 'Done10' 0x43457f52
+@setalias 'Done11' 0x43495f97
+@setalias 'Done12' 0x43495f90
+@setalias 'Done13' 0x43495f96
+@setalias 'Done14' 0x43457f5c
+@setalias 'Done15' 0x43457f64
+@setalias 'Done16' 0x43457f55
+@setalias 'Done17' 0x43457f5b
+@setalias 'Done18' 0x43457f5e
+@setalias 'Done19' 0x43457f5a
+@setalias 'Done20' 0x43457f57
 if @injournal 'world will save'
   while not @injournal 'world save complete'
   endwhile

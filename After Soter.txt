@@ -1,27 +1,27 @@
 //wall of bags north of goza
-@setalias 'verite' 0x46df6e94
-@setalias 'valorite' 0x47b778d1
-@setalias 'agapite' 0x46df6e93
-@setalias 'gold1' 0x46df377b
-@setalias 'gold2' 0x46dee308
-@setalias 'bronze1' 0x46df6e8c
-@setalias 'bronze2' 0x46dee30b
-@setalias 'copper1' 0x46df6e90
-@setalias 'copper2' 0x46dee314
-@setalias '+60' 0x46dee31a
-@setalias '+30' 0x46dee309
-@setalias '+151'0x46df3776
-@setalias '+152' 0x46df3783
-@setalias '120' 0x46df3784
-@setalias 'POF1' 0x46df3782
-@setalias 'POF2' 0x46dee319
-@setalias 'BronzeSmall' 0x46df3770
-@setalias 'CopperSmall' 0x46df376f
-@setalias 'ShadowSmall' 0x46df3774
-@setalias 'HRSK1' 0x46dee2f3
-@setalias 'HRSK2' 0x46df3766
-@setalias 'BRSK1' 0x46dee304
-@setalias 'BRSK2' 0x46df376b
+@setalias 'verite' 0x434e063f
+@setalias 'valorite' 0x43435064
+@setalias 'agapite' 0x434e064a
+@setalias 'gold1' 0x434b54f5
+@setalias 'gold2' 0x4343506d
+@setalias 'bronze1' 0x434b54f3
+@setalias 'bronze2' 0x434b5506
+@setalias 'copper1' 0x434b54fb
+@setalias 'copper2' 0x43435061
+@setalias '+60' 0x434b54f4
+@setalias '+30' 0x434e0648
+@setalias '+151' 0x434e064c
+@setalias '+152' 0x434e0648
+@setalias '120' 0x4343506a
+@setalias 'POF1' 0x434b5502
+@setalias 'POF2' 0x434e063c
+@setalias 'BronzeSmall' 0x43519963
+@setalias 'CopperSmall' 0x43519962
+@setalias 'ShadowSmall' 0x434e0647
+@setalias 'HRSK1' 0x43457f61
+@setalias 'HRSK2' 0x43457f54
+@setalias 'BRSK1' 0x43457f56 
+@setalias 'BRSK2' 0x43457f5f
 if @injournal 'world will save'
   while not @injournal 'world save complete'
   endwhile
@@ -31,7 +31,7 @@ endif
 clearignorelist
 @unsetalias 'setaside1'
 @unsetalias 'setaside2'
-if not x == 983 and y == 1919
+if not x == 2039 and y == 3100
   sysmsg 'stand on the goza'
   stop
 endif
