@@ -167,10 +167,11 @@ if @findtype 0x2258 'any' 'backpack' and @property 'small' 'found'
     replygump 0x5afbd742 2
     waitforgump 0x5afbd742 2500
     waitfortarget 5000
-    if @injournal 'The maximum amount of requested items'
+    if not targetexists 'server'
       clearjournal
       sysmsg 'tem mover as bod' 34
-      @moveitem 'bod' 'FilledBods'
+      @moveitem 'bod' 'filledBods'
+      sysmsg 'tem mover as bod' 34
     endif
   endif
   //set your talismans
@@ -1502,45 +1503,43 @@ if @findtype 0x2258 'any' 'backpack' and @property 'small' 'found'
     endif
   endwhile
   // BOD is complete, move to destination
-  if @injournal 'The maximum amount of requested items have already been combined to this deed'
-    while @findtype Graphic[0] 'any' 'backpack'
-      if color 'bod' == 1102
-        replygump 0x38920abd 14
-        waitfortarget 5000
-        target! 'found'
-        pause 750
-      else
-        if usetype! 0xf9f
+  if not targetexists 'server' and @injournal 'the maximum amount of requested items'
+      while @findtype Graphic[0] 'any' 'backpack'
+        if color 'bod' == 1102
+          replygump 0x38920abd 14
           waitfortarget 5000
           target! 'found'
           pause 750
+        else
+          if usetype! 0xf9f
+            waitfortarget 5000
+            target! 'found'
+            pause 750
+          endif
         endif
-      endif
-      // Unable to recycle, trash item
-      if @findobject 'found'
-        @moveitem! 'found' 'Trash Barrel'
-        pause 750
-      endif
+        // Unable to recycle, trash item
+        if @findobject 'found'
+          @moveitem! 'found' 'Trash Barrel'
+          pause 750
+        endif
+        replygump 0x5afbd742 2
+        waitforgump 0x5afbd742 2500
+        waitfortarget 5000
+        clearjournal
+      endwhile
+      clearjournal
+      @moveitem 'bod' Destination
+      pause 750
+      // Trash BOD or missing definitions
+    elseif not targetexists 'server'
       replygump 0x5afbd742 2
       waitforgump 0x5afbd742 2500
-      waitfortarget 5000
-      clearjournal
-    endwhile
-    clearjournal
-    sysmsg 'tem mover as bod!!!!!!!!!!!' 34
-    @moveitem 'bod' Destination[0]
-    pause 750
-    // Trash BOD or missing definitions
-  elseif not targetexists 'server'
-    replygump 0x5afbd742 2
-    waitforgump 0x5afbd742 2500
-    waitfortarget 1000
-  elseif not @findalias 'crafting'
-    @moveitem 'bod' 'Trash BODs Destination'
-    pause 750
-  endif
+      waitfortarget 1000
+    elseif not @findalias 'crafting'
+      @moveitem 'bod' 'Trash BODs Destination'
+      pause 750
+    endif
 elseif not @property 'Deeds in Book: 0' 'EmptyBods'
-  sysmsg 'tem mover as bod' 34
   useobject! 'EmptyBods'
   waitforgump 0x54f555df 2500
   replygump 0x54f555df 5
